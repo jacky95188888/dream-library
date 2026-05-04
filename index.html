@@ -1,0 +1,1269 @@
+<!DOCTYPE html>
+
+<html lang="zh-TW" style="background:#07060f !important;">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>夢境圖書館</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@300;400;600;700&family=Noto+Sans+TC:wght@300;400;500&display=swap');
+
+:root {
+–bg: #07060f;
+–surface: #0e0c1e;
+–surface2: #141226;
+–gold: #c8a85a;
+–gold2: #e8ca80;
+–blue: #7eb8e0;
+–mist: #a8bfd4;
+–text: #e8e4f4;
+–text2: #9890b8;
+–green: #60c090;
+–purple: #9878d8;
+–red: #e06060;
+}
+
+- { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+
+body {
+background: #07060f !important;
+background-color: #07060f !important;
+color: var(–text);
+font-family: ‘Noto Sans TC’, sans-serif;
+min-height: 100vh;
+overflow-x: hidden;
+}
+
+body::before {
+content:’’;
+position:fixed;
+inset:0;
+background-image:
+radial-gradient(1px 1px at 8% 12%, rgba(255,255,255,.7) 0%,transparent 100%),
+radial-gradient(1px 1px at 22% 58%, rgba(255,255,255,.5) 0%,transparent 100%),
+radial-gradient(1px 1px at 48% 8%, rgba(255,255,255,.6) 0%,transparent 100%),
+radial-gradient(1px 1px at 67% 35%, rgba(255,255,255,.4) 0%,transparent 100%),
+radial-gradient(1px 1px at 83% 72%, rgba(255,255,255,.7) 0%,transparent 100%),
+radial-gradient(1px 1px at 18% 88%, rgba(255,255,255,.5) 0%,transparent 100%),
+radial-gradient(2px 2px at 74% 22%, rgba(200,168,90,.5) 0%,transparent 100%),
+radial-gradient(1px 1px at 35% 75%, rgba(255,255,255,.6) 0%,transparent 100%);
+pointer-events:none;
+z-index:0;
+}
+
+.app {
+position:relative;
+z-index:1;
+max-width:420px;
+margin:0 auto;
+min-height:100vh;
+}
+
+.screen {
+display:none;
+flex-direction:column;
+min-height:100vh;
+animation: fadeIn .4s ease;
+}
+.screen.active { display:flex; }
+
+@keyframes fadeIn {
+from { opacity:0; transform:translateY(10px); }
+to   { opacity:1; transform:translateY(0); }
+}
+
+/* ========== STATUS BAR ========== */
+.status-bar {
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:12px 20px 8px;
+font-size:11px;
+color:var(–text2);
+letter-spacing:.04em;
+}
+
+.trial-badge {
+background:rgba(200,168,90,.12);
+border:1px solid rgba(200,168,90,.3);
+border-radius:20px;
+padding:4px 12px;
+color:var(–gold);
+font-size:11px;
+letter-spacing:.04em;
+}
+
+.trial-badge.warning {
+background:rgba(224,96,96,.1);
+border-color:rgba(224,96,96,.3);
+color:var(–red);
+}
+
+.daily-count {
+font-size:11px;
+color:var(–text2);
+}
+
+.daily-count span { color:var(–gold2); font-weight:500; }
+
+/* ========== HOME ========== */
+#home { padding-bottom:40px; }
+
+.home-hero {
+padding:40px 28px 28px;
+text-align:center;
+position:relative;
+overflow:hidden;
+}
+
+.home-hero::before {
+content:’’;
+position:absolute;
+top:-60px; left:50%;
+transform:translateX(-50%);
+width:300px; height:300px;
+background:radial-gradient(circle, rgba(126,184,224,.1) 0%, transparent 70%);
+pointer-events:none;
+}
+
+.moon-icon {
+font-size:48px;
+display:block;
+margin-bottom:16px;
+filter:drop-shadow(0 0 20px rgba(200,168,90,.4));
+animation:float 4s ease-in-out infinite;
+}
+
+@keyframes float {
+0%,100% { transform:translateY(0); }
+50% { transform:translateY(-8px); }
+}
+
+.home-hook {
+font-family:‘Noto Serif TC’, serif;
+font-size:13px;
+color:var(–gold);
+letter-spacing:.15em;
+margin-bottom:10px;
+}
+
+.home-title {
+font-family:‘Noto Serif TC’, serif;
+font-size:clamp(20px,5.5vw,26px);
+font-weight:600;
+line-height:1.5;
+letter-spacing:.04em;
+margin-bottom:10px;
+}
+
+.home-title .accent { color:var(–gold2); }
+
+.social-proof {
+display:flex;
+align-items:center;
+justify-content:center;
+gap:6px;
+font-size:12px;
+color:var(–mist);
+opacity:.7;
+margin-top:10px;
+}
+
+.proof-dot { width:5px; height:5px; border-radius:50%; background:var(–green); }
+
+.emotion-section { padding:0 24px; margin-bottom:18px; }
+
+.emotion-label {
+font-size:11px;
+color:var(–text2);
+letter-spacing:.1em;
+margin-bottom:10px;
+text-align:center;
+}
+
+.emotion-pills {
+display:flex;
+flex-wrap:wrap;
+gap:8px;
+justify-content:center;
+}
+
+.pill {
+background:rgba(255,255,255,.04);
+border:1px solid rgba(200,168,90,.2);
+border-radius:20px;
+padding:6px 14px;
+font-size:12.5px;
+color:var(–mist);
+cursor:pointer;
+transition:all .2s;
+}
+
+.pill.active {
+background:rgba(200,168,90,.12);
+border-color:var(–gold);
+color:var(–gold2);
+}
+
+.input-section { padding:0 24px; margin-bottom:20px; }
+
+.dream-textarea {
+width:100%;
+min-height:96px;
+background:rgba(255,255,255,.04);
+border:1px solid rgba(200,168,90,.18);
+border-radius:16px;
+padding:14px 16px;
+font-family:‘Noto Sans TC’, sans-serif;
+font-size:14px;
+color:var(–text);
+resize:none;
+outline:none;
+transition:border-color .2s;
+line-height:1.7;
+}
+
+.dream-textarea::placeholder { color:var(–text2); opacity:.6; font-size:13px; }
+.dream-textarea:focus { border-color:rgba(200,168,90,.45); }
+
+.char-hint {
+text-align:right;
+font-size:11px;
+color:var(–text2);
+opacity:.5;
+margin-top:5px;
+}
+
+.cta-btn-main {
+margin:0 24px;
+width:calc(100% - 48px);
+background:linear-gradient(135deg, #c8a85a, #e8ca80, #c8a85a);
+background-size:200% 100%;
+border:none;
+border-radius:14px;
+padding:15px 24px;
+font-family:‘Noto Serif TC’, serif;
+font-size:16px;
+font-weight:600;
+color:#0a0808;
+letter-spacing:.1em;
+cursor:pointer;
+transition:all .3s;
+box-shadow:0 4px 24px rgba(200,168,90,.25);
+}
+
+.cta-btn-main:active { transform:scale(.98); }
+
+.home-links {
+display:flex;
+justify-content:center;
+gap:24px;
+margin-top:18px;
+}
+
+.home-link {
+font-size:12px;
+color:var(–text2);
+cursor:pointer;
+text-decoration:underline;
+text-underline-offset:3px;
+opacity:.6;
+}
+
+/* ========== PROCESSING ========== */
+#processing {
+justify-content:center;
+align-items:center;
+padding:60px 32px;
+text-align:center;
+gap:0;
+}
+
+.proc-moon {
+font-size:60px;
+margin-bottom:28px;
+animation:proc-float 2.5s ease-in-out infinite;
+filter:drop-shadow(0 0 28px rgba(126,184,224,.5));
+}
+
+@keyframes proc-float {
+0%,100% { transform:scale(1) rotate(-3deg); }
+50% { transform:scale(1.06) rotate(3deg); }
+}
+
+.proc-title {
+font-family:‘Noto Serif TC’, serif;
+font-size:17px;
+color:var(–gold2);
+margin-bottom:22px;
+letter-spacing:.08em;
+}
+
+.proc-checklist {
+background:rgba(255,255,255,.04);
+border:1px solid rgba(200,168,90,.15);
+border-radius:14px;
+padding:18px 22px;
+margin-bottom:20px;
+text-align:left;
+width:100%;
+max-width:300px;
+}
+
+.check-item {
+display:flex;
+align-items:center;
+gap:10px;
+font-size:13.5px;
+color:var(–mist);
+padding:5px 0;
+letter-spacing:.03em;
+}
+
+.check-icon {
+width:18px; height:18px;
+border-radius:50%;
+border:1.5px solid rgba(200,168,90,.3);
+display:flex; align-items:center; justify-content:center;
+font-size:10px;
+flex-shrink:0;
+transition:all .4s;
+}
+
+.check-icon.done { background:rgba(96,192,144,.2); border-color:var(–green); color:var(–green); }
+.check-icon.active { border-color:var(–gold); animation:spin .8s linear infinite; }
+@keyframes spin { to { transform:rotate(360deg); } }
+
+.dots-loader {
+display:flex; gap:8px; justify-content:center; margin:14px 0;
+}
+
+.dot {
+width:8px; height:8px; border-radius:50%;
+animation:dotpulse 1.4s ease-in-out infinite;
+}
+
+.dot:nth-child(1) { background:var(–blue); }
+.dot:nth-child(2) { background:var(–gold); animation-delay:.2s; }
+.dot:nth-child(3) { background:var(–purple); animation-delay:.4s; }
+
+@keyframes dotpulse {
+0%,80%,100% { transform:scale(.55); opacity:.4; }
+40% { transform:scale(1); opacity:1; }
+}
+
+.proc-proof { font-size:12px; color:var(–blue); opacity:.8; letter-spacing:.04em; }
+
+/* ========== RESULT ========== */
+#result { padding-bottom:80px; }
+
+.resonance-hook {
+background:rgba(200,168,90,.08);
+border:1px solid rgba(200,168,90,.25);
+border-radius:12px;
+padding:12px 18px;
+margin:32px 20px 16px;
+font-size:13.5px;
+color:var(–gold2);
+letter-spacing:.04em;
+text-align:center;
+line-height:1.6;
+}
+
+.resonance-hook small { display:block; font-size:11px; color:var(–text2); margin-top:4px; }
+
+.result-header { padding:8px 24px 16px; text-align:center; }
+
+.result-title {
+font-family:‘Noto Serif TC’, serif;
+font-size:20px;
+font-weight:600;
+color:var(–gold2);
+margin-bottom:6px;
+letter-spacing:.06em;
+}
+
+.result-tag {
+display:inline-block;
+background:rgba(126,184,224,.1);
+border:1px solid rgba(126,184,224,.25);
+border-radius:20px;
+padding:3px 12px;
+font-size:11px;
+color:var(–blue);
+letter-spacing:.08em;
+}
+
+.result-block {
+margin:0 20px 14px;
+background:rgba(255,255,255,.03);
+border:1px solid rgba(255,255,255,.07);
+border-radius:16px;
+padding:18px 20px;
+position:relative;
+overflow:hidden;
+}
+
+.result-block::before {
+content:’’;
+position:absolute;
+top:0; left:0; right:0;
+height:2px;
+}
+
+.block-emotion::before { background:linear-gradient(90deg,transparent,var(–blue),transparent); }
+.block-story::before   { background:linear-gradient(90deg,transparent,var(–gold),transparent); }
+.block-card::before    { background:linear-gradient(90deg,transparent,var(–purple),transparent); }
+
+.block-label {
+font-size:10px;
+letter-spacing:.3em;
+margin-bottom:10px;
+text-transform:uppercase;
+}
+
+.block-label.blue   { color:var(–blue); }
+.block-label.gold   { color:var(–gold); }
+.block-label.purple { color:var(–purple); }
+
+.block-content {
+font-size:13.5px;
+line-height:1.85;
+color:var(–mist);
+letter-spacing:.03em;
+}
+
+.card-preview {
+border-radius:12px;
+padding:18px;
+margin-top:12px;
+text-align:center;
+min-height:110px;
+display:flex;
+flex-direction:column;
+justify-content:center;
+gap:8px;
+}
+
+.card-preview.dream { background:linear-gradient(135deg,#1a1540,#0d1a35); border:1px solid rgba(126,184,224,.2); }
+.card-preview.dark  { background:linear-gradient(135deg,#0a0a14,#1a0a20); border:1px solid rgba(152,120,216,.2); }
+.card-preview.warm  { background:linear-gradient(135deg,#2a1a08,#1a1008); border:1px solid rgba(200,168,90,.25); }
+
+.card-name  { font-size:11px; letter-spacing:.2em; color:var(–text2); }
+.card-quote { font-family:‘Noto Serif TC’,serif; font-size:14px; font-weight:600; color:var(–text); letter-spacing:.06em; line-height:1.5; }
+
+.card-style-btns { display:flex; gap:8px; margin-top:10px; }
+
+.style-btn {
+flex:1; padding:6px 0;
+border-radius:8px; font-size:11px;
+border:1px solid rgba(255,255,255,.1);
+background:rgba(255,255,255,.04);
+color:var(–text2); cursor:pointer; transition:all .2s;
+}
+
+.style-btn.active { border-color:var(–gold); color:var(–gold); background:rgba(200,168,90,.08); }
+
+.community-btn {
+margin:4px 20px 14px;
+width:calc(100% - 40px);
+background:rgba(96,192,144,.06);
+border:1px solid rgba(96,192,144,.2);
+border-radius:12px;
+padding:11px 20px;
+font-size:13px;
+color:var(–green);
+cursor:pointer;
+text-align:center;
+transition:all .2s;
+}
+
+/* ========== CTA ========== */
+.cta-section { margin:0 20px; }
+
+.cta-primary {
+width:100%;
+background:linear-gradient(135deg, var(–gold), var(–gold2));
+border:none;
+border-radius:14px;
+padding:14px 24px;
+font-family:‘Noto Serif TC’, serif;
+font-size:15px;
+font-weight:600;
+color:#0a0808;
+letter-spacing:.08em;
+cursor:pointer;
+margin-bottom:10px;
+display:flex;
+align-items:center;
+justify-content:center;
+gap:8px;
+transition:all .2s;
+box-shadow:0 4px 20px rgba(200,168,90,.2);
+}
+
+.cta-row { display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-bottom:10px; }
+
+.cta-secondary {
+background:rgba(255,255,255,.05);
+border:1px solid rgba(255,255,255,.1);
+border-radius:12px;
+padding:11px 8px;
+font-size:12px;
+color:var(–mist);
+cursor:pointer;
+letter-spacing:.03em;
+transition:all .2s;
+text-align:center;
+line-height:1.45;
+}
+
+.cta-locked { opacity:.45; }
+
+.cta-nuclear {
+width:100%;
+background:rgba(152,120,216,.08);
+border:1px solid rgba(152,120,216,.3);
+border-radius:12px;
+padding:13px 20px;
+font-size:13.5px;
+color:var(–purple);
+cursor:pointer;
+letter-spacing:.04em;
+margin-bottom:10px;
+transition:all .2s;
+text-align:center;
+}
+
+/* ========== RETENTION ========== */
+.retention-section {
+margin:16px 20px 0;
+background:rgba(126,184,224,.05);
+border:1px solid rgba(126,184,224,.15);
+border-radius:16px;
+padding:16px 18px;
+}
+
+.ret-header {
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-bottom:8px;
+}
+
+.ret-left { font-size:13px; color:var(–text); letter-spacing:.04em; }
+.ret-right { font-size:11px; color:var(–blue); }
+
+.progress-bar {
+background:rgba(255,255,255,.08);
+border-radius:99px;
+height:5px;
+overflow:hidden;
+margin-bottom:10px;
+}
+
+.progress-fill {
+height:100%;
+width:33.3%;
+background:linear-gradient(90deg, var(–blue), var(–purple));
+border-radius:99px;
+}
+
+.ret-stats {
+font-size:12.5px;
+color:var(–mist);
+letter-spacing:.03em;
+margin-bottom:8px;
+}
+
+.ret-stats strong { color:var(–gold2); }
+
+.streak-line {
+display:flex;
+align-items:center;
+gap:6px;
+font-size:12.5px;
+color:var(–mist);
+margin-bottom:10px;
+}
+
+.streak-line strong { color:var(–gold2); }
+
+.ret-cta {
+text-align:center;
+font-size:12px;
+color:var(–text2);
+border-top:1px solid rgba(255,255,255,.06);
+padding-top:10px;
+line-height:1.6;
+}
+
+.ret-proof {
+text-align:center;
+font-size:11px;
+color:var(–green);
+margin-top:6px;
+opacity:.8;
+}
+
+/* ========== TRIAL EXPIRED ========== */
+#expired {
+justify-content:center;
+align-items:center;
+padding:50px 28px;
+text-align:center;
+gap:0;
+}
+
+.expired-icon { font-size:56px; margin-bottom:24px; }
+
+.expired-title {
+font-family:‘Noto Serif TC’, serif;
+font-size:22px;
+color:var(–gold2);
+margin-bottom:10px;
+letter-spacing:.06em;
+}
+
+.expired-sub {
+font-size:13.5px;
+color:var(–mist);
+line-height:1.75;
+letter-spacing:.04em;
+margin-bottom:28px;
+}
+
+.expired-sub strong { color:var(–gold2); }
+
+/* Payment box */
+.payment-box {
+background:rgba(200,168,90,.06);
+border:1px solid rgba(200,168,90,.25);
+border-radius:16px;
+padding:22px 20px;
+margin-bottom:20px;
+width:100%;
+text-align:left;
+}
+
+.payment-title {
+font-family:‘Noto Serif TC’, serif;
+font-size:15px;
+color:var(–gold2);
+margin-bottom:14px;
+text-align:center;
+letter-spacing:.06em;
+}
+
+.payment-plan {
+display:flex;
+justify-content:space-between;
+align-items:center;
+background:rgba(255,255,255,.04);
+border:1px solid rgba(200,168,90,.2);
+border-radius:10px;
+padding:12px 16px;
+margin-bottom:10px;
+}
+
+.plan-info { font-size:13px; color:var(–text); letter-spacing:.03em; }
+.plan-info small { display:block; font-size:11px; color:var(–text2); margin-top:2px; }
+.plan-price { font-family:‘Noto Serif TC’,serif; font-size:16px; color:var(–gold2); font-weight:600; }
+
+.payment-steps {
+font-size:12.5px;
+color:var(–mist);
+line-height:2;
+letter-spacing:.03em;
+margin-bottom:16px;
+padding:0 4px;
+}
+
+.payment-steps span { color:var(–gold); }
+
+.pay-btn {
+width:100%;
+background:linear-gradient(135deg, var(–gold), var(–gold2));
+border:none;
+border-radius:12px;
+padding:14px;
+font-family:‘Noto Serif TC’, serif;
+font-size:15px;
+font-weight:600;
+color:#0a0808;
+letter-spacing:.08em;
+cursor:pointer;
+margin-bottom:10px;
+}
+
+.work-hours {
+text-align:center;
+font-size:11.5px;
+color:var(–text2);
+letter-spacing:.04em;
+line-height:1.6;
+}
+
+/* Unlock code section */
+.unlock-section {
+width:100%;
+background:rgba(152,120,216,.06);
+border:1px solid rgba(152,120,216,.2);
+border-radius:16px;
+padding:20px;
+}
+
+.unlock-title {
+font-size:13px;
+color:var(–purple);
+letter-spacing:.06em;
+margin-bottom:14px;
+text-align:center;
+}
+
+.unlock-input {
+width:100%;
+background:rgba(255,255,255,.05);
+border:1px solid rgba(152,120,216,.25);
+border-radius:10px;
+padding:12px 16px;
+font-family:‘Noto Sans TC’, sans-serif;
+font-size:15px;
+color:var(–text);
+outline:none;
+text-align:center;
+letter-spacing:.2em;
+font-weight:500;
+margin-bottom:10px;
+text-transform:uppercase;
+}
+
+.unlock-input::placeholder { letter-spacing:.08em; font-size:13px; color:var(–text2); opacity:.5; font-weight:400; }
+.unlock-input:focus { border-color:var(–purple); }
+
+.unlock-btn {
+width:100%;
+background:rgba(152,120,216,.15);
+border:1px solid rgba(152,120,216,.4);
+border-radius:10px;
+padding:12px;
+font-size:14px;
+color:var(–purple);
+cursor:pointer;
+letter-spacing:.06em;
+transition:all .2s;
+}
+
+.unlock-btn:hover { background:rgba(152,120,216,.25); }
+
+.unlock-error {
+font-size:12px;
+color:var(–red);
+text-align:center;
+margin-top:8px;
+display:none;
+}
+
+/* ========== FUTURE ========== */
+#future {
+justify-content:center;
+align-items:center;
+padding:60px 28px;
+text-align:center;
+gap:20px;
+}
+
+.future-icon { font-size:52px; filter:drop-shadow(0 0 20px rgba(152,120,216,.5)); }
+
+.future-title {
+font-family:‘Noto Serif TC’, serif;
+font-size:20px;
+color:var(–purple);
+letter-spacing:.08em;
+}
+
+.future-content {
+background:rgba(152,120,216,.06);
+border:1px solid rgba(152,120,216,.2);
+border-radius:16px;
+padding:20px 22px;
+font-size:14px;
+color:var(–mist);
+line-height:1.85;
+letter-spacing:.03em;
+width:100%;
+text-align:left;
+}
+
+.future-content .hl { color:var(–gold2); font-family:‘Noto Serif TC’,serif; font-weight:600; display:block; margin-bottom:10px; font-size:15px; }
+
+.back-btn {
+background:transparent;
+border:1px solid rgba(255,255,255,.15);
+border-radius:12px;
+padding:11px 28px;
+font-size:13px;
+color:var(–text2);
+cursor:pointer;
+letter-spacing:.06em;
+}
+
+.divider {
+height:1px;
+background:linear-gradient(90deg,transparent,rgba(255,255,255,.07),transparent);
+margin:0 20px 14px;
+}
+</style>
+
+</head>
+<body>
+<div class="app">
+
+<!-- ========== HOME ========== -->
+
+<div class="screen active" id="home">
+
+  <div class="status-bar">
+    <div class="trial-badge" id="trialBadge">⏳ 試用第 1 天</div>
+    <div class="daily-count">今日剩餘 <span id="remainCount">2</span> 次</div>
+  </div>
+
+  <div class="home-hero">
+    <span class="moon-icon">🌙</span>
+    <div class="home-hook">你昨晚的夢，其實在告訴你一件事...</div>
+    <h1 class="home-title">很多人不知道<br>他們的夢<span class="accent">正在影響人生</span></h1>
+    <div class="social-proof">
+      <div class="proof-dot"></div>
+      已有 12,438 人解析過夢境
+    </div>
+  </div>
+
+  <div class="emotion-section">
+    <div class="emotion-label">你昨晚的情緒是？</div>
+    <div class="emotion-pills">
+      <span class="pill" onclick="togglePill(this)">😰 焦慮</span>
+      <span class="pill" onclick="togglePill(this)">😌 平靜</span>
+      <span class="pill" onclick="togglePill(this)">😨 恐懼</span>
+      <span class="pill" onclick="togglePill(this)">😊 喜悅</span>
+      <span class="pill" onclick="togglePill(this)">😶‍🌫️ 迷茫</span>
+      <span class="pill" onclick="togglePill(this)">😢 悲傷</span>
+    </div>
+  </div>
+
+  <div class="input-section">
+    <textarea class="dream-textarea" id="dreamInput"
+      placeholder="昨晚夢到了什麼？幾個字也沒關係...&#10;&#10;例如：我夢到自己在追一列離站的火車"
+      oninput="updateChar(this)"></textarea>
+    <div class="char-hint"><span id="charCount">0</span> / 200 字</div>
+  </div>
+
+  <button class="cta-btn-main" onclick="startProcessing()">
+    👉 立即解析（免費）
+  </button>
+
+  <div class="home-links">
+    <span class="home-link">查看昨日夢境</span>
+    <span class="home-link">🏆 夢境排行榜</span>
+  </div>
+
+</div>
+
+<!-- ========== PROCESSING ========== -->
+
+<div class="screen" id="processing">
+  <span class="proc-moon">✨</span>
+  <div class="proc-title">正在解析你的夢境...</div>
+
+  <div class="proc-checklist">
+    <div class="check-item">
+      <div class="check-icon" id="c1">○</div>
+      <span>分析你的情緒</span>
+    </div>
+    <div class="check-item">
+      <div class="check-icon" id="c2">○</div>
+      <span>找出潛意識訊號</span>
+    </div>
+    <div class="check-item">
+      <div class="check-icon" id="c3">○</div>
+      <span>幫你寫成故事</span>
+    </div>
+  </div>
+
+  <div class="dots-loader">
+    <div class="dot"></div>
+    <div class="dot"></div>
+    <div class="dot"></div>
+  </div>
+
+  <div class="proc-proof">🌙 已有 12,438 人解析過夢境</div>
+</div>
+
+<!-- ========== RESULT ========== -->
+
+<div class="screen" id="result">
+
+  <div class="resonance-hook">
+    ⚠️ 這個夢，很多人都有
+    <small>這種夢通常出現在「壓力大的時候」</small>
+  </div>
+
+  <div class="result-header">
+    <div class="result-title">火車追不上的人</div>
+    <span class="result-tag">焦慮型夢境</span>
+  </div>
+
+  <div class="result-block block-emotion">
+    <div class="block-label blue">A · 情緒解析</div>
+    <div class="block-content">
+      你內心可能有某件事還沒準備好，卻感覺時間一直在跑。這個夢在提醒你——也許是時候停下來喘一口氣了。
+    </div>
+  </div>
+
+  <div class="result-block block-story">
+    <div class="block-label gold">B · 電影感故事</div>
+    <div class="block-content">
+      月台的燈光在雨中模糊。他跑，鞋底打在積水上，背包不停撞著腰。火車門緩緩合上，他看見自己的倒影停在玻璃裡——就這樣。<br><br>不是所有的錯過，都代表失去。有時候，留在月台上，才是下一段旅程的開始。
+    </div>
+  </div>
+
+  <div class="result-block block-card">
+    <div class="block-label purple">C · 分享卡片</div>
+    <div class="card-preview dream" id="cardPreview">
+      <div class="card-name">夢境圖書館 · 火車追不上的人</div>
+      <div class="card-quote">「留在月台上，才是下一段旅程的開始」</div>
+    </div>
+    <div class="card-style-btns">
+      <button class="style-btn active" onclick="switchCard(this,'dream')">夢幻</button>
+      <button class="style-btn" onclick="switchCard(this,'dark')">暗黑</button>
+      <button class="style-btn" onclick="switchCard(this,'warm')">溫暖</button>
+    </div>
+  </div>
+
+  <div class="community-btn" onclick="showToast('🌙 共有 3,847 人夢過類似的夢！')">
+    👁 看有多少人夢過這個
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="cta-section">
+    <button class="cta-primary">📤 分享卡片</button>
+
+```
+<div class="cta-row">
+  <button class="cta-secondary" onclick="copyPost()">📋 一鍵複製<br>FB貼文</button>
+  <button class="cta-secondary">🎬 生成短影片<br>腳本</button>
+</div>
+
+<button class="cta-nuclear" onclick="showScreen('future')">
+  🔮 看看這個夢代表你未來會發生什麼
+</button>
+
+<div class="cta-row">
+  <button class="cta-secondary cta-locked">🧬 查看夢境人格 🔒</button>
+  <button class="cta-secondary">🏆 加入排行榜</button>
+</div>
+```
+
+  </div>
+
+  <div class="divider" style="margin-top:16px"></div>
+
+  <div class="retention-section">
+    <div class="ret-header">
+      <span class="ret-left">🔒 解鎖完整人格分析</span>
+      <span class="ret-right">還差 2 個夢</span>
+    </div>
+    <div class="progress-bar">
+      <div class="progress-fill"></div>
+    </div>
+    <div class="ret-stats">
+      你已記錄 <strong>1 / 3</strong> 個夢，再記錄 <strong>2 個</strong> → 解鎖完整人格
+    </div>
+    <div class="streak-line">
+      🔥 你已連續記錄 <strong>2 天</strong>　中斷會重置
+    </div>
+    <div class="ret-cta">
+      明天再來記錄你的夢，解鎖<strong style="color:var(--gold2)">完整人格分析</strong>
+    </div>
+    <div class="ret-proof">🔥 已有 2,134 人解鎖人格</div>
+  </div>
+
+</div>
+
+<!-- ========== TRIAL EXPIRED ========== -->
+
+<div class="screen" id="expired">
+
+<span class="expired-icon">🌙</span>
+
+  <div class="expired-title">3 天試用已結束</div>
+  <div class="expired-sub">
+    謝謝你這 3 天的使用！<br>
+    你已經解析了 <strong>6 個夢境</strong>，<br>
+    繼續使用需要升級方案。
+  </div>
+
+  <div class="payment-box">
+    <div class="payment-title">選擇方案</div>
+
+```
+<div class="payment-plan">
+  <div class="plan-info">
+    基本版
+    <small>每天 2 次 · 每月 60 次</small>
+  </div>
+  <div class="plan-price">NT$99<small style="font-size:11px;color:var(--text2)">/月</small></div>
+</div>
+
+<div class="payment-plan" style="border-color:rgba(200,168,90,.4); background:rgba(200,168,90,.06);">
+  <div class="plan-info">
+    進階版 ⭐
+    <small>每天 5 次 · 每月 150 次</small>
+  </div>
+  <div class="plan-price">NT$199<small style="font-size:11px;color:var(--text2)">/月</small></div>
+</div>
+
+<div class="payment-steps">
+  1️⃣ 點下方按鈕，用街口支付<br>
+  2️⃣ 截圖付款成功畫面<br>
+  3️⃣ <span>私訊我們</span>，傳送截圖<br>
+  4️⃣ 收到解鎖碼後輸入下方
+</div>
+
+<button class="pay-btn" onclick="showToast('正在開啟街口支付...')">
+  💰 街口支付升級
+</button>
+
+<div class="work-hours">
+  工作時間 09:00～21:00<br>
+  付款後 2 小時內提供解鎖碼
+</div>
+```
+
+  </div>
+
+  <div class="unlock-section">
+    <div class="unlock-title">🔑 已有解鎖碼？輸入這裡</div>
+    <input class="unlock-input" id="unlockInput" type="text" placeholder="輸入解鎖碼" maxlength="10">
+    <button class="unlock-btn" onclick="checkUnlock()">確認解鎖</button>
+    <div class="unlock-error" id="unlockError">❌ 解鎖碼錯誤，請重新輸入</div>
+  </div>
+
+</div>
+
+<!-- ========== FUTURE ========== -->
+
+<div class="screen" id="future">
+  <span class="future-icon">🔮</span>
+  <div class="future-title">夢境預言解析</div>
+
+  <div class="future-content">
+    <span class="hl">「這種夢，通常出現在人生即將轉變前」</span>
+    你追趕卻抓不住的感覺，往往不是真的在逃避——而是你的潛意識正在為你篩選，哪些事值得全力奔赴，哪些可以放手。<br><br>
+    歷史上許多創業者、藝術家，都在人生轉折前夕夢到類似的場景。<br><br>
+    <strong style="color:var(--gold2)">這個夢出現的人，通常在 3 個月內都經歷了重要決定。</strong>
+  </div>
+
+<button class="back-btn" onclick="showScreen('result')">← 回到解析結果</button>
+
+</div>
+
+</div>
+
+<script>
+// ===== STATE =====
+const UNLOCK_CODE = 'MING872';
+const TRIAL_DAYS = 3;
+const DAILY_LIMIT = 2;
+
+function getState() {
+  const def = {
+    startDate: Date.now(),
+    usedToday: 0,
+    lastDate: new Date().toDateString(),
+    unlocked: false,
+    streak: 1,
+    dreamCount: 1
+  };
+  try {
+    const s = localStorage.getItem('dlState');
+    return s ? {...def, ...JSON.parse(s)} : def;
+  } catch(e) { return def; }
+}
+
+function saveState(s) {
+  try { localStorage.setItem('dlState', JSON.stringify(s)); } catch(e) {}
+}
+
+let state = getState();
+
+// Reset daily count if new day
+function refreshDaily() {
+  const today = new Date().toDateString();
+  if (state.lastDate !== today) {
+    state.usedToday = 0;
+    state.lastDate = today;
+    const daysDiff = Math.floor((Date.now() - state.startDate) / 86400000);
+    // Check streak continuity (simplified)
+    state.streak = (state.streak || 1) + 1;
+    saveState(state);
+  }
+}
+
+function getTrialDaysLeft() {
+  const daysPassed = Math.floor((Date.now() - state.startDate) / 86400000);
+  return Math.max(0, TRIAL_DAYS - daysPassed);
+}
+
+function updateStatusBar() {
+  refreshDaily();
+  const daysLeft = getTrialDaysLeft();
+  const badge = document.getElementById('trialBadge');
+  const remain = document.getElementById('remainCount');
+
+  if (state.unlocked) {
+    badge.textContent = '✅ 已解鎖';
+    badge.className = 'trial-badge';
+  } else if (daysLeft <= 1) {
+    badge.textContent = daysLeft === 0 ? '❌ 試用已結束' : `⚠️ 試用最後 1 天`;
+    badge.className = 'trial-badge warning';
+  } else {
+    badge.textContent = `⏳ 試用第 ${TRIAL_DAYS - daysLeft + 1} 天`;
+    badge.className = 'trial-badge';
+  }
+
+  const left = Math.max(0, DAILY_LIMIT - state.usedToday);
+  remain.textContent = state.unlocked ? '∞' : left;
+}
+
+// ===== INTERACTIONS =====
+function togglePill(el) {
+  document.querySelectorAll('.pill').forEach(p => p.classList.remove('active'));
+  el.classList.add('active');
+}
+
+function updateChar(el) {
+  document.getElementById('charCount').textContent = el.value.length;
+}
+
+function showScreen(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  window.scrollTo(0, 0);
+}
+
+function startProcessing() {
+  const input = document.getElementById('dreamInput').value.trim();
+
+  if (!input) {
+    const ta = document.getElementById('dreamInput');
+    ta.style.borderColor = 'rgba(224,96,96,.5)';
+    setTimeout(() => ta.style.borderColor = '', 1500);
+    return;
+  }
+
+  // Check trial expired
+  if (!state.unlocked && getTrialDaysLeft() === 0) {
+    showScreen('expired');
+    return;
+  }
+
+  // Check daily limit
+  if (!state.unlocked && state.usedToday >= DAILY_LIMIT) {
+    showToast('⏳ 今日次數已用完，明天再來！');
+    return;
+  }
+
+  showScreen('processing');
+
+  // Animate checklist
+  const checks = ['c1','c2','c3'];
+  checks.forEach((id, i) => {
+    setTimeout(() => {
+      const el = document.getElementById(id);
+      el.classList.add('active');
+      el.textContent = '◌';
+    }, i * 1100);
+    setTimeout(() => {
+      const el = document.getElementById(id);
+      el.classList.remove('active');
+      el.classList.add('done');
+      el.textContent = '✓';
+    }, i * 1100 + 850);
+  });
+
+  setTimeout(() => {
+    // Update usage
+    state.usedToday++;
+    state.dreamCount = (state.dreamCount || 0) + 1;
+    saveState(state);
+    updateStatusBar();
+    showScreen('result');
+  }, 4000);
+}
+
+function switchCard(btn, style) {
+  document.querySelectorAll('.style-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('cardPreview').className = 'card-preview ' + style;
+}
+
+function copyPost() {
+  const text = `這個夢，很多人都有。\n\n月台的燈光在雨中模糊。他跑，鞋底打在積水上——火車門緩緩合上，他看見自己的倒影停在玻璃裡。\n\n不是所有的錯過，都代表失去。\n\n「留在月台上，才是下一段旅程的開始」\n\n你也有過這種夢嗎？留言告訴我 👇\n\n🌙 夢境圖書館 免費解析你的夢`;
+  if (navigator.clipboard) {
+    navigator.clipboard.writeText(text).then(() => showToast('✓ 貼文已複製！'));
+  } else {
+    showToast('✓ 內容已準備好！');
+  }
+}
+
+function checkUnlock() {
+  const input = document.getElementById('unlockInput').value.trim().toUpperCase();
+  const err = document.getElementById('unlockError');
+
+  if (input === UNLOCK_CODE) {
+    state.unlocked = true;
+    saveState(state);
+    showToast('🎉 解鎖成功！歡迎使用完整版');
+    setTimeout(() => {
+      showScreen('home');
+      updateStatusBar();
+    }, 1500);
+  } else {
+    err.style.display = 'block';
+    document.getElementById('unlockInput').style.borderColor = 'rgba(224,96,96,.4)';
+    setTimeout(() => {
+      err.style.display = 'none';
+      document.getElementById('unlockInput').style.borderColor = '';
+    }, 2000);
+  }
+}
+
+// Toast
+function showToast(msg) {
+  let t = document.getElementById('toast');
+  if (!t) {
+    t = document.createElement('div');
+    t.id = 'toast';
+    t.style.cssText = `
+      position:fixed; bottom:36px; left:50%; transform:translateX(-50%);
+      background:rgba(18,15,35,.97); border:1px solid rgba(200,168,90,.3);
+      border-radius:12px; padding:11px 22px; font-size:13px; color:#e8ca80;
+      letter-spacing:.04em; z-index:9999; white-space:nowrap;
+      box-shadow:0 4px 20px rgba(0,0,0,.5); pointer-events:none;
+      transition:opacity .3s;
+    `;
+    document.body.appendChild(t);
+  }
+  t.textContent = msg;
+  t.style.opacity = '1';
+  clearTimeout(t._timer);
+  t._timer = setTimeout(() => t.style.opacity = '0', 2400);
+}
+
+// Init
+updateStatusBar();
+</script>
+
+</body>
+</html>
