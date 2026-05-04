@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 
-<html lang="zh-TW" style="background:#07060f !important;">
+<html lang="zh-TW">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
@@ -8,36 +8,30 @@
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@300;400;600;700&family=Noto+Sans+TC:wght@300;400;500&display=swap');
 
-:root {
-–bg: #07060f;
-–surface: #0e0c1e;
-–surface2: #141226;
-–gold: #c8a85a;
-–gold2: #e8ca80;
-–blue: #7eb8e0;
-–mist: #a8bfd4;
-–text: #e8e4f4;
-–text2: #9890b8;
-–green: #60c090;
-–purple: #9878d8;
-–red: #e06060;
-}
-
 - { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
 
-body {
-background: #07060f !important;
-background-color: #07060f !important;
-color: var(–text);
+html, body {
+background-color: #07060f;
+color: #e8e4f4;
 font-family: ‘Noto Sans TC’, sans-serif;
 min-height: 100vh;
 overflow-x: hidden;
 }
 
-body::before {
-content:’’;
-position:fixed;
-inset:0;
+.app {
+position: relative;
+max-width: 420px;
+margin: 0 auto;
+min-height: 100vh;
+background-color: #07060f;
+}
+
+/* Stars background */
+.stars {
+position: fixed;
+inset: 0;
+pointer-events: none;
+z-index: 0;
 background-image:
 radial-gradient(1px 1px at 8% 12%, rgba(255,255,255,.7) 0%,transparent 100%),
 radial-gradient(1px 1px at 22% 58%, rgba(255,255,255,.5) 0%,transparent 100%),
@@ -45,851 +39,917 @@ radial-gradient(1px 1px at 48% 8%, rgba(255,255,255,.6) 0%,transparent 100%),
 radial-gradient(1px 1px at 67% 35%, rgba(255,255,255,.4) 0%,transparent 100%),
 radial-gradient(1px 1px at 83% 72%, rgba(255,255,255,.7) 0%,transparent 100%),
 radial-gradient(1px 1px at 18% 88%, rgba(255,255,255,.5) 0%,transparent 100%),
-radial-gradient(2px 2px at 74% 22%, rgba(200,168,90,.5) 0%,transparent 100%),
-radial-gradient(1px 1px at 35% 75%, rgba(255,255,255,.6) 0%,transparent 100%);
-pointer-events:none;
-z-index:0;
+radial-gradient(2px 2px at 74% 22%, rgba(200,168,90,.4) 0%,transparent 100%),
+radial-gradient(1px 1px at 35% 75%, rgba(255,255,255,.6) 0%,transparent 100%),
+radial-gradient(1px 1px at 91% 45%, rgba(255,255,255,.4) 0%,transparent 100%),
+radial-gradient(1px 1px at 55% 30%, rgba(200,200,255,.3) 0%,transparent 100%);
 }
 
-.app {
-position:relative;
-z-index:1;
-max-width:420px;
-margin:0 auto;
-min-height:100vh;
-}
-
+/* SCREENS */
 .screen {
-display:none;
-flex-direction:column;
-min-height:100vh;
-animation: fadeIn .4s ease;
+display: none;
+flex-direction: column;
+min-height: 100vh;
+padding-bottom: 40px;
+position: relative;
+z-index: 1;
+animation: fadeUp .35s ease;
 }
-.screen.active { display:flex; }
+.screen.active { display: flex; }
 
-@keyframes fadeIn {
-from { opacity:0; transform:translateY(10px); }
+@keyframes fadeUp {
+from { opacity:0; transform:translateY(12px); }
 to   { opacity:1; transform:translateY(0); }
 }
 
-/* ========== STATUS BAR ========== */
+/* STATUS BAR */
 .status-bar {
-display:flex;
-justify-content:space-between;
-align-items:center;
-padding:12px 20px 8px;
-font-size:11px;
-color:var(–text2);
-letter-spacing:.04em;
+display: flex;
+justify-content: space-between;
+align-items: center;
+padding: 14px 20px 8px;
 }
 
 .trial-badge {
-background:rgba(200,168,90,.12);
-border:1px solid rgba(200,168,90,.3);
-border-radius:20px;
-padding:4px 12px;
-color:var(–gold);
-font-size:11px;
-letter-spacing:.04em;
+background: rgba(200,168,90,.15);
+border: 1px solid rgba(200,168,90,.35);
+border-radius: 20px;
+padding: 5px 14px;
+color: #c8a85a;
+font-size: 11px;
+letter-spacing: .04em;
 }
 
-.trial-badge.warning {
-background:rgba(224,96,96,.1);
-border-color:rgba(224,96,96,.3);
-color:var(–red);
+.trial-badge.warn {
+background: rgba(224,96,96,.12);
+border-color: rgba(224,96,96,.35);
+color: #e06060;
 }
 
-.daily-count {
-font-size:11px;
-color:var(–text2);
+.daily-info {
+font-size: 11px;
+color: #9890b8;
+letter-spacing: .03em;
 }
 
-.daily-count span { color:var(–gold2); font-weight:500; }
+.daily-info span { color: #e8ca80; font-weight: 500; }
 
-/* ========== HOME ========== */
-#home { padding-bottom:40px; }
-
+/* HOME */
 .home-hero {
-padding:40px 28px 28px;
-text-align:center;
-position:relative;
-overflow:hidden;
+text-align: center;
+padding: 36px 28px 24px;
 }
 
-.home-hero::before {
-content:’’;
-position:absolute;
-top:-60px; left:50%;
-transform:translateX(-50%);
-width:300px; height:300px;
-background:radial-gradient(circle, rgba(126,184,224,.1) 0%, transparent 70%);
-pointer-events:none;
-}
-
-.moon-icon {
-font-size:48px;
-display:block;
-margin-bottom:16px;
-filter:drop-shadow(0 0 20px rgba(200,168,90,.4));
-animation:float 4s ease-in-out infinite;
+.moon {
+font-size: 52px;
+display: block;
+margin-bottom: 18px;
+filter: drop-shadow(0 0 20px rgba(200,168,90,.5));
+animation: float 4s ease-in-out infinite;
 }
 
 @keyframes float {
-0%,100% { transform:translateY(0); }
-50% { transform:translateY(-8px); }
+0%,100% { transform: translateY(0); }
+50% { transform: translateY(-8px); }
 }
 
-.home-hook {
-font-family:‘Noto Serif TC’, serif;
-font-size:13px;
-color:var(–gold);
-letter-spacing:.15em;
-margin-bottom:10px;
+.hook-text {
+font-family: ‘Noto Serif TC’, serif;
+font-size: 13px;
+color: #c8a85a;
+letter-spacing: .15em;
+margin-bottom: 12px;
 }
 
-.home-title {
-font-family:‘Noto Serif TC’, serif;
-font-size:clamp(20px,5.5vw,26px);
-font-weight:600;
-line-height:1.5;
-letter-spacing:.04em;
-margin-bottom:10px;
+.main-title {
+font-family: ‘Noto Serif TC’, serif;
+font-size: 24px;
+font-weight: 600;
+color: #e8e4f4;
+line-height: 1.5;
+letter-spacing: .04em;
+margin-bottom: 12px;
 }
 
-.home-title .accent { color:var(–gold2); }
+.main-title .gold { color: #e8ca80; }
 
-.social-proof {
-display:flex;
-align-items:center;
-justify-content:center;
-gap:6px;
-font-size:12px;
-color:var(–mist);
-opacity:.7;
-margin-top:10px;
+.proof {
+display: flex;
+align-items: center;
+justify-content: center;
+gap: 7px;
+font-size: 12px;
+color: #a8bfd4;
 }
 
-.proof-dot { width:5px; height:5px; border-radius:50%; background:var(–green); }
-
-.emotion-section { padding:0 24px; margin-bottom:18px; }
-
-.emotion-label {
-font-size:11px;
-color:var(–text2);
-letter-spacing:.1em;
-margin-bottom:10px;
-text-align:center;
+.proof-dot {
+width: 6px; height: 6px;
+border-radius: 50%;
+background: #60c090;
+flex-shrink: 0;
 }
 
-.emotion-pills {
-display:flex;
-flex-wrap:wrap;
-gap:8px;
-justify-content:center;
+/* EMOTION */
+.section { padding: 0 22px; margin-bottom: 18px; }
+
+.section-label {
+font-size: 11px;
+color: #9890b8;
+letter-spacing: .1em;
+text-align: center;
+margin-bottom: 10px;
+}
+
+.pills {
+display: flex;
+flex-wrap: wrap;
+gap: 8px;
+justify-content: center;
 }
 
 .pill {
-background:rgba(255,255,255,.04);
-border:1px solid rgba(200,168,90,.2);
-border-radius:20px;
-padding:6px 14px;
-font-size:12.5px;
-color:var(–mist);
-cursor:pointer;
-transition:all .2s;
+background: rgba(255,255,255,.04);
+border: 1px solid rgba(200,168,90,.2);
+border-radius: 20px;
+padding: 7px 15px;
+font-size: 13px;
+color: #a8bfd4;
+cursor: pointer;
+transition: all .2s;
+font-family: ‘Noto Sans TC’, sans-serif;
 }
 
-.pill.active {
-background:rgba(200,168,90,.12);
-border-color:var(–gold);
-color:var(–gold2);
+.pill.active, .pill:active {
+background: rgba(200,168,90,.14);
+border-color: #c8a85a;
+color: #e8ca80;
 }
 
-.input-section { padding:0 24px; margin-bottom:20px; }
-
-.dream-textarea {
-width:100%;
-min-height:96px;
-background:rgba(255,255,255,.04);
-border:1px solid rgba(200,168,90,.18);
-border-radius:16px;
-padding:14px 16px;
-font-family:‘Noto Sans TC’, sans-serif;
-font-size:14px;
-color:var(–text);
-resize:none;
-outline:none;
-transition:border-color .2s;
-line-height:1.7;
+/* TEXTAREA */
+.dream-box {
+width: 100%;
+min-height: 100px;
+background: rgba(255,255,255,.05);
+border: 1px solid rgba(200,168,90,.2);
+border-radius: 14px;
+padding: 14px 16px;
+font-family: ‘Noto Sans TC’, sans-serif;
+font-size: 14px;
+color: #e8e4f4;
+resize: none;
+outline: none;
+line-height: 1.7;
+transition: border-color .2s;
 }
 
-.dream-textarea::placeholder { color:var(–text2); opacity:.6; font-size:13px; }
-.dream-textarea:focus { border-color:rgba(200,168,90,.45); }
+.dream-box::placeholder { color: #9890b8; font-size: 13px; }
+.dream-box:focus { border-color: rgba(200,168,90,.5); }
 
 .char-hint {
-text-align:right;
-font-size:11px;
-color:var(–text2);
-opacity:.5;
-margin-top:5px;
+text-align: right;
+font-size: 11px;
+color: #9890b8;
+margin-top: 5px;
+opacity: .6;
 }
 
-.cta-btn-main {
-margin:0 24px;
-width:calc(100% - 48px);
-background:linear-gradient(135deg, #c8a85a, #e8ca80, #c8a85a);
-background-size:200% 100%;
-border:none;
-border-radius:14px;
-padding:15px 24px;
-font-family:‘Noto Serif TC’, serif;
-font-size:16px;
-font-weight:600;
-color:#0a0808;
-letter-spacing:.1em;
-cursor:pointer;
-transition:all .3s;
-box-shadow:0 4px 24px rgba(200,168,90,.25);
+/* MAIN CTA */
+.main-cta {
+margin: 4px 22px 0;
+width: calc(100% - 44px);
+background: linear-gradient(135deg, #c8a85a, #e8ca80, #c8a85a);
+border: none;
+border-radius: 14px;
+padding: 16px;
+font-family: ‘Noto Serif TC’, serif;
+font-size: 16px;
+font-weight: 600;
+color: #0a0808;
+letter-spacing: .1em;
+cursor: pointer;
+box-shadow: 0 4px 24px rgba(200,168,90,.3);
+transition: all .2s;
 }
 
-.cta-btn-main:active { transform:scale(.98); }
+.main-cta:active { transform: scale(.98); }
 
-.home-links {
-display:flex;
-justify-content:center;
-gap:24px;
-margin-top:18px;
+.bottom-links {
+display: flex;
+justify-content: center;
+gap: 24px;
+margin-top: 18px;
+padding: 0 22px;
 }
 
-.home-link {
-font-size:12px;
-color:var(–text2);
-cursor:pointer;
-text-decoration:underline;
-text-underline-offset:3px;
-opacity:.6;
+.link-btn {
+font-size: 12px;
+color: #9890b8;
+cursor: pointer;
+text-decoration: underline;
+text-underline-offset: 3px;
+background: none;
+border: none;
+font-family: ‘Noto Sans TC’, sans-serif;
 }
 
-/* ========== PROCESSING ========== */
+/* PROCESSING */
 #processing {
-justify-content:center;
-align-items:center;
-padding:60px 32px;
-text-align:center;
-gap:0;
+justify-content: center;
+align-items: center;
+padding: 60px 32px;
+text-align: center;
+gap: 0;
+background-color: #07060f;
 }
 
-.proc-moon {
-font-size:60px;
-margin-bottom:28px;
-animation:proc-float 2.5s ease-in-out infinite;
-filter:drop-shadow(0 0 28px rgba(126,184,224,.5));
+.proc-icon {
+font-size: 64px;
+margin-bottom: 28px;
+display: block;
+animation: glow-pulse 2s ease-in-out infinite;
+filter: drop-shadow(0 0 24px rgba(126,184,224,.6));
 }
 
-@keyframes proc-float {
-0%,100% { transform:scale(1) rotate(-3deg); }
-50% { transform:scale(1.06) rotate(3deg); }
+@keyframes glow-pulse {
+0%,100% { transform: scale(1); }
+50% { transform: scale(1.08); }
 }
 
 .proc-title {
-font-family:‘Noto Serif TC’, serif;
-font-size:17px;
-color:var(–gold2);
-margin-bottom:22px;
-letter-spacing:.08em;
+font-family: ‘Noto Serif TC’, serif;
+font-size: 18px;
+color: #e8ca80;
+margin-bottom: 24px;
+letter-spacing: .08em;
 }
 
-.proc-checklist {
-background:rgba(255,255,255,.04);
-border:1px solid rgba(200,168,90,.15);
-border-radius:14px;
-padding:18px 22px;
-margin-bottom:20px;
-text-align:left;
-width:100%;
-max-width:300px;
+.checklist {
+background: rgba(255,255,255,.04);
+border: 1px solid rgba(200,168,90,.15);
+border-radius: 14px;
+padding: 20px 24px;
+margin-bottom: 22px;
+text-align: left;
+width: 100%;
+max-width: 300px;
 }
 
-.check-item {
-display:flex;
-align-items:center;
-gap:10px;
-font-size:13.5px;
-color:var(–mist);
-padding:5px 0;
-letter-spacing:.03em;
+.check-row {
+display: flex;
+align-items: center;
+gap: 12px;
+padding: 6px 0;
+font-size: 14px;
+color: #a8bfd4;
 }
 
 .check-icon {
-width:18px; height:18px;
-border-radius:50%;
-border:1.5px solid rgba(200,168,90,.3);
-display:flex; align-items:center; justify-content:center;
-font-size:10px;
-flex-shrink:0;
-transition:all .4s;
+width: 20px; height: 20px;
+border-radius: 50%;
+border: 1.5px solid rgba(200,168,90,.3);
+display: flex;
+align-items: center;
+justify-content: center;
+font-size: 11px;
+color: #e8e4f4;
+flex-shrink: 0;
+transition: all .4s;
 }
 
-.check-icon.done { background:rgba(96,192,144,.2); border-color:var(–green); color:var(–green); }
-.check-icon.active { border-color:var(–gold); animation:spin .8s linear infinite; }
-@keyframes spin { to { transform:rotate(360deg); } }
+.check-icon.done {
+background: rgba(96,192,144,.2);
+border-color: #60c090;
+color: #60c090;
+}
 
-.dots-loader {
-display:flex; gap:8px; justify-content:center; margin:14px 0;
+.check-icon.spin {
+border-color: #c8a85a;
+animation: spinning .8s linear infinite;
+}
+
+@keyframes spinning { to { transform: rotate(360deg); } }
+
+.dots {
+display: flex;
+gap: 8px;
+justify-content: center;
+margin: 14px 0;
 }
 
 .dot {
-width:8px; height:8px; border-radius:50%;
-animation:dotpulse 1.4s ease-in-out infinite;
+width: 8px; height: 8px;
+border-radius: 50%;
+animation: bounce 1.4s ease-in-out infinite;
 }
 
-.dot:nth-child(1) { background:var(–blue); }
-.dot:nth-child(2) { background:var(–gold); animation-delay:.2s; }
-.dot:nth-child(3) { background:var(–purple); animation-delay:.4s; }
+.dot:nth-child(1) { background: #7eb8e0; }
+.dot:nth-child(2) { background: #c8a85a; animation-delay: .2s; }
+.dot:nth-child(3) { background: #9878d8; animation-delay: .4s; }
 
-@keyframes dotpulse {
-0%,80%,100% { transform:scale(.55); opacity:.4; }
-40% { transform:scale(1); opacity:1; }
+@keyframes bounce {
+0%,80%,100% { transform: scale(.5); opacity: .4; }
+40% { transform: scale(1); opacity: 1; }
 }
 
-.proc-proof { font-size:12px; color:var(–blue); opacity:.8; letter-spacing:.04em; }
+.proc-proof { font-size: 12px; color: #7eb8e0; opacity: .8; }
 
-/* ========== RESULT ========== */
-#result { padding-bottom:80px; }
+/* RESULT */
+#result { background-color: #07060f; }
 
-.resonance-hook {
-background:rgba(200,168,90,.08);
-border:1px solid rgba(200,168,90,.25);
-border-radius:12px;
-padding:12px 18px;
-margin:32px 20px 16px;
-font-size:13.5px;
-color:var(–gold2);
-letter-spacing:.04em;
-text-align:center;
-line-height:1.6;
+.resonance {
+background: rgba(200,168,90,.08);
+border: 1px solid rgba(200,168,90,.28);
+border-radius: 12px;
+padding: 13px 18px;
+margin: 32px 20px 16px;
+font-size: 13.5px;
+color: #e8ca80;
+text-align: center;
+line-height: 1.65;
+letter-spacing: .04em;
 }
 
-.resonance-hook small { display:block; font-size:11px; color:var(–text2); margin-top:4px; }
+.resonance small {
+display: block;
+font-size: 11.5px;
+color: #9890b8;
+margin-top: 5px;
+}
 
-.result-header { padding:8px 24px 16px; text-align:center; }
+.result-head {
+text-align: center;
+padding: 8px 24px 16px;
+}
 
-.result-title {
-font-family:‘Noto Serif TC’, serif;
-font-size:20px;
-font-weight:600;
-color:var(–gold2);
-margin-bottom:6px;
-letter-spacing:.06em;
+.result-name {
+font-family: ‘Noto Serif TC’, serif;
+font-size: 21px;
+font-weight: 600;
+color: #e8ca80;
+margin-bottom: 8px;
+letter-spacing: .06em;
 }
 
 .result-tag {
-display:inline-block;
-background:rgba(126,184,224,.1);
-border:1px solid rgba(126,184,224,.25);
-border-radius:20px;
-padding:3px 12px;
-font-size:11px;
-color:var(–blue);
-letter-spacing:.08em;
+display: inline-block;
+background: rgba(126,184,224,.1);
+border: 1px solid rgba(126,184,224,.28);
+border-radius: 20px;
+padding: 4px 14px;
+font-size: 11px;
+color: #7eb8e0;
+letter-spacing: .08em;
 }
 
-.result-block {
-margin:0 20px 14px;
-background:rgba(255,255,255,.03);
-border:1px solid rgba(255,255,255,.07);
-border-radius:16px;
-padding:18px 20px;
-position:relative;
-overflow:hidden;
+.block {
+margin: 0 20px 14px;
+background: rgba(255,255,255,.035);
+border: 1px solid rgba(255,255,255,.08);
+border-radius: 16px;
+padding: 18px 20px;
+position: relative;
+overflow: hidden;
 }
 
-.result-block::before {
-content:’’;
-position:absolute;
-top:0; left:0; right:0;
-height:2px;
+.block::before {
+content: ‘’;
+position: absolute;
+top: 0; left: 0; right: 0;
+height: 2px;
 }
 
-.block-emotion::before { background:linear-gradient(90deg,transparent,var(–blue),transparent); }
-.block-story::before   { background:linear-gradient(90deg,transparent,var(–gold),transparent); }
-.block-card::before    { background:linear-gradient(90deg,transparent,var(–purple),transparent); }
+.block-a::before { background: linear-gradient(90deg, transparent, #7eb8e0, transparent); }
+.block-b::before { background: linear-gradient(90deg, transparent, #c8a85a, transparent); }
+.block-c::before { background: linear-gradient(90deg, transparent, #9878d8, transparent); }
 
 .block-label {
-font-size:10px;
-letter-spacing:.3em;
-margin-bottom:10px;
-text-transform:uppercase;
+font-size: 10px;
+letter-spacing: .3em;
+text-transform: uppercase;
+margin-bottom: 10px;
 }
 
-.block-label.blue   { color:var(–blue); }
-.block-label.gold   { color:var(–gold); }
-.block-label.purple { color:var(–purple); }
+.lbl-blue   { color: #7eb8e0; }
+.lbl-gold   { color: #c8a85a; }
+.lbl-purple { color: #9878d8; }
 
-.block-content {
-font-size:13.5px;
-line-height:1.85;
-color:var(–mist);
-letter-spacing:.03em;
+.block-text {
+font-size: 13.5px;
+color: #a8bfd4;
+line-height: 1.85;
+letter-spacing: .03em;
 }
 
-.card-preview {
-border-radius:12px;
-padding:18px;
-margin-top:12px;
-text-align:center;
-min-height:110px;
-display:flex;
-flex-direction:column;
-justify-content:center;
-gap:8px;
+/* CARD */
+.card-wrap {
+border-radius: 12px;
+padding: 18px;
+margin-top: 12px;
+text-align: center;
+min-height: 110px;
+display: flex;
+flex-direction: column;
+justify-content: center;
+gap: 8px;
 }
 
-.card-preview.dream { background:linear-gradient(135deg,#1a1540,#0d1a35); border:1px solid rgba(126,184,224,.2); }
-.card-preview.dark  { background:linear-gradient(135deg,#0a0a14,#1a0a20); border:1px solid rgba(152,120,216,.2); }
-.card-preview.warm  { background:linear-gradient(135deg,#2a1a08,#1a1008); border:1px solid rgba(200,168,90,.25); }
+.card-dream { background: linear-gradient(135deg,#1a1540,#0d1a35); border: 1px solid rgba(126,184,224,.2); }
+.card-dark  { background: linear-gradient(135deg,#0a0a14,#1a0a20); border: 1px solid rgba(152,120,216,.2); }
+.card-warm  { background: linear-gradient(135deg,#2a1808,#1a1008); border: 1px solid rgba(200,168,90,.25); }
 
-.card-name  { font-size:11px; letter-spacing:.2em; color:var(–text2); }
-.card-quote { font-family:‘Noto Serif TC’,serif; font-size:14px; font-weight:600; color:var(–text); letter-spacing:.06em; line-height:1.5; }
+.card-name  { font-size: 11px; letter-spacing: .2em; color: #9890b8; }
+.card-quote {
+font-family: ‘Noto Serif TC’, serif;
+font-size: 14px;
+font-weight: 600;
+color: #e8e4f4;
+letter-spacing: .06em;
+line-height: 1.5;
+}
 
-.card-style-btns { display:flex; gap:8px; margin-top:10px; }
+.style-row { display: flex; gap: 8px; margin-top: 10px; }
 
 .style-btn {
-flex:1; padding:6px 0;
-border-radius:8px; font-size:11px;
-border:1px solid rgba(255,255,255,.1);
-background:rgba(255,255,255,.04);
-color:var(–text2); cursor:pointer; transition:all .2s;
+flex: 1;
+padding: 7px 0;
+border-radius: 8px;
+font-size: 11px;
+border: 1px solid rgba(255,255,255,.12);
+background: rgba(255,255,255,.04);
+color: #9890b8;
+cursor: pointer;
+transition: all .2s;
+font-family: ‘Noto Sans TC’, sans-serif;
 }
 
-.style-btn.active { border-color:var(–gold); color:var(–gold); background:rgba(200,168,90,.08); }
-
-.community-btn {
-margin:4px 20px 14px;
-width:calc(100% - 40px);
-background:rgba(96,192,144,.06);
-border:1px solid rgba(96,192,144,.2);
-border-radius:12px;
-padding:11px 20px;
-font-size:13px;
-color:var(–green);
-cursor:pointer;
-text-align:center;
-transition:all .2s;
+.style-btn.active {
+border-color: #c8a85a;
+color: #c8a85a;
+background: rgba(200,168,90,.1);
 }
 
-/* ========== CTA ========== */
-.cta-section { margin:0 20px; }
-
-.cta-primary {
-width:100%;
-background:linear-gradient(135deg, var(–gold), var(–gold2));
-border:none;
-border-radius:14px;
-padding:14px 24px;
-font-family:‘Noto Serif TC’, serif;
-font-size:15px;
-font-weight:600;
-color:#0a0808;
-letter-spacing:.08em;
-cursor:pointer;
-margin-bottom:10px;
-display:flex;
-align-items:center;
-justify-content:center;
-gap:8px;
-transition:all .2s;
-box-shadow:0 4px 20px rgba(200,168,90,.2);
-}
-
-.cta-row { display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-bottom:10px; }
-
-.cta-secondary {
-background:rgba(255,255,255,.05);
-border:1px solid rgba(255,255,255,.1);
-border-radius:12px;
-padding:11px 8px;
-font-size:12px;
-color:var(–mist);
-cursor:pointer;
-letter-spacing:.03em;
-transition:all .2s;
-text-align:center;
-line-height:1.45;
-}
-
-.cta-locked { opacity:.45; }
-
-.cta-nuclear {
-width:100%;
-background:rgba(152,120,216,.08);
-border:1px solid rgba(152,120,216,.3);
-border-radius:12px;
-padding:13px 20px;
-font-size:13.5px;
-color:var(–purple);
-cursor:pointer;
-letter-spacing:.04em;
-margin-bottom:10px;
-transition:all .2s;
-text-align:center;
-}
-
-/* ========== RETENTION ========== */
-.retention-section {
-margin:16px 20px 0;
-background:rgba(126,184,224,.05);
-border:1px solid rgba(126,184,224,.15);
-border-radius:16px;
-padding:16px 18px;
-}
-
-.ret-header {
-display:flex;
-justify-content:space-between;
-align-items:center;
-margin-bottom:8px;
-}
-
-.ret-left { font-size:13px; color:var(–text); letter-spacing:.04em; }
-.ret-right { font-size:11px; color:var(–blue); }
-
-.progress-bar {
-background:rgba(255,255,255,.08);
-border-radius:99px;
-height:5px;
-overflow:hidden;
-margin-bottom:10px;
-}
-
-.progress-fill {
-height:100%;
-width:33.3%;
-background:linear-gradient(90deg, var(–blue), var(–purple));
-border-radius:99px;
-}
-
-.ret-stats {
-font-size:12.5px;
-color:var(–mist);
-letter-spacing:.03em;
-margin-bottom:8px;
-}
-
-.ret-stats strong { color:var(–gold2); }
-
-.streak-line {
-display:flex;
-align-items:center;
-gap:6px;
-font-size:12.5px;
-color:var(–mist);
-margin-bottom:10px;
-}
-
-.streak-line strong { color:var(–gold2); }
-
-.ret-cta {
-text-align:center;
-font-size:12px;
-color:var(–text2);
-border-top:1px solid rgba(255,255,255,.06);
-padding-top:10px;
-line-height:1.6;
-}
-
-.ret-proof {
-text-align:center;
-font-size:11px;
-color:var(–green);
-margin-top:6px;
-opacity:.8;
-}
-
-/* ========== TRIAL EXPIRED ========== */
-#expired {
-justify-content:center;
-align-items:center;
-padding:50px 28px;
-text-align:center;
-gap:0;
-}
-
-.expired-icon { font-size:56px; margin-bottom:24px; }
-
-.expired-title {
-font-family:‘Noto Serif TC’, serif;
-font-size:22px;
-color:var(–gold2);
-margin-bottom:10px;
-letter-spacing:.06em;
-}
-
-.expired-sub {
-font-size:13.5px;
-color:var(–mist);
-line-height:1.75;
-letter-spacing:.04em;
-margin-bottom:28px;
-}
-
-.expired-sub strong { color:var(–gold2); }
-
-/* Payment box */
-.payment-box {
-background:rgba(200,168,90,.06);
-border:1px solid rgba(200,168,90,.25);
-border-radius:16px;
-padding:22px 20px;
-margin-bottom:20px;
-width:100%;
-text-align:left;
-}
-
-.payment-title {
-font-family:‘Noto Serif TC’, serif;
-font-size:15px;
-color:var(–gold2);
-margin-bottom:14px;
-text-align:center;
-letter-spacing:.06em;
-}
-
-.payment-plan {
-display:flex;
-justify-content:space-between;
-align-items:center;
-background:rgba(255,255,255,.04);
-border:1px solid rgba(200,168,90,.2);
-border-radius:10px;
-padding:12px 16px;
-margin-bottom:10px;
-}
-
-.plan-info { font-size:13px; color:var(–text); letter-spacing:.03em; }
-.plan-info small { display:block; font-size:11px; color:var(–text2); margin-top:2px; }
-.plan-price { font-family:‘Noto Serif TC’,serif; font-size:16px; color:var(–gold2); font-weight:600; }
-
-.payment-steps {
-font-size:12.5px;
-color:var(–mist);
-line-height:2;
-letter-spacing:.03em;
-margin-bottom:16px;
-padding:0 4px;
-}
-
-.payment-steps span { color:var(–gold); }
-
-.pay-btn {
-width:100%;
-background:linear-gradient(135deg, var(–gold), var(–gold2));
-border:none;
-border-radius:12px;
-padding:14px;
-font-family:‘Noto Serif TC’, serif;
-font-size:15px;
-font-weight:600;
-color:#0a0808;
-letter-spacing:.08em;
-cursor:pointer;
-margin-bottom:10px;
-}
-
-.work-hours {
-text-align:center;
-font-size:11.5px;
-color:var(–text2);
-letter-spacing:.04em;
-line-height:1.6;
-}
-
-/* Unlock code section */
-.unlock-section {
-width:100%;
-background:rgba(152,120,216,.06);
-border:1px solid rgba(152,120,216,.2);
-border-radius:16px;
-padding:20px;
-}
-
-.unlock-title {
-font-size:13px;
-color:var(–purple);
-letter-spacing:.06em;
-margin-bottom:14px;
-text-align:center;
-}
-
-.unlock-input {
-width:100%;
-background:rgba(255,255,255,.05);
-border:1px solid rgba(152,120,216,.25);
-border-radius:10px;
-padding:12px 16px;
-font-family:‘Noto Sans TC’, sans-serif;
-font-size:15px;
-color:var(–text);
-outline:none;
-text-align:center;
-letter-spacing:.2em;
-font-weight:500;
-margin-bottom:10px;
-text-transform:uppercase;
-}
-
-.unlock-input::placeholder { letter-spacing:.08em; font-size:13px; color:var(–text2); opacity:.5; font-weight:400; }
-.unlock-input:focus { border-color:var(–purple); }
-
-.unlock-btn {
-width:100%;
-background:rgba(152,120,216,.15);
-border:1px solid rgba(152,120,216,.4);
-border-radius:10px;
-padding:12px;
-font-size:14px;
-color:var(–purple);
-cursor:pointer;
-letter-spacing:.06em;
-transition:all .2s;
-}
-
-.unlock-btn:hover { background:rgba(152,120,216,.25); }
-
-.unlock-error {
-font-size:12px;
-color:var(–red);
-text-align:center;
-margin-top:8px;
-display:none;
-}
-
-/* ========== FUTURE ========== */
-#future {
-justify-content:center;
-align-items:center;
-padding:60px 28px;
-text-align:center;
-gap:20px;
-}
-
-.future-icon { font-size:52px; filter:drop-shadow(0 0 20px rgba(152,120,216,.5)); }
-
-.future-title {
-font-family:‘Noto Serif TC’, serif;
-font-size:20px;
-color:var(–purple);
-letter-spacing:.08em;
-}
-
-.future-content {
-background:rgba(152,120,216,.06);
-border:1px solid rgba(152,120,216,.2);
-border-radius:16px;
-padding:20px 22px;
-font-size:14px;
-color:var(–mist);
-line-height:1.85;
-letter-spacing:.03em;
-width:100%;
-text-align:left;
-}
-
-.future-content .hl { color:var(–gold2); font-family:‘Noto Serif TC’,serif; font-weight:600; display:block; margin-bottom:10px; font-size:15px; }
-
-.back-btn {
-background:transparent;
-border:1px solid rgba(255,255,255,.15);
-border-radius:12px;
-padding:11px 28px;
-font-size:13px;
-color:var(–text2);
-cursor:pointer;
-letter-spacing:.06em;
+.community-row {
+margin: 4px 20px 14px;
+background: rgba(96,192,144,.06);
+border: 1px solid rgba(96,192,144,.22);
+border-radius: 12px;
+padding: 12px 20px;
+font-size: 13px;
+color: #60c090;
+text-align: center;
+cursor: pointer;
+transition: all .2s;
+font-family: ‘Noto Sans TC’, sans-serif;
+width: calc(100% - 40px);
 }
 
 .divider {
-height:1px;
-background:linear-gradient(90deg,transparent,rgba(255,255,255,.07),transparent);
-margin:0 20px 14px;
+height: 1px;
+background: linear-gradient(90deg, transparent, rgba(255,255,255,.08), transparent);
+margin: 0 20px 14px;
+}
+
+/* CTA */
+.cta-wrap { margin: 0 20px; }
+
+.cta-main {
+width: 100%;
+background: linear-gradient(135deg, #c8a85a, #e8ca80);
+border: none;
+border-radius: 14px;
+padding: 15px;
+font-family: ‘Noto Serif TC’, serif;
+font-size: 15px;
+font-weight: 600;
+color: #0a0808;
+letter-spacing: .08em;
+cursor: pointer;
+margin-bottom: 10px;
+box-shadow: 0 4px 20px rgba(200,168,90,.25);
+transition: all .2s;
+}
+
+.cta-main:active { transform: scale(.98); }
+
+.cta-grid {
+display: grid;
+grid-template-columns: 1fr 1fr;
+gap: 8px;
+margin-bottom: 10px;
+}
+
+.cta-sec {
+background: rgba(255,255,255,.05);
+border: 1px solid rgba(255,255,255,.1);
+border-radius: 12px;
+padding: 12px 8px;
+font-size: 12px;
+color: #a8bfd4;
+cursor: pointer;
+text-align: center;
+line-height: 1.5;
+transition: all .2s;
+font-family: ‘Noto Sans TC’, sans-serif;
+}
+
+.cta-sec:active { background: rgba(255,255,255,.1); }
+.cta-locked { opacity: .45; }
+
+.cta-nuclear {
+width: 100%;
+background: rgba(152,120,216,.08);
+border: 1px solid rgba(152,120,216,.32);
+border-radius: 12px;
+padding: 14px 20px;
+font-size: 14px;
+color: #9878d8;
+cursor: pointer;
+text-align: center;
+margin-bottom: 10px;
+transition: all .2s;
+font-family: ‘Noto Sans TC’, sans-serif;
+}
+
+.cta-nuclear:active { background: rgba(152,120,216,.16); }
+
+/* RETENTION */
+.retention {
+margin: 14px 20px 0;
+background: rgba(126,184,224,.05);
+border: 1px solid rgba(126,184,224,.16);
+border-radius: 16px;
+padding: 16px 18px;
+}
+
+.ret-top {
+display: flex;
+justify-content: space-between;
+align-items: center;
+margin-bottom: 8px;
+font-size: 13px;
+color: #e8e4f4;
+}
+
+.ret-right { font-size: 11px; color: #7eb8e0; }
+
+.prog-bar {
+background: rgba(255,255,255,.08);
+border-radius: 99px;
+height: 5px;
+overflow: hidden;
+margin-bottom: 10px;
+}
+
+.prog-fill {
+height: 100%;
+width: 33%;
+background: linear-gradient(90deg, #7eb8e0, #9878d8);
+border-radius: 99px;
+}
+
+.ret-stats {
+font-size: 12.5px;
+color: #a8bfd4;
+margin-bottom: 8px;
+letter-spacing: .03em;
+}
+
+.ret-stats strong { color: #e8ca80; }
+
+.ret-streak {
+font-size: 12.5px;
+color: #a8bfd4;
+margin-bottom: 10px;
+}
+
+.ret-streak strong { color: #e8ca80; }
+
+.ret-cta {
+text-align: center;
+font-size: 12px;
+color: #9890b8;
+border-top: 1px solid rgba(255,255,255,.06);
+padding-top: 10px;
+line-height: 1.65;
+}
+
+.ret-proof {
+text-align: center;
+font-size: 11px;
+color: #60c090;
+margin-top: 6px;
+}
+
+/* EXPIRED */
+#expired {
+justify-content: flex-start;
+align-items: center;
+padding: 50px 24px 40px;
+text-align: center;
+background-color: #07060f;
+}
+
+.exp-icon { font-size: 54px; margin-bottom: 20px; }
+
+.exp-title {
+font-family: ‘Noto Serif TC’, serif;
+font-size: 22px;
+color: #e8ca80;
+margin-bottom: 10px;
+letter-spacing: .06em;
+}
+
+.exp-sub {
+font-size: 13.5px;
+color: #a8bfd4;
+line-height: 1.75;
+margin-bottom: 24px;
+}
+
+.exp-sub strong { color: #e8ca80; }
+
+.pay-box {
+background: rgba(200,168,90,.07);
+border: 1px solid rgba(200,168,90,.28);
+border-radius: 16px;
+padding: 22px 20px;
+margin-bottom: 16px;
+width: 100%;
+text-align: left;
+}
+
+.pay-title {
+font-family: ‘Noto Serif TC’, serif;
+font-size: 15px;
+color: #e8ca80;
+text-align: center;
+margin-bottom: 16px;
+letter-spacing: .06em;
+}
+
+.plan {
+display: flex;
+justify-content: space-between;
+align-items: center;
+background: rgba(255,255,255,.04);
+border: 1px solid rgba(200,168,90,.2);
+border-radius: 10px;
+padding: 12px 16px;
+margin-bottom: 10px;
+}
+
+.plan.featured { border-color: rgba(200,168,90,.45); background: rgba(200,168,90,.07); }
+
+.plan-info { font-size: 13px; color: #e8e4f4; }
+.plan-info small { display: block; font-size: 11px; color: #9890b8; margin-top: 2px; }
+.plan-price { font-family: ‘Noto Serif TC’, serif; font-size: 16px; color: #e8ca80; font-weight: 600; }
+.plan-price small { font-size: 11px; color: #9890b8; }
+
+.pay-steps {
+font-size: 12.5px;
+color: #a8bfd4;
+line-height: 2;
+margin: 14px 0;
+}
+
+.pay-steps span { color: #c8a85a; }
+
+.pay-btn {
+width: 100%;
+background: linear-gradient(135deg, #c8a85a, #e8ca80);
+border: none;
+border-radius: 12px;
+padding: 14px;
+font-family: ‘Noto Serif TC’, serif;
+font-size: 15px;
+font-weight: 600;
+color: #0a0808;
+letter-spacing: .08em;
+cursor: pointer;
+margin-bottom: 10px;
+}
+
+.work-info {
+text-align: center;
+font-size: 11.5px;
+color: #9890b8;
+line-height: 1.65;
+}
+
+.unlock-box {
+background: rgba(152,120,216,.07);
+border: 1px solid rgba(152,120,216,.22);
+border-radius: 16px;
+padding: 20px;
+width: 100%;
+}
+
+.unlock-label {
+font-size: 13px;
+color: #9878d8;
+text-align: center;
+margin-bottom: 14px;
+letter-spacing: .05em;
+}
+
+.unlock-input {
+width: 100%;
+background: rgba(255,255,255,.05);
+border: 1px solid rgba(152,120,216,.28);
+border-radius: 10px;
+padding: 12px 16px;
+font-size: 16px;
+color: #e8e4f4;
+outline: none;
+text-align: center;
+letter-spacing: .2em;
+font-weight: 500;
+text-transform: uppercase;
+margin-bottom: 10px;
+font-family: ‘Noto Sans TC’, sans-serif;
+}
+
+.unlock-input::placeholder {
+letter-spacing: .06em;
+font-size: 13px;
+color: #9890b8;
+font-weight: 400;
+}
+
+.unlock-input:focus { border-color: #9878d8; }
+
+.unlock-btn {
+width: 100%;
+background: rgba(152,120,216,.16);
+border: 1px solid rgba(152,120,216,.4);
+border-radius: 10px;
+padding: 12px;
+font-size: 14px;
+color: #9878d8;
+cursor: pointer;
+letter-spacing: .05em;
+font-family: ‘Noto Sans TC’, sans-serif;
+}
+
+.unlock-err {
+font-size: 12px;
+color: #e06060;
+text-align: center;
+margin-top: 8px;
+display: none;
+}
+
+/* FUTURE */
+#future {
+justify-content: center;
+align-items: center;
+padding: 60px 28px;
+text-align: center;
+gap: 20px;
+background-color: #07060f;
+}
+
+.future-icon {
+font-size: 56px;
+filter: drop-shadow(0 0 24px rgba(152,120,216,.6));
+}
+
+.future-title {
+font-family: ‘Noto Serif TC’, serif;
+font-size: 21px;
+color: #9878d8;
+letter-spacing: .08em;
+}
+
+.future-card {
+background: rgba(152,120,216,.07);
+border: 1px solid rgba(152,120,216,.22);
+border-radius: 16px;
+padding: 22px;
+font-size: 14px;
+color: #a8bfd4;
+line-height: 1.85;
+letter-spacing: .03em;
+text-align: left;
+width: 100%;
+}
+
+.future-card .hl {
+display: block;
+font-family: ‘Noto Serif TC’, serif;
+font-size: 15px;
+font-weight: 600;
+color: #e8ca80;
+margin-bottom: 12px;
+}
+
+.back-btn {
+background: transparent;
+border: 1px solid rgba(255,255,255,.16);
+border-radius: 12px;
+padding: 11px 28px;
+font-size: 13px;
+color: #9890b8;
+cursor: pointer;
+font-family: ‘Noto Sans TC’, sans-serif;
+}
+
+/* TOAST */
+#toast {
+position: fixed;
+bottom: 36px;
+left: 50%;
+transform: translateX(-50%);
+background: rgba(18,15,35,.97);
+border: 1px solid rgba(200,168,90,.35);
+border-radius: 12px;
+padding: 11px 22px;
+font-size: 13px;
+color: #e8ca80;
+letter-spacing: .04em;
+z-index: 9999;
+white-space: nowrap;
+box-shadow: 0 4px 20px rgba(0,0,0,.6);
+pointer-events: none;
+opacity: 0;
+transition: opacity .3s;
 }
 </style>
 
 </head>
 <body>
+
+<div class="stars"></div>
+
 <div class="app">
 
-<!-- ========== HOME ========== -->
+<!-- ===== HOME ===== -->
 
 <div class="screen active" id="home">
-
   <div class="status-bar">
     <div class="trial-badge" id="trialBadge">⏳ 試用第 1 天</div>
-    <div class="daily-count">今日剩餘 <span id="remainCount">2</span> 次</div>
+    <div class="daily-info">今日剩餘 <span id="remainCount">2</span> 次</div>
   </div>
 
   <div class="home-hero">
-    <span class="moon-icon">🌙</span>
-    <div class="home-hook">你昨晚的夢，其實在告訴你一件事...</div>
-    <h1 class="home-title">很多人不知道<br>他們的夢<span class="accent">正在影響人生</span></h1>
-    <div class="social-proof">
+    <span class="moon">🌙</span>
+    <div class="hook-text">你昨晚的夢，其實在告訴你一件事...</div>
+    <h1 class="main-title">很多人不知道<br>他們的夢<span class="gold">正在影響人生</span></h1>
+    <div class="proof">
       <div class="proof-dot"></div>
       已有 12,438 人解析過夢境
     </div>
   </div>
 
-  <div class="emotion-section">
-    <div class="emotion-label">你昨晚的情緒是？</div>
-    <div class="emotion-pills">
-      <span class="pill" onclick="togglePill(this)">😰 焦慮</span>
-      <span class="pill" onclick="togglePill(this)">😌 平靜</span>
-      <span class="pill" onclick="togglePill(this)">😨 恐懼</span>
-      <span class="pill" onclick="togglePill(this)">😊 喜悅</span>
-      <span class="pill" onclick="togglePill(this)">😶‍🌫️ 迷茫</span>
-      <span class="pill" onclick="togglePill(this)">😢 悲傷</span>
+  <div class="section">
+    <div class="section-label">你昨晚的情緒是？</div>
+    <div class="pills">
+      <button class="pill" onclick="pickPill(this)">😰 焦慮</button>
+      <button class="pill" onclick="pickPill(this)">😌 平靜</button>
+      <button class="pill" onclick="pickPill(this)">😨 恐懼</button>
+      <button class="pill" onclick="pickPill(this)">😊 喜悅</button>
+      <button class="pill" onclick="pickPill(this)">😶‍🌫️ 迷茫</button>
+      <button class="pill" onclick="pickPill(this)">😢 悲傷</button>
     </div>
   </div>
 
-  <div class="input-section">
-    <textarea class="dream-textarea" id="dreamInput"
+  <div class="section">
+    <textarea class="dream-box" id="dreamInput"
       placeholder="昨晚夢到了什麼？幾個字也沒關係...&#10;&#10;例如：我夢到自己在追一列離站的火車"
-      oninput="updateChar(this)"></textarea>
+      oninput="document.getElementById('charCount').textContent=this.value.length"></textarea>
     <div class="char-hint"><span id="charCount">0</span> / 200 字</div>
   </div>
 
-  <button class="cta-btn-main" onclick="startProcessing()">
-    👉 立即解析（免費）
-  </button>
+<button class="main-cta" onclick="goProcess()">👉 立即解析（免費）</button>
 
-  <div class="home-links">
-    <span class="home-link">查看昨日夢境</span>
-    <span class="home-link">🏆 夢境排行榜</span>
+  <div class="bottom-links">
+    <button class="link-btn">查看昨日夢境</button>
+    <button class="link-btn">🏆 夢境排行榜</button>
   </div>
-
 </div>
 
-<!-- ========== PROCESSING ========== -->
+<!-- ===== PROCESSING ===== -->
 
 <div class="screen" id="processing">
-  <span class="proc-moon">✨</span>
+  <span class="proc-icon">✨</span>
   <div class="proc-title">正在解析你的夢境...</div>
 
-  <div class="proc-checklist">
-    <div class="check-item">
+  <div class="checklist">
+    <div class="check-row">
       <div class="check-icon" id="c1">○</div>
       <span>分析你的情緒</span>
     </div>
-    <div class="check-item">
+    <div class="check-row">
       <div class="check-icon" id="c2">○</div>
       <span>找出潛意識訊號</span>
     </div>
-    <div class="check-item">
+    <div class="check-row">
       <div class="check-icon" id="c3">○</div>
       <span>幫你寫成故事</span>
     </div>
   </div>
 
-  <div class="dots-loader">
+  <div class="dots">
     <div class="dot"></div>
     <div class="dot"></div>
     <div class="dot"></div>
@@ -898,69 +958,65 @@ margin:0 20px 14px;
   <div class="proc-proof">🌙 已有 12,438 人解析過夢境</div>
 </div>
 
-<!-- ========== RESULT ========== -->
+<!-- ===== RESULT ===== -->
 
 <div class="screen" id="result">
 
-  <div class="resonance-hook">
+  <div class="resonance">
     ⚠️ 這個夢，很多人都有
     <small>這種夢通常出現在「壓力大的時候」</small>
   </div>
 
-  <div class="result-header">
-    <div class="result-title">火車追不上的人</div>
+  <div class="result-head">
+    <div class="result-name">火車追不上的人</div>
     <span class="result-tag">焦慮型夢境</span>
   </div>
 
-  <div class="result-block block-emotion">
-    <div class="block-label blue">A · 情緒解析</div>
-    <div class="block-content">
-      你內心可能有某件事還沒準備好，卻感覺時間一直在跑。這個夢在提醒你——也許是時候停下來喘一口氣了。
-    </div>
+  <div class="block block-a">
+    <div class="block-label lbl-blue">A · 情緒解析</div>
+    <div class="block-text">你內心可能有某件事還沒準備好，卻感覺時間一直在跑。這個夢在提醒你——也許是時候停下來喘一口氣了。</div>
   </div>
 
-  <div class="result-block block-story">
-    <div class="block-label gold">B · 電影感故事</div>
-    <div class="block-content">
-      月台的燈光在雨中模糊。他跑，鞋底打在積水上，背包不停撞著腰。火車門緩緩合上，他看見自己的倒影停在玻璃裡——就這樣。<br><br>不是所有的錯過，都代表失去。有時候，留在月台上，才是下一段旅程的開始。
-    </div>
+  <div class="block block-b">
+    <div class="block-label lbl-gold">B · 電影感故事</div>
+    <div class="block-text">月台的燈光在雨中模糊。他跑，鞋底打在積水上，背包不停撞著腰。火車門緩緩合上，他看見自己的倒影停在玻璃裡——就這樣。<br><br>不是所有的錯過，都代表失去。有時候，留在月台上，才是下一段旅程的開始。</div>
   </div>
 
-  <div class="result-block block-card">
-    <div class="block-label purple">C · 分享卡片</div>
-    <div class="card-preview dream" id="cardPreview">
+  <div class="block block-c">
+    <div class="block-label lbl-purple">C · 分享卡片</div>
+    <div class="card-wrap card-dream" id="cardWrap">
       <div class="card-name">夢境圖書館 · 火車追不上的人</div>
       <div class="card-quote">「留在月台上，才是下一段旅程的開始」</div>
     </div>
-    <div class="card-style-btns">
-      <button class="style-btn active" onclick="switchCard(this,'dream')">夢幻</button>
-      <button class="style-btn" onclick="switchCard(this,'dark')">暗黑</button>
-      <button class="style-btn" onclick="switchCard(this,'warm')">溫暖</button>
+    <div class="style-row">
+      <button class="style-btn active" onclick="switchStyle(this,'card-dream')">夢幻</button>
+      <button class="style-btn" onclick="switchStyle(this,'card-dark')">暗黑</button>
+      <button class="style-btn" onclick="switchStyle(this,'card-warm')">溫暖</button>
     </div>
   </div>
 
-  <div class="community-btn" onclick="showToast('🌙 共有 3,847 人夢過類似的夢！')">
+  <button class="community-row" onclick="toast('🌙 共有 3,847 人夢過類似的夢！')">
     👁 看有多少人夢過這個
-  </div>
+  </button>
 
   <div class="divider"></div>
 
-  <div class="cta-section">
-    <button class="cta-primary">📤 分享卡片</button>
+  <div class="cta-wrap">
+    <button class="cta-main">📤 分享卡片</button>
 
 ```
-<div class="cta-row">
-  <button class="cta-secondary" onclick="copyPost()">📋 一鍵複製<br>FB貼文</button>
-  <button class="cta-secondary">🎬 生成短影片<br>腳本</button>
+<div class="cta-grid">
+  <button class="cta-sec" onclick="copyPost()">📋 一鍵複製<br>FB貼文</button>
+  <button class="cta-sec">🎬 生成短影片<br>腳本</button>
 </div>
 
-<button class="cta-nuclear" onclick="showScreen('future')">
+<button class="cta-nuclear" onclick="goScreen('future')">
   🔮 看看這個夢代表你未來會發生什麼
 </button>
 
-<div class="cta-row">
-  <button class="cta-secondary cta-locked">🧬 查看夢境人格 🔒</button>
-  <button class="cta-secondary">🏆 加入排行榜</button>
+<div class="cta-grid">
+  <button class="cta-sec cta-locked">🧬 查看夢境人格 🔒</button>
+  <button class="cta-sec">🏆 加入排行榜</button>
 </div>
 ```
 
@@ -968,301 +1024,212 @@ margin:0 20px 14px;
 
   <div class="divider" style="margin-top:16px"></div>
 
-  <div class="retention-section">
-    <div class="ret-header">
-      <span class="ret-left">🔒 解鎖完整人格分析</span>
+  <div class="retention">
+    <div class="ret-top">
+      <span>🔒 解鎖完整人格分析</span>
       <span class="ret-right">還差 2 個夢</span>
     </div>
-    <div class="progress-bar">
-      <div class="progress-fill"></div>
-    </div>
-    <div class="ret-stats">
-      你已記錄 <strong>1 / 3</strong> 個夢，再記錄 <strong>2 個</strong> → 解鎖完整人格
-    </div>
-    <div class="streak-line">
-      🔥 你已連續記錄 <strong>2 天</strong>　中斷會重置
-    </div>
-    <div class="ret-cta">
-      明天再來記錄你的夢，解鎖<strong style="color:var(--gold2)">完整人格分析</strong>
-    </div>
+    <div class="prog-bar"><div class="prog-fill"></div></div>
+    <div class="ret-stats">你已記錄 <strong>1 / 3</strong> 個夢，再記錄 <strong>2 個</strong> → 解鎖完整人格</div>
+    <div class="ret-streak">🔥 你已連續記錄 <strong>2 天</strong>　中斷會重置</div>
+    <div class="ret-cta">明天再來記錄你的夢，解鎖<strong style="color:#e8ca80">完整人格分析</strong></div>
     <div class="ret-proof">🔥 已有 2,134 人解鎖人格</div>
   </div>
 
 </div>
 
-<!-- ========== TRIAL EXPIRED ========== -->
+<!-- ===== EXPIRED ===== -->
 
 <div class="screen" id="expired">
+  <div class="exp-icon">🌙</div>
+  <div class="exp-title">3 天試用已結束</div>
+  <div class="exp-sub">謝謝你這 3 天的使用！<br>你已解析了 <strong>6 個夢境</strong>，<br>繼續使用需要升級方案。</div>
 
-<span class="expired-icon">🌙</span>
-
-  <div class="expired-title">3 天試用已結束</div>
-  <div class="expired-sub">
-    謝謝你這 3 天的使用！<br>
-    你已經解析了 <strong>6 個夢境</strong>，<br>
-    繼續使用需要升級方案。
+  <div class="pay-box">
+    <div class="pay-title">選擇方案</div>
+    <div class="plan">
+      <div class="plan-info">基本版<small>每天 2 次 · 每月 60 次</small></div>
+      <div class="plan-price">NT$99<small>/月</small></div>
+    </div>
+    <div class="plan featured">
+      <div class="plan-info">進階版 ⭐<small>每天 5 次 · 每月 150 次</small></div>
+      <div class="plan-price">NT$199<small>/月</small></div>
+    </div>
+    <div class="pay-steps">
+      1️⃣ 點下方按鈕，用街口支付<br>
+      2️⃣ 截圖付款成功畫面<br>
+      3️⃣ <span>私訊我們</span>，傳送截圖<br>
+      4️⃣ 收到解鎖碼後輸入下方
+    </div>
+    <button class="pay-btn" onclick="toast('正在開啟街口支付...')">💰 街口支付升級</button>
+    <div class="work-info">工作時間 09:00～21:00<br>付款後 2 小時內提供解鎖碼</div>
   </div>
 
-  <div class="payment-box">
-    <div class="payment-title">選擇方案</div>
-
-```
-<div class="payment-plan">
-  <div class="plan-info">
-    基本版
-    <small>每天 2 次 · 每月 60 次</small>
-  </div>
-  <div class="plan-price">NT$99<small style="font-size:11px;color:var(--text2)">/月</small></div>
-</div>
-
-<div class="payment-plan" style="border-color:rgba(200,168,90,.4); background:rgba(200,168,90,.06);">
-  <div class="plan-info">
-    進階版 ⭐
-    <small>每天 5 次 · 每月 150 次</small>
-  </div>
-  <div class="plan-price">NT$199<small style="font-size:11px;color:var(--text2)">/月</small></div>
-</div>
-
-<div class="payment-steps">
-  1️⃣ 點下方按鈕，用街口支付<br>
-  2️⃣ 截圖付款成功畫面<br>
-  3️⃣ <span>私訊我們</span>，傳送截圖<br>
-  4️⃣ 收到解鎖碼後輸入下方
-</div>
-
-<button class="pay-btn" onclick="showToast('正在開啟街口支付...')">
-  💰 街口支付升級
-</button>
-
-<div class="work-hours">
-  工作時間 09:00～21:00<br>
-  付款後 2 小時內提供解鎖碼
-</div>
-```
-
-  </div>
-
-  <div class="unlock-section">
-    <div class="unlock-title">🔑 已有解鎖碼？輸入這裡</div>
+  <div class="unlock-box">
+    <div class="unlock-label">🔑 已有解鎖碼？輸入這裡</div>
     <input class="unlock-input" id="unlockInput" type="text" placeholder="輸入解鎖碼" maxlength="10">
-    <button class="unlock-btn" onclick="checkUnlock()">確認解鎖</button>
-    <div class="unlock-error" id="unlockError">❌ 解鎖碼錯誤，請重新輸入</div>
+    <button class="unlock-btn" onclick="checkCode()">確認解鎖</button>
+    <div class="unlock-err" id="unlockErr">❌ 解鎖碼錯誤，請重新輸入</div>
   </div>
-
 </div>
 
-<!-- ========== FUTURE ========== -->
+<!-- ===== FUTURE ===== -->
 
 <div class="screen" id="future">
-  <span class="future-icon">🔮</span>
+  <div class="future-icon">🔮</div>
   <div class="future-title">夢境預言解析</div>
-
-  <div class="future-content">
+  <div class="future-card">
     <span class="hl">「這種夢，通常出現在人生即將轉變前」</span>
     你追趕卻抓不住的感覺，往往不是真的在逃避——而是你的潛意識正在為你篩選，哪些事值得全力奔赴，哪些可以放手。<br><br>
     歷史上許多創業者、藝術家，都在人生轉折前夕夢到類似的場景。<br><br>
-    <strong style="color:var(--gold2)">這個夢出現的人，通常在 3 個月內都經歷了重要決定。</strong>
+    <strong style="color:#e8ca80">這個夢出現的人，通常在 3 個月內都經歷了重要決定。</strong>
   </div>
-
-<button class="back-btn" onclick="showScreen('result')">← 回到解析結果</button>
-
+  <button class="back-btn" onclick="goScreen('result')">← 回到解析結果</button>
 </div>
 
-</div>
+</div><!-- /app -->
+
+<div id="toast"></div>
 
 <script>
-// ===== STATE =====
-const UNLOCK_CODE = 'MING872';
-const TRIAL_DAYS = 3;
-const DAILY_LIMIT = 2;
+var UNLOCK_CODE = 'MING872';
+var TRIAL_DAYS = 3;
+var DAILY_LIMIT = 2;
 
 function getState() {
-  const def = {
-    startDate: Date.now(),
-    usedToday: 0,
-    lastDate: new Date().toDateString(),
-    unlocked: false,
-    streak: 1,
-    dreamCount: 1
-  };
-  try {
-    const s = localStorage.getItem('dlState');
-    return s ? {...def, ...JSON.parse(s)} : def;
-  } catch(e) { return def; }
+  var def = { startDate: Date.now(), usedToday: 0, lastDate: new Date().toDateString(), unlocked: false, streak: 1 };
+  try { var s = localStorage.getItem('dl4'); return s ? Object.assign(def, JSON.parse(s)) : def; } catch(e) { return def; }
 }
 
-function saveState(s) {
-  try { localStorage.setItem('dlState', JSON.stringify(s)); } catch(e) {}
-}
+function saveState(s) { try { localStorage.setItem('dl4', JSON.stringify(s)); } catch(e) {} }
 
-let state = getState();
+var state = getState();
 
-// Reset daily count if new day
-function refreshDaily() {
-  const today = new Date().toDateString();
+function refreshDay() {
+  var today = new Date().toDateString();
   if (state.lastDate !== today) {
     state.usedToday = 0;
     state.lastDate = today;
-    const daysDiff = Math.floor((Date.now() - state.startDate) / 86400000);
-    // Check streak continuity (simplified)
     state.streak = (state.streak || 1) + 1;
     saveState(state);
   }
 }
 
-function getTrialDaysLeft() {
-  const daysPassed = Math.floor((Date.now() - state.startDate) / 86400000);
-  return Math.max(0, TRIAL_DAYS - daysPassed);
+function daysLeft() {
+  return Math.max(0, TRIAL_DAYS - Math.floor((Date.now() - state.startDate) / 86400000));
 }
 
-function updateStatusBar() {
-  refreshDaily();
-  const daysLeft = getTrialDaysLeft();
-  const badge = document.getElementById('trialBadge');
-  const remain = document.getElementById('remainCount');
-
+function updateBar() {
+  refreshDay();
+  var dl = daysLeft();
+  var badge = document.getElementById('trialBadge');
+  var rem = document.getElementById('remainCount');
   if (state.unlocked) {
     badge.textContent = '✅ 已解鎖';
     badge.className = 'trial-badge';
-  } else if (daysLeft <= 1) {
-    badge.textContent = daysLeft === 0 ? '❌ 試用已結束' : `⚠️ 試用最後 1 天`;
-    badge.className = 'trial-badge warning';
+    rem.textContent = '∞';
+  } else if (dl === 0) {
+    badge.textContent = '❌ 試用已結束';
+    badge.className = 'trial-badge warn';
+    rem.textContent = '0';
+  } else if (dl === 1) {
+    badge.textContent = '⚠️ 試用最後 1 天';
+    badge.className = 'trial-badge warn';
+    rem.textContent = Math.max(0, DAILY_LIMIT - state.usedToday);
   } else {
-    badge.textContent = `⏳ 試用第 ${TRIAL_DAYS - daysLeft + 1} 天`;
+    badge.textContent = '⏳ 試用第 ' + (TRIAL_DAYS - dl + 1) + ' 天';
     badge.className = 'trial-badge';
+    rem.textContent = Math.max(0, DAILY_LIMIT - state.usedToday);
   }
-
-  const left = Math.max(0, DAILY_LIMIT - state.usedToday);
-  remain.textContent = state.unlocked ? '∞' : left;
 }
 
-// ===== INTERACTIONS =====
-function togglePill(el) {
-  document.querySelectorAll('.pill').forEach(p => p.classList.remove('active'));
-  el.classList.add('active');
-}
-
-function updateChar(el) {
-  document.getElementById('charCount').textContent = el.value.length;
-}
-
-function showScreen(id) {
-  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+function goScreen(id) {
+  var screens = document.querySelectorAll('.screen');
+  for (var i = 0; i < screens.length; i++) screens[i].classList.remove('active');
   document.getElementById(id).classList.add('active');
   window.scrollTo(0, 0);
 }
 
-function startProcessing() {
-  const input = document.getElementById('dreamInput').value.trim();
-
-  if (!input) {
-    const ta = document.getElementById('dreamInput');
-    ta.style.borderColor = 'rgba(224,96,96,.5)';
-    setTimeout(() => ta.style.borderColor = '', 1500);
-    return;
-  }
-
-  // Check trial expired
-  if (!state.unlocked && getTrialDaysLeft() === 0) {
-    showScreen('expired');
-    return;
-  }
-
-  // Check daily limit
-  if (!state.unlocked && state.usedToday >= DAILY_LIMIT) {
-    showToast('⏳ 今日次數已用完，明天再來！');
-    return;
-  }
-
-  showScreen('processing');
-
-  // Animate checklist
-  const checks = ['c1','c2','c3'];
-  checks.forEach((id, i) => {
-    setTimeout(() => {
-      const el = document.getElementById(id);
-      el.classList.add('active');
-      el.textContent = '◌';
-    }, i * 1100);
-    setTimeout(() => {
-      const el = document.getElementById(id);
-      el.classList.remove('active');
-      el.classList.add('done');
-      el.textContent = '✓';
-    }, i * 1100 + 850);
-  });
-
-  setTimeout(() => {
-    // Update usage
-    state.usedToday++;
-    state.dreamCount = (state.dreamCount || 0) + 1;
-    saveState(state);
-    updateStatusBar();
-    showScreen('result');
-  }, 4000);
+function pickPill(el) {
+  var pills = document.querySelectorAll('.pill');
+  for (var i = 0; i < pills.length; i++) pills[i].classList.remove('active');
+  el.classList.add('active');
 }
 
-function switchCard(btn, style) {
-  document.querySelectorAll('.style-btn').forEach(b => b.classList.remove('active'));
+function goProcess() {
+  var input = document.getElementById('dreamInput').value.trim();
+  if (!input) {
+    var ta = document.getElementById('dreamInput');
+    ta.style.borderColor = 'rgba(224,96,96,.5)';
+    setTimeout(function() { ta.style.borderColor = ''; }, 1500);
+    return;
+  }
+  if (!state.unlocked && daysLeft() === 0) { goScreen('expired'); return; }
+  if (!state.unlocked && state.usedToday >= DAILY_LIMIT) { toast('⏳ 今日次數已用完，明天再來！'); return; }
+
+  goScreen('processing');
+
+  var steps = ['c1','c2','c3'];
+  for (var i = 0; i < steps.length; i++) {
+    (function(idx, id) {
+      setTimeout(function() {
+        var el = document.getElementById(id);
+        el.className = 'check-icon spin';
+        el.textContent = '◌';
+      }, idx * 1100);
+      setTimeout(function() {
+        var el = document.getElementById(id);
+        el.className = 'check-icon done';
+        el.textContent = '✓';
+      }, idx * 1100 + 900);
+    })(i, steps[i]);
+  }
+
+  setTimeout(function() {
+    state.usedToday++;
+    saveState(state);
+    updateBar();
+    goScreen('result');
+  }, 4200);
+}
+
+function switchStyle(btn, cls) {
+  var btns = document.querySelectorAll('.style-btn');
+  for (var i = 0; i < btns.length; i++) btns[i].classList.remove('active');
   btn.classList.add('active');
-  document.getElementById('cardPreview').className = 'card-preview ' + style;
+  var card = document.getElementById('cardWrap');
+  card.className = 'card-wrap ' + cls;
 }
 
 function copyPost() {
-  const text = `這個夢，很多人都有。\n\n月台的燈光在雨中模糊。他跑，鞋底打在積水上——火車門緩緩合上，他看見自己的倒影停在玻璃裡。\n\n不是所有的錯過，都代表失去。\n\n「留在月台上，才是下一段旅程的開始」\n\n你也有過這種夢嗎？留言告訴我 👇\n\n🌙 夢境圖書館 免費解析你的夢`;
-  if (navigator.clipboard) {
-    navigator.clipboard.writeText(text).then(() => showToast('✓ 貼文已複製！'));
-  } else {
-    showToast('✓ 內容已準備好！');
-  }
+  var text = '這個夢，很多人都有。\n\n月台的燈光在雨中模糊。他跑，鞋底打在積水上——火車門緩緩合上，他看見自己的倒影停在玻璃裡。\n\n不是所有的錯過，都代表失去。\n\n「留在月台上，才是下一段旅程的開始」\n\n你也有過這種夢嗎？留言告訴我 👇\n\n🌙 夢境圖書館 免費解析你的夢';
+  if (navigator.clipboard) { navigator.clipboard.writeText(text).then(function() { toast('✓ 貼文已複製！'); }); }
+  else { toast('✓ 內容已準備好！'); }
 }
 
-function checkUnlock() {
-  const input = document.getElementById('unlockInput').value.trim().toUpperCase();
-  const err = document.getElementById('unlockError');
-
-  if (input === UNLOCK_CODE) {
+function checkCode() {
+  var val = document.getElementById('unlockInput').value.trim().toUpperCase();
+  var err = document.getElementById('unlockErr');
+  if (val === UNLOCK_CODE) {
     state.unlocked = true;
     saveState(state);
-    showToast('🎉 解鎖成功！歡迎使用完整版');
-    setTimeout(() => {
-      showScreen('home');
-      updateStatusBar();
-    }, 1500);
+    toast('🎉 解鎖成功！歡迎使用完整版');
+    setTimeout(function() { goScreen('home'); updateBar(); }, 1600);
   } else {
     err.style.display = 'block';
-    document.getElementById('unlockInput').style.borderColor = 'rgba(224,96,96,.4)';
-    setTimeout(() => {
-      err.style.display = 'none';
-      document.getElementById('unlockInput').style.borderColor = '';
-    }, 2000);
+    setTimeout(function() { err.style.display = 'none'; }, 2200);
   }
 }
 
-// Toast
-function showToast(msg) {
-  let t = document.getElementById('toast');
-  if (!t) {
-    t = document.createElement('div');
-    t.id = 'toast';
-    t.style.cssText = `
-      position:fixed; bottom:36px; left:50%; transform:translateX(-50%);
-      background:rgba(18,15,35,.97); border:1px solid rgba(200,168,90,.3);
-      border-radius:12px; padding:11px 22px; font-size:13px; color:#e8ca80;
-      letter-spacing:.04em; z-index:9999; white-space:nowrap;
-      box-shadow:0 4px 20px rgba(0,0,0,.5); pointer-events:none;
-      transition:opacity .3s;
-    `;
-    document.body.appendChild(t);
-  }
+function toast(msg) {
+  var t = document.getElementById('toast');
   t.textContent = msg;
   t.style.opacity = '1';
-  clearTimeout(t._timer);
-  t._timer = setTimeout(() => t.style.opacity = '0', 2400);
+  clearTimeout(t._t);
+  t._t = setTimeout(function() { t.style.opacity = '0'; }, 2400);
 }
 
-// Init
-updateStatusBar();
+updateBar();
 </script>
 
 </body>
