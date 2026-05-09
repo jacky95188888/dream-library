@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>夢境交友 — 找到靈魂頻率相近的人</title>
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;700&family=Cinzel:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#080412;--bg2:#0f0820;--pd:#1a0d35;--pm:#2d1560;
+  --pg:#7c3aed;--pl:#a855f7;--ps:#c084fc;
+  --gold:#f5c518;--golds:#fde68a;
+  --teal:#0ea5e9;--teals:#7dd3fc;
+  --green:#10b981;--greens:#6ee7b7;
+  --pink:#ec4899;--pinks:#f9a8d4;
+  --red:#ef4444;
+  --tm:#ede9fe;--ts:#c4b5fd;--td:#7c6fa0;
+  --cb:rgba(20,10,45,.92);--cbr:rgba(167,85,247,.25);
+}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+html,body{height:100%;overflow:hidden;}
+body{font-family:'Noto Serif TC',serif;background:var(--bg);color:var(--tm);}
+
+#stars{position:fixed;inset:0;pointer-events:none;z-index:0;}
+.s{position:absolute;background:#fff;border-radius:50%;animation:tw var(–d,3s) ease-in-out infinite var(–dl,0s);}
+@keyframes tw{0%,100%{opacity:.15;}50%{opacity:1;}}
+
+#lbg{position:fixed;inset:0;pointer-events:none;z-index:0;
+background:radial-gradient(ellipse 70% 50% at 50% 30%,rgba(124,58,237,.15) 0%,transparent 70%),
+linear-gradient(180deg,#1a0528 0%,#080412 100%);}
+
+/* APP SHELL */
+#app{position:relative;z-index:1;height:100vh;display:flex;flex-direction:column;}
+
+/* SCREENS */
+.screen{display:none;flex:1;flex-direction:column;overflow:hidden;}
+.screen.on{display:flex;}
+
+/* ===== LOGIN SCREEN ===== */
+#loginScreen{align-items:center;justify-content:center;padding:30px 24px;}
+.login-moon{font-size:64px;filter:drop-shadow(0 0 20px rgba(245,197,24,.6));animation:mf 4s ease-in-out infinite;margin-bottom:16px;}
+@keyframes mf{0%,100%{transform:translateY(0);}50%{transform:translateY(-8px);}}
+.login-title{font-size:28px;font-weight:700;background:linear-gradient(135deg,#e9d5ff,#c084fc 40%,#f5c518);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;text-align:center;margin-bottom:8px;}
+.login-sub{font-size:13px;color:var(–td);text-align:center;line-height:1.6;margin-bottom:30px;}
+.login-card{width:100%;background:var(–cb);border:1px solid var(–cbr);border-radius:20px;padding:24px;backdrop-filter:blur(12px);}
+.login-label{font-size:13px;color:var(–ts);margin-bottom:8px;display:block;}
+.login-input{width:100%;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);border-radius:12px;padding:12px 14px;color:var(–tm);font-family:‘Noto Serif TC’,serif;font-size:15px;outline:none;margin-bottom:14px;transition:border-color .2s;}
+.login-input:focus{border-color:var(–pg);}
+.login-input::placeholder{color:var(–td);}
+.personality-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:20px;}
+.pt-item{background:rgba(255,255,255,.05);border:1.5px solid rgba(255,255,255,.1);border-radius:11px;padding:10px 6px;text-align:center;cursor:pointer;transition:all .2s;}
+.pt-item.sel{border-color:var(–pg);background:rgba(124,58,237,.2);}
+.pt-ico{font-size:22px;margin-bottom:4px;}
+.pt-lbl{font-size:11px;color:var(–ts);}
+.pt-item.sel .pt-lbl{color:var(–ps);}
+.enter-btn{width:100%;background:linear-gradient(135deg,var(–pg),var(–pl));border:none;border-radius:13px;color:#fff;font-family:‘Noto Serif TC’,serif;font-size:16px;font-weight:700;padding:15px;cursor:pointer;box-shadow:0 4px 18px rgba(124,58,237,.5);}
+
+/* ===== MAIN SCREEN ===== */
+#mainScreen{flex-direction:column;}
+
+/* HEADER */
+.main-hdr{padding:12px 16px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(–cbr);flex-shrink:0;}
+.user-info{display:flex;align-items:center;gap:8px;}
+.user-avatar{width:34px;height:34px;border-radius:50%;background:linear-gradient(135deg,var(–pm),var(–pg));display:flex;align-items:center;justify-content:center;font-size:16px;}
+.user-name{font-size:14px;font-weight:600;}
+.user-type{font-size:11px;color:var(–td);}
+.online-badge{background:rgba(16,185,129,.15);border:1px solid rgba(16,185,129,.3);border-radius:20px;padding:4px 10px;font-size:11px;color:var(–greens);display:flex;align-items:center;gap:5px;}
+.online-dot{width:6px;height:6px;border-radius:50%;background:var(–green);animation:blink 2s ease-in-out infinite;}
+@keyframes blink{0%,100%{opacity:1;}50%{opacity:.3;}}
+
+/* TABS */
+.tabs{display:flex;border-bottom:1px solid var(–cbr);flex-shrink:0;}
+.tab{flex:1;padding:12px;text-align:center;font-size:13px;color:var(–td);cursor:pointer;border-bottom:2px solid transparent;transition:all .2s;}
+.tab.on{color:var(–pl);border-bottom-color:var(–pl);}
+
+/* TAB CONTENT */
+.tab-content{display:none;flex:1;overflow-y:auto;}
+.tab-content.on{display:flex;flex-direction:column;}
+
+/* ===== PUBLIC ROOM ===== */
+.room-header{padding:12px 14px;background:rgba(124,58,237,.08);border-bottom:1px solid var(–cbr);flex-shrink:0;}
+.room-title{font-size:14px;font-weight:700;margin-bottom:2px;}
+.room-desc{font-size:11px;color:var(–td);}
+
+.messages{flex:1;overflow-y:auto;padding:12px 14px;display:flex;flex-direction:column;gap:10px;}
+.msg-item{display:flex;gap:9px;animation:fadeUp .3s ease;}
+@keyframes fadeUp{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);}}
+.msg-item.mine{flex-direction:row-reverse;}
+.msg-avatar{width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,var(–pm),var(–pg));display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0;}
+.msg-body{max-width:72%;}
+.msg-name{font-size:10px;color:var(–td);margin-bottom:3px;}
+.msg-item.mine .msg-name{text-align:right;}
+.msg-bubble{background:var(–cb);border:1px solid var(–cbr);border-radius:14px;padding:9px 12px;font-size:13px;line-height:1.5;}
+.msg-item.mine .msg-bubble{background:rgba(124,58,237,.25);border-color:rgba(124,58,237,.4);}
+.msg-time{font-size:10px;color:var(–td);margin-top:3px;}
+.msg-item.mine .msg-time{text-align:right;}
+.msg-dream{background:rgba(245,197,24,.08);border:1px solid rgba(245,197,24,.2);border-radius:10px;padding:6px 10px;font-size:11px;color:var(–golds);margin-top:5px;cursor:pointer;}
+.msg-dream::before{content:’🌙 ’;}
+
+.msg-input-row{padding:10px 14px;border-top:1px solid var(–cbr);display:flex;gap:8px;flex-shrink:0;background:rgba(8,4,18,.9);}
+.msg-input{flex:1;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:22px;padding:10px 14px;color:var(–tm);font-family:‘Noto Serif TC’,serif;font-size:14px;outline:none;}
+.msg-input::placeholder{color:var(–td);}
+.send-btn{width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,var(–pg),var(–pl));border:none;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:18px;flex-shrink:0;box-shadow:0 2px 10px rgba(124,58,237,.4);}
+
+/* SYSTEM MSG */
+.sys-msg{text-align:center;font-size:11px;color:var(–td);padding:4px 0;}
+
+/* ===== BROWSE TAB ===== */
+.browse-list{padding:12px 14px;display:flex;flex-direction:column;gap:10px;}
+.user-card{background:var(–cb);border:1px solid var(–cbr);border-radius:16px;padding:14px;display:flex;gap:12px;align-items:flex-start;}
+.uc-avatar{width:46px;height:46px;border-radius:50%;background:linear-gradient(135deg,var(–pm),var(–pg));display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0;}
+.uc-info{flex:1;min-width:0;}
+.uc-name{font-size:15px;font-weight:700;margin-bottom:3px;}
+.uc-type{display:inline-block;font-size:10px;padding:2px 8px;border-radius:20px;background:rgba(124,58,237,.2);border:1px solid rgba(124,58,237,.3);color:var(–ps);margin-bottom:6px;}
+.uc-dream{font-size:12px;color:var(–ts);line-height:1.5;margin-bottom:8px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
+.uc-actions{display:flex;gap:7px;}
+.uc-btn{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:20px;color:var(–ts);font-family:‘Noto Serif TC’,serif;font-size:12px;padding:6px 12px;cursor:pointer;transition:all .2s;}
+.uc-btn.primary{background:rgba(124,58,237,.2);border-color:rgba(124,58,237,.4);color:var(–ps);}
+.uc-btn:active{transform:scale(.97);}
+.resonance-count{font-size:11px;color:var(–td);display:flex;align-items:center;gap:4px;}
+
+/* ===== PRIVATE CHATS TAB ===== */
+.chat-list{padding:12px 14px;display:flex;flex-direction:column;gap:8px;}
+.chat-item{background:var(–cb);border:1px solid var(–cbr);border-radius:14px;padding:12px;display:flex;gap:10px;align-items:center;cursor:pointer;transition:border-color .2s;}
+.chat-item:active{border-color:rgba(124,58,237,.5);}
+.chat-avatar{width:42px;height:42px;border-radius:50%;background:linear-gradient(135deg,var(–pm),var(–pg));display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0;position:relative;}
+.chat-online{position:absolute;bottom:0;right:0;width:12px;height:12px;border-radius:50%;background:var(–green);border:2px solid var(–bg);}
+.chat-info{flex:1;min-width:0;}
+.chat-name{font-size:14px;font-weight:600;margin-bottom:3px;}
+.chat-preview{font-size:12px;color:var(–td);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.chat-meta{display:flex;flex-direction:column;align-items:flex-end;gap:4px;}
+.chat-time{font-size:10px;color:var(–td);}
+.chat-unread{width:18px;height:18px;border-radius:50%;background:var(–pg);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;}
+.empty-state{text-align:center;padding:40px 20px;color:var(–td);}
+.empty-ico{font-size:40px;margin-bottom:10px;}
+.empty-txt{font-size:13px;line-height:1.6;}
+
+/* ===== PRIVATE CHAT SCREEN ===== */
+#chatScreen{flex-direction:column;}
+.chat-hdr{padding:12px 14px;display:flex;align-items:center;gap:10px;border-bottom:1px solid var(–cbr);flex-shrink:0;}
+.back-btn{width:34px;height:34px;border-radius:50%;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.09);display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:16px;}
+.chat-hdr-info{flex:1;}
+.chat-hdr-name{font-size:15px;font-weight:700;}
+.chat-hdr-status{font-size:11px;color:var(–greens);}
+.share-btn{background:rgba(245,197,24,.1);border:1px solid rgba(245,197,24,.25);border-radius:20px;color:var(–golds);font-family:‘Noto Serif TC’,serif;font-size:12px;padding:6px 12px;cursor:pointer;}
+
+/* CONTACT SHARE PANEL */
+.contact-panel{display:none;position:fixed;inset:0;z-index:300;}
+.contact-panel.on{display:flex;flex-direction:column;}
+.cp-back{position:absolute;inset:0;background:rgba(0,0,0,.7);backdrop-filter:blur(4px);}
+.cp-sheet{position:absolute;bottom:0;left:0;right:0;background:linear-gradient(180deg,#1a0d35,#0f0820);border:1px solid var(–cbr);border-radius:22px 22px 0 0;padding:20px 20px env(safe-area-inset-bottom,20px);animation:su .3s ease;}
+@keyframes su{from{transform:translateY(100%);}to{transform:translateY(0);}}
+.cp-handle{width:36px;height:4px;background:rgba(255,255,255,.18);border-radius:2px;margin:0 auto 18px;}
+.cp-title{font-size:17px;font-weight:700;text-align:center;margin-bottom:6px;}
+.cp-sub{font-size:13px;color:var(–td);text-align:center;margin-bottom:20px;line-height:1.5;}
+.cp-warning{background:rgba(245,197,24,.08);border:1px solid rgba(245,197,24,.2);border-radius:10px;padding:10px 12px;font-size:12px;color:var(–golds);line-height:1.5;margin-bottom:16px;}
+.cp-input{width:100%;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);border-radius:12px;padding:12px 14px;color:var(–tm);font-family:‘Noto Serif TC’,serif;font-size:15px;outline:none;margin-bottom:12px;transition:border-color .2s;}
+.cp-input:focus{border-color:var(–pg);}
+.cp-input::placeholder{color:var(–td);}
+.cp-send-btn{width:100%;background:linear-gradient(135deg,var(–gold),#f97316);border:none;border-radius:13px;color:#fff;font-family:‘Noto Serif TC’,serif;font-size:15px;font-weight:700;padding:14px;cursor:pointer;box-shadow:0 4px 15px rgba(245,197,24,.3);}
+
+/* BOTTOM NAV */
+.bnav{position:fixed;bottom:0;left:0;right:0;background:rgba(8,4,18,.96);border-top:1px solid var(–cbr);backdrop-filter:blur(20px);display:flex;align-items:center;justify-content:space-around;padding:8px 0 env(safe-area-inset-bottom,8px);z-index:50;}
+.ni{display:flex;flex-direction:column;align-items:center;gap:3px;cursor:pointer;padding:4px 12px;}
+.ni.on .nico,.ni.on .nlbl{color:var(–pl);}
+.nico{font-size:21px;color:var(–td);}
+.nlbl{font-size:10px;color:var(–td);}
+</style>
+
+</head>
+<body>
+
+<div id="stars"></div>
+<div id="lbg"></div>
+
+<div id="app">
+
+<!-- ===== LOGIN ===== -->
+
+<div class="screen on" id="loginScreen">
+  <div class="login-moon">🌙</div>
+  <div class="login-title">夢境交友</div>
+  <div class="login-sub">透過你的夢，找到靈魂頻率相近的人</div>
+  <div class="login-card">
+    <label class="login-label">你的暱稱</label>
+    <input class="login-input" id="nickInput" placeholder="輸入你的暱稱（匿名）" maxlength="12">
+    <label class="login-label">你的夢境人格</label>
+    <div class="personality-grid">
+      <div class="pt-item" onclick="selPT(this,'🌊 探索者')"><div class="pt-ico">🌊</div><div class="pt-lbl">探索者</div></div>
+      <div class="pt-item" onclick="selPT(this,'🌙 浪漫者')"><div class="pt-ico">🌙</div><div class="pt-lbl">浪漫者</div></div>
+      <div class="pt-item" onclick="selPT(this,'🔮 神秘者')"><div class="pt-ico">🔮</div><div class="pt-lbl">神秘者</div></div>
+      <div class="pt-item" onclick="selPT(this,'🌟 守護者')"><div class="pt-ico">🌟</div><div class="pt-lbl">守護者</div></div>
+      <div class="pt-item" onclick="selPT(this,'🦋 自由者')"><div class="pt-ico">🦋</div><div class="pt-lbl">自由者</div></div>
+      <div class="pt-item" onclick="selPT(this,'🏛️ 智慧者')"><div class="pt-ico">🏛️</div><div class="pt-lbl">智慧者</div></div>
+    </div>
+    <button class="enter-btn" onclick="enterApp()">✦ 進入夢境交友</button>
+  </div>
+</div>
+
+<!-- ===== MAIN ===== -->
+
+<div class="screen" id="mainScreen">
+  <div class="main-hdr">
+    <div class="user-info">
+      <div class="user-avatar" id="myAvatar">🌙</div>
+      <div>
+        <div class="user-name" id="myName">-</div>
+        <div class="user-type" id="myType">-</div>
+      </div>
+    </div>
+    <div class="online-badge"><div class="online-dot"></div><span id="onlineCount">1</span> 人在線</div>
+  </div>
+
+  <div class="tabs">
+    <div class="tab on" onclick="switchTab('public')">💬 公開討論室</div>
+    <div class="tab" onclick="switchTab('browse')">🔍 瀏覽配對</div>
+    <div class="tab" onclick="switchTab('private')">💌 私聊 <span id="unreadBadge"></span></div>
+  </div>
+
+  <!-- PUBLIC ROOM -->
+
+  <div class="tab-content on" id="tabPublic">
+    <div class="room-header">
+      <div class="room-title">🌙 夢境共鳴廣場</div>
+      <div class="room-desc">分享你的夢，與陌生靈魂共鳴</div>
+    </div>
+    <div class="messages" id="publicMessages"></div>
+    <div class="msg-input-row">
+      <input class="msg-input" id="publicInput" placeholder="分享你的夢境或想法..." maxlength="200">
+      <button class="send-btn" onclick="sendPublic()">➤</button>
+    </div>
+  </div>
+
+  <!-- BROWSE -->
+
+  <div class="tab-content" id="tabBrowse">
+    <div class="browse-list" id="browseList">
+      <div class="empty-state"><div class="empty-ico">🔍</div><div class="empty-txt">正在尋找靈魂頻率相近的人...</div></div>
+    </div>
+  </div>
+
+  <!-- PRIVATE CHATS LIST -->
+
+  <div class="tab-content" id="tabPrivate">
+    <div class="chat-list" id="chatList">
+      <div class="empty-state"><div class="empty-ico">💌</div><div class="empty-txt">還沒有私聊<br>在「瀏覽配對」送出共鳴<br>對方回應後即可開始私聊</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== PRIVATE CHAT ===== -->
+
+<div class="screen" id="chatScreen">
+  <div class="chat-hdr">
+    <div class="back-btn" onclick="backToMain()">←</div>
+    <div class="chat-avatar" id="chatAvatar" style="width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,#2d1560,#7c3aed);display:flex;align-items:center;justify-content:center;font-size:18px;">🌙</div>
+    <div class="chat-hdr-info">
+      <div class="chat-hdr-name" id="chatName">-</div>
+      <div class="chat-hdr-status">在線中</div>
+    </div>
+    <button class="share-btn" onclick="openContactPanel()">📱 交換聯絡</button>
+  </div>
+  <div class="messages" id="privateMessages"></div>
+  <div class="msg-input-row">
+    <input class="msg-input" id="privateInput" placeholder="輸入訊息..." maxlength="200" onkeydown="if(event.key==='Enter')sendPrivate()">
+    <button class="send-btn" onclick="sendPrivate()">➤</button>
+  </div>
+</div>
+
+</div><!-- end app -->
+
+<!-- BOTTOM NAV (only in main) -->
+
+<div class="bnav" id="bnav" style="display:none;">
+  <div class="ni on" onclick="switchTab('public')"><div class="nico">💬</div><div class="nlbl">討論室</div></div>
+  <div class="ni" onclick="switchTab('browse')"><div class="nico">🔍</div><div class="nlbl">瀏覽</div></div>
+  <div class="ni" onclick="switchTab('private')"><div class="nico">💌</div><div class="nlbl">私聊</div></div>
+</div>
+
+<!-- CONTACT PANEL -->
+
+<div class="contact-panel" id="contactPanel">
+  <div class="cp-back" onclick="closeContactPanel()"></div>
+  <div class="cp-sheet">
+    <div class="cp-handle"></div>
+    <div class="cp-title">📱 交換聯絡方式</div>
+    <div class="cp-sub">雙方都同意後才會互相顯示<br>保護你的隱私安全</div>
+    <div class="cp-warning">⚠️ 請謹慎分享個人資訊，只與你信任的人交換聯絡方式</div>
+    <input class="cp-input" id="contactInput" placeholder="輸入你的 Line ID 或其他聯絡方式">
+    <button class="cp-send-btn" onclick="sendContactRequest()">✦ 送出交換請求</button>
+  </div>
+</div>
+
+<!-- FIREBASE -->
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import { getAuth, signInAnonymously } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+import { getDatabase, ref, push, onValue, set, get, update, serverTimestamp, query, orderByChild, limitToLast } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyBCB1mNOALciOrtM2l3ev7oLUrRS8jXrds",
+  authDomain: "dream-library-44465.firebaseapp.com",
+  databaseURL: "https://dream-library-44465-default-rtdb.asia-southeast1.firebasedatabase.app",
+  projectId: "dream-library-44465",
+  storageBucket: "dream-library-44465.firebasestorage.app",
+  messagingSenderId: "455603446756",
+  appId: "1:455603446756:web:5dbaf31740bc714c711df1"
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getDatabase(app);
+
+// STATE
+let myUid = null;
+let myNick = '';
+let myType = '';
+let currentChatUid = null;
+let currentChatName = '';
+
+const ptEmojis = {'🌊 探索者':'🌊','🌙 浪漫者':'🌙','🔮 神秘者':'🔮','🌟 守護者':'🌟','🦋 自由者':'🦋','🏛️ 智慧者':'🏛️'};
+
+// ===== STARS =====
+const starsEl = document.getElementById('stars');
+for(let i=0;i<60;i++){
+  const s=document.createElement('div');s.className='s';
+  const sz=Math.random()*2+.3;
+  s.style.cssText=`width:${sz}px;height:${sz}px;top:${Math.random()*100}%;left:${Math.random()*100}%;--d:${Math.random()*3+2}s;--dl:${Math.random()*4}s;`;
+  starsEl.appendChild(s);
+}
+
+// ===== GLOBAL FUNCTIONS =====
+window.selPT = function(el, type) {
+  document.querySelectorAll('.pt-item').forEach(e=>e.classList.remove('sel'));
+  el.classList.add('sel');
+  window._selType = type;
+};
+
+window.enterApp = async function() {
+  const nick = document.getElementById('nickInput').value.trim();
+  const type = window._selType;
+  if(!nick){alert('請輸入暱稱');return;}
+  if(!type){alert('請選擇夢境人格');return;}
+
+  myNick = nick;
+  myType = type;
+
+  try {
+    const cred = await signInAnonymously(auth);
+    myUid = cred.user.uid;
+
+    // 儲存用戶資料
+    await set(ref(db, `users/${myUid}`), {
+      nick, type,
+      emoji: ptEmojis[type]||'🌙',
+      online: true,
+      lastSeen: serverTimestamp(),
+      joinedAt: serverTimestamp()
+    });
+
+    // 離線時更新狀態
+    window.addEventListener('beforeunload', () => {
+      update(ref(db, `users/${myUid}`), {online: false, lastSeen: serverTimestamp()});
+    });
+
+    // 更新UI
+    document.getElementById('myName').textContent = nick;
+    document.getElementById('myType').textContent = type;
+    document.getElementById('myAvatar').textContent = ptEmojis[type]||'🌙';
+
+    // 切換畫面
+    document.getElementById('loginScreen').classList.remove('on');
+    document.getElementById('mainScreen').classList.add('on');
+    document.getElementById('bnav').style.display='flex';
+
+    // 載入資料
+    loadPublicMessages();
+    loadUsers();
+    loadPrivateChats();
+    trackOnline();
+
+    // 系統歡迎訊息
+    setTimeout(()=>{
+      addSystemMsg(`${nick} 加入了夢境廣場 ✨`);
+    }, 500);
+
+  } catch(e) {
+    alert('連線失敗，請重試：'+e.message);
+  }
+};
+
+// ===== ONLINE TRACKING =====
+function trackOnline() {
+  const usersRef = ref(db, 'users');
+  onValue(usersRef, snap => {
+    if(!snap.exists()) return;
+    let count = 0;
+    snap.forEach(child => {
+      if(child.val().online) count++;
+    });
+    document.getElementById('onlineCount').textContent = count;
+  });
+}
+
+// ===== PUBLIC MESSAGES =====
+function loadPublicMessages() {
+  const msgsRef = query(ref(db, 'publicMessages'), orderByChild('ts'), limitToLast(50));
+  onValue(msgsRef, snap => {
+    const container = document.getElementById('publicMessages');
+    container.innerHTML = '';
+    if(!snap.exists()){
+      container.innerHTML = '<div class="sys-msg">歡迎來到夢境廣場，分享你的夢境吧 🌙</div>';
+      return;
+    }
+    snap.forEach(child => {
+      const m = child.val();
+      renderPublicMsg(m);
+    });
+    container.scrollTop = container.scrollHeight;
+  });
+}
+
+function renderPublicMsg(m) {
+  const container = document.getElementById('publicMessages');
+  if(m.type === 'system'){
+    const div = document.createElement('div');
+    div.className = 'sys-msg';
+    div.textContent = m.text;
+    container.appendChild(div);
+    return;
+  }
+  const isMe = m.uid === myUid;
+  const div = document.createElement('div');
+  div.className = `msg-item ${isMe?'mine':''}`;
+  const time = m.ts ? new Date(m.ts).toLocaleTimeString('zh-TW',{hour:'2-digit',minute:'2-digit'}) : '';
+  div.innerHTML = `
+    <div class="msg-avatar">${m.emoji||'🌙'}</div>
+    <div class="msg-body">
+      <div class="msg-name">${isMe?'我':m.nick} · ${m.type_label||''}</div>
+      <div class="msg-bubble">${escHtml(m.text)}</div>
+      <div class="msg-time">${time}</div>
+    </div>`;
+  container.appendChild(div);
+}
+
+window.sendPublic = function() {
+  const input = document.getElementById('publicInput');
+  const text = input.value.trim();
+  if(!text || !myUid) return;
+  push(ref(db, 'publicMessages'), {
+    uid: myUid, nick: myNick, emoji: ptEmojis[myType]||'🌙',
+    type_label: myType, text, ts: Date.now()
+  });
+  input.value = '';
+};
+
+function addSystemMsg(text) {
+  push(ref(db, 'publicMessages'), {type:'system', text, ts: Date.now()});
+}
+
+// ===== BROWSE USERS =====
+function loadUsers() {
+  const usersRef = ref(db, 'users');
+  onValue(usersRef, snap => {
+    const list = document.getElementById('browseList');
+    list.innerHTML = '';
+    if(!snap.exists()){
+      list.innerHTML = '<div class="empty-state"><div class="empty-ico">🔍</div><div class="empty-txt">還沒有其他用戶</div></div>';
+      return;
+    }
+    let count = 0;
+    snap.forEach(child => {
+      const u = child.val();
+      const uid = child.key;
+      if(uid === myUid) return;
+      count++;
+      const div = document.createElement('div');
+      div.className = 'user-card';
+      div.innerHTML = `
+        <div class="uc-avatar">${u.emoji||'🌙'}</div>
+        <div class="uc-info">
+          <div class="uc-name">${escHtml(u.nick)} ${u.online?'<span style="color:var(--greens);font-size:10px;">● 在線</span>':''}</div>
+          <div class="uc-type">${u.type||''}</div>
+          <div class="uc-actions">
+            <button class="uc-btn primary" onclick="sendResonance('${uid}','${escAttr(u.nick)}','${u.emoji||'🌙'}')">💜 送出共鳴</button>
+            <button class="uc-btn" onclick="openPrivateChat('${uid}','${escAttr(u.nick)}','${u.emoji||'🌙'}')">💬 私聊</button>
+          </div>
+        </div>`;
+      list.appendChild(div);
+    });
+    if(count === 0){
+      list.innerHTML = '<div class="empty-state"><div class="empty-ico">🔍</div><div class="empty-txt">目前只有你在線<br>邀請朋友一起來！</div></div>';
+    }
+  });
+}
+
+window.sendResonance = function(toUid, toNick, toEmoji) {
+  push(ref(db, 'publicMessages'), {
+    uid: myUid, nick: myNick, emoji: ptEmojis[myType]||'🌙',
+    type_label: myType,
+    text: `對 ${toNick} 送出了💜共鳴`,
+    ts: Date.now()
+  });
+  // 同時開啟私聊
+  openPrivateChat(toUid, toNick, toEmoji);
+  alert(`已送出共鳴給 ${toNick}！可以到私聊繼續對話 💜`);
+};
+
+// ===== PRIVATE CHAT =====
+window.openPrivateChat = function(uid, nick, emoji) {
+  currentChatUid = uid;
+  currentChatName = nick;
+
+  document.getElementById('chatName').textContent = nick;
+  document.getElementById('chatAvatar').textContent = emoji;
+
+  document.getElementById('mainScreen').classList.remove('on');
+  document.getElementById('bnav').style.display='none';
+  document.getElementById('chatScreen').classList.add('on');
+
+  loadPrivateMessages(uid);
+};
+
+window.backToMain = function() {
+  document.getElementById('chatScreen').classList.remove('on');
+  document.getElementById('mainScreen').classList.add('on');
+  document.getElementById('bnav').style.display='flex';
+  currentChatUid = null;
+};
+
+function getChatId(uid1, uid2) {
+  return [uid1, uid2].sort().join('_');
+}
+
+function loadPrivateMessages(otherUid) {
+  const chatId = getChatId(myUid, otherUid);
+  const msgsRef = query(ref(db, `chats/${chatId}/messages`), orderByChild('ts'), limitToLast(100));
+  onValue(msgsRef, snap => {
+    const container = document.getElementById('privateMessages');
+    container.innerHTML = '';
+    if(!snap.exists()){
+      container.innerHTML = `<div class="sys-msg">與 ${currentChatName} 的對話開始了 🌙</div>`;
+      return;
+    }
+    snap.forEach(child => {
+      const m = child.val();
+      renderPrivateMsg(m);
+    });
+    container.scrollTop = container.scrollHeight;
+  });
+}
+
+function renderPrivateMsg(m) {
+  const container = document.getElementById('privateMessages');
+  if(m.type === 'system'){
+    const div = document.createElement('div');
+    div.className = 'sys-msg';
+    div.textContent = m.text;
+    container.appendChild(div);
+    return;
+  }
+  if(m.type === 'contact'){
+    const div = document.createElement('div');
+    div.className = 'sys-msg';
+    div.innerHTML = `📱 ${escHtml(m.nick)} 分享了聯絡方式：<strong style="color:var(--golds)">${escHtml(m.contact)}</strong>`;
+    container.appendChild(div);
+    return;
+  }
+  const isMe = m.uid === myUid;
+  const div = document.createElement('div');
+  div.className = `msg-item ${isMe?'mine':''}`;
+  const time = m.ts ? new Date(m.ts).toLocaleTimeString('zh-TW',{hour:'2-digit',minute:'2-digit'}) : '';
+  div.innerHTML = `
+    <div class="msg-avatar">${m.emoji||'🌙'}</div>
+    <div class="msg-body">
+      <div class="msg-name">${isMe?'我':escHtml(m.nick)}</div>
+      <div class="msg-bubble">${escHtml(m.text)}</div>
+      <div class="msg-time">${time}</div>
+    </div>`;
+  container.appendChild(div);
+}
+
+window.sendPrivate = function() {
+  const input = document.getElementById('privateInput');
+  const text = input.value.trim();
+  if(!text || !myUid || !currentChatUid) return;
+  const chatId = getChatId(myUid, currentChatUid);
+  push(ref(db, `chats/${chatId}/messages`), {
+    uid: myUid, nick: myNick, emoji: ptEmojis[myType]||'🌙',
+    text, ts: Date.now()
+  });
+  // 更新私聊列表
+  set(ref(db, `userChats/${myUid}/${currentChatUid}`), {
+    nick: currentChatName, lastMsg: text, ts: Date.now()
+  });
+  set(ref(db, `userChats/${currentChatUid}/${myUid}`), {
+    nick: myNick, emoji: ptEmojis[myType]||'🌙', lastMsg: text, ts: Date.now(), unread: true
+  });
+  input.value = '';
+};
+
+// ===== PRIVATE CHATS LIST =====
+function loadPrivateChats() {
+  const chatsRef = ref(db, `userChats/${myUid}`);
+  onValue(chatsRef, snap => {
+    const list = document.getElementById('chatList');
+    list.innerHTML = '';
+    if(!snap.exists()){
+      list.innerHTML = '<div class="empty-state"><div class="empty-ico">💌</div><div class="empty-txt">還沒有私聊<br>在「瀏覽配對」送出共鳴<br>對方回應後即可開始私聊</div></div>';
+      return;
+    }
+    snap.forEach(child => {
+      const c = child.val();
+      const uid = child.key;
+      const div = document.createElement('div');
+      div.className = 'chat-item';
+      div.onclick = () => openPrivateChat(uid, c.nick, c.emoji||'🌙');
+      div.innerHTML = `
+        <div class="chat-avatar">${c.emoji||'🌙'}</div>
+        <div class="chat-info">
+          <div class="chat-name">${escHtml(c.nick)}</div>
+          <div class="chat-preview">${escHtml(c.lastMsg||'開始聊天吧...')}</div>
+        </div>
+        <div class="chat-meta">
+          <div class="chat-time">${c.ts?new Date(c.ts).toLocaleTimeString('zh-TW',{hour:'2-digit',minute:'2-digit'}):''}</div>
+          ${c.unread?'<div class="chat-unread">1</div>':''}
+        </div>`;
+      list.appendChild(div);
+    });
+  });
+}
+
+// ===== CONTACT EXCHANGE =====
+window.openContactPanel = function() {
+  document.getElementById('contactPanel').classList.add('on');
+};
+window.closeContactPanel = function() {
+  document.getElementById('contactPanel').classList.remove('on');
+};
+window.sendContactRequest = function() {
+  const contact = document.getElementById('contactInput').value.trim();
+  if(!contact){alert('請輸入聯絡方式');return;}
+  if(!currentChatUid){return;}
+  const chatId = getChatId(myUid, currentChatUid);
+  push(ref(db, `chats/${chatId}/messages`), {
+    type: 'contact', uid: myUid, nick: myNick,
+    contact, ts: Date.now()
+  });
+  closeContactPanel();
+  alert('聯絡方式已分享！對方可以在聊天室看到 💜');
+};
+
+// ===== TAB SWITCH =====
+window.switchTab = function(tab) {
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('on'));
+  document.querySelectorAll('.tab-content').forEach(t=>t.classList.remove('on'));
+  document.querySelectorAll('.ni').forEach(n=>n.classList.remove('on'));
+  const idx = {public:0,browse:1,private:2}[tab];
+  document.querySelectorAll('.tab')[idx].classList.add('on');
+  document.querySelectorAll('.ni')[idx].classList.add('on');
+  document.getElementById(`tab${tab.charAt(0).toUpperCase()+tab.slice(1)}`).classList.add('on');
+};
+
+// ===== UTILS =====
+function escHtml(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+function escAttr(s){ return String(s).replace(/'/g,"\\'"); }
+
+// Enter key for public
+document.getElementById('publicInput').addEventListener('keydown', e=>{ if(e.key==='Enter') window.sendPublic(); });
+</script>
+
+</body>
+</html>
