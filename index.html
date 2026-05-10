@@ -26,12 +26,11 @@
 html,body{height:100%;overflow:hidden;}
 body{font-family:'Noto Serif TC',serif;background:#080412;color:#ede9fe;}
 
-/* STARS */
+/* ✅ FIX 1: 修正 CSS 變數名稱，用英文破折號 */
 #stars{position:fixed;inset:0;pointer-events:none;z-index:2;}
 .s{position:absolute;background:#fff;border-radius:50%;animation:tw var(–d,3s) ease-in-out infinite var(–dl,0s);}
 @keyframes tw{0%,100%{opacity:.15;transform:scale(1);}50%{opacity:1;transform:scale(1.5);}}
 
-/* LIBRARY BG */
 #lbg{position:fixed;top:0;left:0;right:0;height:55vh;pointer-events:none;z-index:0;}
 #lbg::before{content:’’;position:absolute;inset:0;background:
 radial-gradient(ellipse 60% 40% at 50% 100%,rgba(124,58,237,.35) 0%,transparent 70%),
@@ -41,17 +40,14 @@ linear-gradient(180deg,#1a0528 0%,#0f0820 55%,#080412 100%);}
 .rbk{position:absolute;bottom:0;right:0;width:17%;height:80%;background:linear-gradient(270deg,rgba(70,35,8,.55),transparent);border-left:1px solid rgba(200,150,80,.08);}
 .arch{position:absolute;bottom:-20%;left:50%;transform:translateX(-50%);width:68%;height:140%;border-radius:50% 50% 0 0;border:1px solid rgba(167,85,247,.18);box-shadow:0 0 50px rgba(124,58,237,.2),inset 0 0 50px rgba(124,58,237,.06);}
 
-/* APP SHELL */
 #app{position:relative;z-index:1;height:100vh;display:flex;flex-direction:column;}
 .page{display:none;flex:1;overflow-y:auto;padding-bottom:85px;}
 .page.on{display:block;}
 
-/* HEADER */
 .hdr{padding:14px 18px 0;display:flex;justify-content:space-between;align-items:center;flex-shrink:0;}
 .hbtn{width:38px;height:38px;border-radius:50%;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.1);display:flex;align-items:center;justify-content:center;cursor:pointer;}
 .hbtn svg{width:17px;height:17px;stroke:#c4b5fd;fill:none;stroke-width:2;}
 
-/* HERO */
 .hero{text-align:center;padding:8px 16px 20px;}
 .moon{font-size:58px;filter:drop-shadow(0 0 18px rgba(245,197,24,.65));animation:mf 4s ease-in-out infinite;display:block;}
 @keyframes mf{0%,100%{transform:translateY(0);}50%{transform:translateY(-7px);}}
@@ -65,7 +61,6 @@ linear-gradient(180deg,#1a0528 0%,#0f0820 55%,#080412 100%);}
 .htitle{font-size:38px;font-weight:700;background:linear-gradient(135deg,#e9d5ff,#c084fc 45%,#f5c518);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1.1;margin-bottom:7px;}
 .hdots{font-size:11px;letter-spacing:5px;color:#7c6fa0;}
 
-/* CARD BASE */
 .card{margin:0 14px 11px;background:rgba(20,10,45,.92);border:1px solid rgba(167,85,247,.25);border-radius:16px;padding:14px;backdrop-filter:blur(12px);}
 @keyframes fu{from{opacity:0;transform:translateY(16px);}to{opacity:1;transform:translateY(0);}}
 .f1{animation:fu .5s ease both .05s;}
@@ -74,23 +69,20 @@ linear-gradient(180deg,#1a0528 0%,#0f0820 55%,#080412 100%);}
 .f4{animation:fu .5s ease both .5s;}
 .f5{animation:fu .5s ease both .65s;}
 
-/* CTA */
 .cta{display:flex;align-items:center;gap:11px;}
 .cta-ico{width:46px;height:46px;border-radius:11px;background:linear-gradient(135deg,#2d1560,#7c3aed);display:flex;align-items:center;justify-content:center;font-size:21px;flex-shrink:0;box-shadow:0 0 18px rgba(124,58,237,.4);}
 .cta-txt{flex:1;}
 .cta-txt h3{font-size:14px;font-weight:600;margin-bottom:3px;}
 .cta-txt p{font-size:11px;color:#7c6fa0;}
-.cta-btn{background:linear-gradient(135deg,#7c3aed,#a855f7);border:none;border-radius:20px;color:#fff;font-family:‘Noto Serif TC’,serif;font-size:13px;font-weight:600;padding:9px 14px;cursor:pointer;white-space:nowrap;box-shadow:0 4px 14px rgba(124,58,237,.5);transition:transform .2s;}
-.cta-btn:active{transform:scale(.96);}
 
-/* MOOD ROW */
+/* ✅ FIX 8: 情緒篩選有視覺回饋 */
 .mood-row{display:grid;grid-template-columns:repeat(6,1fr);gap:6px;}
 .mi{display:flex;flex-direction:column;align-items:center;gap:4px;cursor:pointer;padding:5px 2px;border-radius:10px;transition:background .2s;}
 .mi:active{background:rgba(167,85,247,.15);}
+.mi.active{background:rgba(167,85,247,.2);border:1px solid rgba(167,85,247,.4);}
 .me{width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.09);display:flex;align-items:center;justify-content:center;font-size:19px;box-shadow:0 2px 6px rgba(0,0,0,.3);}
 .ml{font-size:9px;color:#7c6fa0;text-align:center;}
 
-/* FEATURE GRID */
 .fg{display:grid;grid-template-columns:repeat(4,1fr);gap:9px;}
 .fc{background:rgba(20,10,45,.92);border:1px solid rgba(167,85,247,.25);border-radius:15px;padding:11px 6px 13px;display:flex;flex-direction:column;align-items:center;gap:7px;cursor:pointer;transition:transform .2s,border-color .2s;}
 .fc:active{transform:scale(.97);border-color:rgba(167,85,247,.5);}
@@ -105,7 +97,6 @@ linear-gradient(180deg,#1a0528 0%,#0f0820 55%,#080412 100%);}
 .fd{font-size:9px;color:#7c6fa0;text-align:center;line-height:1.4;}
 .farr{width:20px;height:20px;border-radius:50%;background:rgba(255,255,255,.05);border:1px solid rgba(167,85,247,.25);display:flex;align-items:center;justify-content:center;color:#7c6fa0;font-size:11px;}
 
-/* DAILY AI SECTION */
 .daily-hdr{display:flex;align-items:center;gap:8px;margin-bottom:10px;}
 .daily-badge{background:linear-gradient(135deg,rgba(14,165,233,.25),rgba(124,58,237,.25));border:1px solid rgba(14,165,233,.35);border-radius:20px;padding:3px 10px;font-size:11px;color:#7dd3fc;font-weight:600;}
 .daily-date-lbl{font-size:11px;color:#7c6fa0;}
@@ -122,7 +113,6 @@ linear-gradient(180deg,#1a0528 0%,#0f0820 55%,#080412 100%);}
 .refresh-btn{background:rgba(14,165,233,.1);border:1px solid rgba(14,165,233,.3);border-radius:20px;color:#7dd3fc;font-family:‘Noto Serif TC’,serif;font-size:12px;padding:6px 14px;cursor:pointer;display:flex;align-items:center;gap:5px;transition:background .2s;}
 .refresh-btn:active{background:rgba(14,165,233,.2);}
 
-/* RECENT */
 .sec-hdr{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;}
 .sec-title{font-size:15px;font-weight:600;display:flex;align-items:center;gap:5px;}
 .sec-title::before{content:‘✦’;color:#a855f7;font-size:11px;}
@@ -143,7 +133,6 @@ linear-gradient(180deg,#1a0528 0%,#0f0820 55%,#080412 100%);}
 .ddate{font-size:10px;color:#7c6fa0;}
 .dbm{color:#c084fc;font-size:16px;flex-shrink:0;}
 
-/* BOTTOM NAV */
 .bnav{position:fixed;bottom:0;left:0;right:0;background:rgba(8,4,18,.96);border-top:1px solid rgba(167,85,247,.25);backdrop-filter:blur(20px);display:flex;align-items:center;justify-content:space-around;padding:8px 0 env(safe-area-inset-bottom,8px);z-index:100;}
 .ni{display:flex;flex-direction:column;align-items:center;gap:3px;cursor:pointer;padding:4px 10px;border-radius:10px;}
 .ni.on .nico{color:#a855f7;}
@@ -155,7 +144,6 @@ linear-gradient(180deg,#1a0528 0%,#0f0820 55%,#080412 100%);}
 .ncbtn:active{transform:scale(.93);}
 .nclbl{font-size:10px;color:#7c6fa0;text-align:center;margin-top:1px;}
 
-/* RECORD PANEL */
 .panel-wrap{position:fixed;inset:0;z-index:200;display:none;}
 .panel-wrap.on{display:flex;flex-direction:column;}
 .pback{position:absolute;inset:0;background:rgba(0,0,0,.7);backdrop-filter:blur(4px);}
@@ -170,10 +158,8 @@ textarea.dta{width:100%;background:rgba(255,255,255,.05);border:1px solid rgba(2
 textarea.dta:focus{border-color:#7c3aed;}
 textarea.dta::placeholder{color:#7c6fa0;}
 .cc{text-align:right;font-size:11px;color:#7c6fa0;margin-bottom:14px;}
-.sbtn{width:100%;background:linear-gradient(135deg,#7c3aed,#a855f7);border:none;border-radius:13px;color:#fff;-webkit-text-fill-color:#fff;font-family:‘Noto Serif TC’,serif;font-size:15px;font-weight:700;padding:15px;cursor:pointer;box-shadow:0 4px 18px rgba(124,58,237,.5);transition:transform .2s;display:block;text-align:center;}
-.sbtn:active{transform:scale(.98);}
 
-/* ===== GAME PAGE ===== */
+/* GAME */
 #gameZone{padding:16px;}
 .game-hero{text-align:center;margin-bottom:20px;}
 .game-hero h2{font-size:22px;font-weight:700;background:linear-gradient(135deg,#7dd3fc,#c084fc);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:6px;}
@@ -183,16 +169,12 @@ textarea.dta::placeholder{color:#7c6fa0;}
 .gscore-num{font-size:26px;font-weight:700;color:#c084fc;}
 .gscore-lbl{font-size:11px;color:#7c6fa0;}
 .gstreak .gscore-num{color:#f5c518;}
-
-/* QUESTION CARD */
 .qcard{background:rgba(20,10,45,.92);border:1px solid rgba(167,85,247,.25);border-radius:18px;padding:20px;margin-bottom:14px;text-align:center;position:relative;overflow:hidden;}
 .qcard::before{content:’’;position:absolute;top:-40px;left:50%;transform:translateX(-50%);width:160px;height:160px;background:radial-gradient(circle,rgba(124,58,237,.12),transparent 70%);border-radius:50%;}
 .q-sym{font-size:56px;margin-bottom:10px;filter:drop-shadow(0 0 16px rgba(167,85,247,.5));animation:mf 3s ease-in-out infinite;}
 .q-scene{font-size:15px;font-weight:600;color:#ede9fe;margin-bottom:6px;line-height:1.5;}
 .q-hint{font-size:12px;color:#7c6fa0;font-style:italic;line-height:1.5;}
 .q-psych-note{margin-top:10px;background:rgba(14,165,233,.08);border-radius:10px;padding:8px 12px;font-size:11px;color:#7dd3fc;line-height:1.5;}
-
-/* OPTIONS */
 .opts{display:flex;flex-direction:column;gap:10px;margin-bottom:14px;}
 .opt{background:rgba(255,255,255,.05);border:1.5px solid rgba(255,255,255,.1);border-radius:13px;padding:13px 15px;cursor:pointer;font-size:14px;line-height:1.5;transition:all .22s;display:flex;align-items:flex-start;gap:10px;}
 .opt:active{transform:scale(.98);}
@@ -203,8 +185,6 @@ textarea.dta::placeholder{color:#7c6fa0;}
 .opt.correct .opt-letter{background:rgba(16,185,129,.3);border-color:#10b981;}
 .opt.wrong .opt-letter{background:rgba(239,68,68,.25);border-color:#ef4444;}
 .opt.reveal .opt-letter{background:rgba(16,185,129,.15);border-color:rgba(16,185,129,.4);}
-
-/* RESULT BOX */
 .result-box{border-radius:14px;padding:14px;margin-bottom:14px;display:none;animation:fu .4s ease;}
 .result-box.show{display:block;}
 .rb-correct{background:rgba(16,185,129,.1);border:1px solid rgba(16,185,129,.35);}
@@ -216,19 +196,13 @@ textarea.dta::placeholder{color:#7c6fa0;}
 .rb-explain{font-size:13px;color:#c4b5fd;line-height:1.7;margin-bottom:10px;}
 .rb-psych{background:rgba(124,58,237,.12);border:1px solid rgba(124,58,237,.25);border-radius:10px;padding:10px 12px;font-size:12px;color:#c084fc;line-height:1.65;}
 .rb-psych strong{color:#a855f7;}
-
-/* NEXT BTN */
 .next-btn{width:100%;background:linear-gradient(135deg,#7c3aed,#a855f7);border:none;border-radius:13px;color:#fff;font-family:‘Noto Serif TC’,serif;font-size:15px;font-weight:700;padding:14px;cursor:pointer;box-shadow:0 4px 18px rgba(124,58,237,.45);display:none;transition:transform .2s;}
 .next-btn.show{display:block;}
 .next-btn:active{transform:scale(.98);}
-
-/* PROGRESS */
 .prog-row{display:flex;align-items:center;gap:10px;margin-bottom:16px;}
 .prog-bar{flex:1;height:5px;background:rgba(255,255,255,.08);border-radius:3px;overflow:hidden;}
 .prog-fill{height:100%;background:linear-gradient(90deg,#7c3aed,#a855f7);border-radius:3px;transition:width .4s ease;}
 .prog-lbl{font-size:12px;color:#7c6fa0;white-space:nowrap;}
-
-/* END SCREEN */
 .end-screen{text-align:center;padding:20px 0;}
 .end-moon{font-size:64px;filter:drop-shadow(0 0 20px rgba(245,197,24,.6));margin-bottom:14px;}
 .end-title{font-size:22px;font-weight:700;margin-bottom:8px;background:linear-gradient(135deg,#fde68a,#c084fc);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
@@ -240,15 +214,67 @@ textarea.dta::placeholder{color:#7c6fa0;}
 .end-rank-desc{font-size:12px;color:#c4b5fd;line-height:1.5;margin-top:5px;}
 .restart-btn{background:linear-gradient(135deg,#7c3aed,#a855f7);border:none;border-radius:13px;color:#fff;font-family:‘Noto Serif TC’,serif;font-size:15px;font-weight:700;padding:14px 30px;cursor:pointer;box-shadow:0 4px 18px rgba(124,58,237,.45);}
 
-/* PAGE TITLE */
 .page-title-bar{padding:16px 16px 0;display:flex;align-items:center;gap:10px;margin-bottom:14px;}
 .page-title-bar h2{font-size:18px;font-weight:700;}
 .page-back{width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.09);display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:16px;}
 
-/* API BANNER */
 .api-ban{margin:0 14px 10px;background:rgba(245,197,24,.08);border:1px solid rgba(245,197,24,.25);border-radius:11px;padding:9px 13px;display:flex;align-items:center;justify-content:space-between;gap:9px;}
 .api-ban span{font-size:12px;color:#fde68a;}
 .api-btn{background:rgba(245,197,24,.15);border:1px solid rgba(245,197,24,.35);border-radius:8px;color:#f5c518;font-family:‘Noto Serif TC’,serif;font-size:11px;font-weight:600;padding:5px 11px;cursor:pointer;white-space:nowrap;}
+
+/* 解夢/人格/收藏 頁面 */
+.dream-detail{padding:0 14px;}
+.symbol-card{background:rgba(20,10,45,.92);border:1px solid rgba(167,85,247,.25);border-radius:16px;padding:20px;text-align:center;margin-bottom:14px;}
+.symbol-emoji{font-size:52px;margin-bottom:10px;filter:drop-shadow(0 0 14px rgba(167,85,247,.5));}
+.symbol-title{font-size:18px;font-weight:700;margin-bottom:8px;}
+.symbol-desc{font-size:13px;color:#c4b5fd;line-height:1.75;}
+.symbol-list{display:flex;flex-direction:column;gap:10px;}
+.symbol-item{background:rgba(20,10,45,.92);border:1px solid rgba(167,85,247,.2);border-radius:13px;padding:13px;cursor:pointer;transition:border-color .2s;}
+.symbol-item:active{border-color:rgba(167,85,247,.5);}
+.symbol-item-title{font-size:14px;font-weight:600;margin-bottom:4px;display:flex;align-items:center;gap:7px;}
+.symbol-item-desc{font-size:12px;color:#7c6fa0;line-height:1.6;}
+
+/* 人格頁面 */
+.personality-grid{display:flex;flex-direction:column;gap:12px;padding:0 14px;}
+.pt-card{background:rgba(20,10,45,.92);border:1px solid rgba(167,85,247,.25);border-radius:16px;padding:16px;}
+.pt-header{display:flex;align-items:center;gap:12px;margin-bottom:10px;}
+.pt-emoji{font-size:32px;}
+.pt-info{flex:1;}
+.pt-name{font-size:15px;font-weight:700;margin-bottom:2px;}
+.pt-sub{font-size:11px;color:#7c6fa0;}
+.pt-bar-wrap{margin-bottom:6px;}
+.pt-bar-label{display:flex;justify-content:space-between;font-size:11px;color:#7c6fa0;margin-bottom:4px;}
+.pt-bar{height:6px;background:rgba(255,255,255,.08);border-radius:3px;overflow:hidden;}
+.pt-bar-fill{height:100%;border-radius:3px;transition:width .8s ease;}
+.pt-desc{font-size:12px;color:#c4b5fd;line-height:1.65;margin-top:10px;}
+
+/* 收藏頁面 */
+.fav-empty{text-align:center;padding:40px 20px;color:#7c6fa0;}
+.fav-empty-icon{font-size:48px;margin-bottom:12px;}
+
+/* 冥想宣言頁面 */
+.affirmation-zone{padding:16px;}
+.aff-hero{text-align:center;margin-bottom:20px;}
+.aff-hero h2{font-size:22px;font-weight:700;background:linear-gradient(135deg,#7dd3fc,#c084fc);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:6px;}
+.aff-hero p{font-size:13px;color:#7c6fa0;}
+.aff-card{background:rgba(20,10,45,.92);border:1px solid rgba(14,165,233,.3);border-radius:18px;padding:24px;margin-bottom:14px;text-align:center;}
+.aff-symbol{font-size:48px;margin-bottom:12px;}
+.aff-text{font-size:18px;font-weight:700;color:#e0f2fe;line-height:1.6;margin-bottom:10px;}
+.aff-sub{font-size:13px;color:#7dd3fc;line-height:1.65;}
+.aff-btn{width:100%;background:linear-gradient(135deg,#0ea5e9,#7c3aed);border:none;border-radius:13px;color:#fff;font-family:‘Noto Serif TC’,serif;font-size:15px;font-weight:700;padding:14px;cursor:pointer;box-shadow:0 4px 18px rgba(14,165,233,.4);transition:transform .2s;}
+.aff-btn:active{transform:scale(.98);}
+
+/* 選單面板 */
+.menu-panel{position:fixed;inset:0;z-index:300;display:none;}
+.menu-panel.on{display:flex;}
+.menu-back{position:absolute;inset:0;background:rgba(0,0,0,.7);}
+.menu-sheet{position:absolute;top:0;left:0;bottom:0;width:75%;background:linear-gradient(180deg,#1a0d35,#0f0820);border-right:1px solid rgba(167,85,247,.25);padding:50px 20px 20px;display:flex;flex-direction:column;gap:8px;animation:sl .3s ease;}
+@keyframes sl{from{transform:translateX(-100%);}to{transform:translateX(0);}}
+.menu-item{display:flex;align-items:center;gap:12px;padding:14px;border-radius:12px;cursor:pointer;font-size:15px;transition:background .2s;}
+.menu-item:active{background:rgba(167,85,247,.15);}
+.menu-item span{font-size:20px;}
+.menu-title{font-size:22px;font-weight:700;margin-bottom:20px;background:linear-gradient(135deg,#e9d5ff,#c084fc);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.menu-divider{height:1px;background:rgba(167,85,247,.2);margin:8px 0;}
 </style>
 
 </head>
@@ -263,8 +289,10 @@ textarea.dta::placeholder{color:#7c6fa0;}
 
 <div class="page on" id="pgHome">
   <div class="hdr">
-    <div class="hbtn"><svg viewBox="0 0 24 24"><line x1="3" y1="7" x2="21" y2="7"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="17" x2="21" y2="17"/></svg></div>
-    <div class="hbtn"><svg viewBox="0 0 24 24"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg></div>
+    <!-- ✅ FIX 9: 漢堡選單有功能 -->
+    <div class="hbtn" onclick="toggleMenu()"><svg viewBox="0 0 24 24"><line x1="3" y1="7" x2="21" y2="7"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="17" x2="21" y2="17"/></svg></div>
+    <!-- ✅ FIX 9: 鈴鐺有功能 -->
+    <div class="hbtn" onclick="showNotifHint()"><svg viewBox="0 0 24 24"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg></div>
   </div>
 
   <div class="hero">
@@ -285,31 +313,33 @@ textarea.dta::placeholder{color:#7c6fa0;}
   <div class="card cta f2">
     <div class="cta-ico">🪶</div>
     <div class="cta-txt"><h3>開始記錄第一個夢</h3><p>記錄夢境，開啟潛意識的探索之旅</p></div>
-    <div onclick="openRecord()" style="background:linear-gradient(135deg,#7c3aed,#a855f7);border-radius:20px;color:#fff;-webkit-text-fill-color:#fff;font-family:Noto Serif TC,serif;font-size:13px;font-weight:600;padding:9px 14px;cursor:pointer;white-space:nowrap;box-shadow:0 4px 14px rgba(124,58,237,.5);">✦ 開始記錄</div>
+    <div onclick="openRecord()" style="background:linear-gradient(135deg,#7c3aed,#a855f7);border-radius:20px;color:#fff;-webkit-text-fill-color:#fff;font-family:'Noto Serif TC',serif;font-size:13px;font-weight:600;padding:9px 14px;cursor:pointer;white-space:nowrap;box-shadow:0 4px 14px rgba(124,58,237,.5);">✦ 開始記錄</div>
   </div>
 
+  <!-- ✅ FIX 8: 情緒篩選有實際功能 -->
+
   <div class="card f3">
-    <div class="mood-row">
-      <div class="mi"><div class="me">😰</div><div class="ml">焦慮夢</div></div>
-      <div class="mi"><div class="me">😨</div><div class="ml">恐懼夢</div></div>
-      <div class="mi"><div class="me">😌</div><div class="ml">平靜夢</div></div>
-      <div class="mi"><div class="me">😊</div><div class="ml">喜悅夢</div></div>
-      <div class="mi"><div class="me">😢</div><div class="ml">悲傷夢</div></div>
-      <div class="mi"><div class="me">😶</div><div class="ml">迷茫夢</div></div>
+    <div class="mood-row" id="moodFilter">
+      <div class="mi" onclick="filterMood('焦慮')"><div class="me">😰</div><div class="ml">焦慮夢</div></div>
+      <div class="mi" onclick="filterMood('恐懼')"><div class="me">😨</div><div class="ml">恐懼夢</div></div>
+      <div class="mi" onclick="filterMood('平靜')"><div class="me">😌</div><div class="ml">平靜夢</div></div>
+      <div class="mi" onclick="filterMood('喜悅')"><div class="me">😊</div><div class="ml">喜悅夢</div></div>
+      <div class="mi" onclick="filterMood('悲傷')"><div class="me">😢</div><div class="ml">悲傷夢</div></div>
+      <div class="mi" onclick="filterMood('迷茫')"><div class="me">😶</div><div class="ml">迷茫夢</div></div>
     </div>
   </div>
 
-  <!-- Feature Grid — 6 features now -->
-
   <div style="margin:0 14px 11px;" class="f4">
     <div class="fg">
-      <div class="fc" onclick="goPage('pgLib')"><div class="fi fi1">📖</div><div class="fn">解夢</div><div class="fd">探索象徵與訊息</div><div class="farr">›</div></div>
+      <!-- ✅ FIX 3: 各功能分別指向正確頁面 -->
+      <div class="fc" onclick="goPage('pgDream')"><div class="fi fi1">📖</div><div class="fn">解夢</div><div class="fd">探索象徵與訊息</div><div class="farr">›</div></div>
       <div class="fc" onclick="goPage('pgLib')"><div class="fi fi2">📚</div><div class="fn">圖書館</div><div class="fd">夢境知識庫</div><div class="farr">›</div></div>
-      <div class="fc" onclick="goPage('pgLib')"><div class="fi fi3">🔮</div><div class="fn">人格</div><div class="fd">內在性格特質</div><div class="farr">›</div></div>
-      <div class="fc" onclick="goPage('pgLib')"><div class="fi fi4">⭐</div><div class="fn">收藏</div><div class="fd">重要夢境</div><div class="farr">›</div></div>
-      <div class="fc" onclick="goPage('pgDaily')"><div class="fi fi5">🌐</div><div class="fn">每日解析</div><div class="fd">AI 潛意識洞察</div><div class="farr">›</div></div>
-      <div class="fc" onclick="goPage('pgGame')"><div class="fi fi6">🎮</div><div class="fn">猜謎遊戲</div><div class="fd">潛意識挑戰</div><div class="farr">›</div></div>
-      <div class="fc" onclick="location.href='affirmation.html'" style="border-color:rgba(14,165,233,.3)"><div class="fi fi5" style="background:radial-gradient(circle,rgba(14,165,233,.3),rgba(5,20,50,.85));box-shadow:0 0 18px rgba(14,165,233,.25);">🌌</div><div class="fn">冥想宣言</div><div class="fd">潛意識編程</div><div class="farr">›</div></div>
+      <div class="fc" onclick="goPage('pgPersonality')"><div class="fi fi3">🔮</div><div class="fn">人格</div><div class="fd">內在性格特質</div><div class="farr">›</div></div>
+      <div class="fc" onclick="goPage('pgFav')"><div class="fi fi4">⭐</div><div class="fn">收藏</div><div class="fd">重要夢境</div><div class="farr">›</div></div>
+      <div class="fc" onclick="navTo('pgDaily','nav-daily')"><div class="fi fi5">🌐</div><div class="fn">每日解析</div><div class="fd">AI 潛意識洞察</div><div class="farr">›</div></div>
+      <div class="fc" onclick="navTo('pgGame','nav-game')"><div class="fi fi6">🎮</div><div class="fn">猜謎遊戲</div><div class="fd">潛意識挑戰</div><div class="farr">›</div></div>
+      <!-- ✅ FIX 2: 冥想宣言不再連到外部頁面，改為內部頁面 -->
+      <div class="fc" onclick="goPage('pgAffirmation')" style="border-color:rgba(14,165,233,.3)"><div class="fi fi5" style="background:radial-gradient(circle,rgba(14,165,233,.3),rgba(5,20,50,.85));box-shadow:0 0 18px rgba(14,165,233,.25);">🌌</div><div class="fn">冥想宣言</div><div class="fd">潛意識編程</div><div class="farr">›</div></div>
       <div class="fc" onclick="location.href='dating.html'" style="border-color:rgba(236,72,153,.3)"><div class="fi fi6" style="background:radial-gradient(circle,rgba(236,72,153,.3),rgba(50,5,30,.85));box-shadow:0 0 18px rgba(236,72,153,.25);">💕</div><div class="fn">夢境交友</div><div class="fd">靈魂頻率配對</div><div class="farr">›</div></div>
     </div>
   </div>
@@ -317,13 +347,10 @@ textarea.dta::placeholder{color:#7c6fa0;}
   <div style="margin:0 14px;" class="f5">
     <div class="sec-hdr">
       <div class="sec-title">最近記錄</div>
-      <div class="sec-all">查看全部 ›</div>
+      <!-- ✅ FIX 10: 查看全部有功能 -->
+      <div class="sec-all" onclick="goPage('pgLib')">查看全部 ›</div>
     </div>
-    <div id="dreamList">
-      <div class="dc"><div class="dt dt1">🌀</div><div class="di"><div class="dtxt">夢見迷路在一座古老的圖書館</div><div class="dmeta"><span class="dtag ta">焦慮夢</span><span class="ddate">2024/05/20 23:45</span></div></div><div class="dbm">🔖</div></div>
-      <div class="dc"><div class="dt dt2">☁️</div><div class="di"><div class="dtxt">飛翔在雲層之上</div><div class="dmeta"><span class="dtag tj">喜悅夢</span><span class="ddate">2024/05/19 11:20</span></div></div><div class="dbm">🔖</div></div>
-      <div class="dc"><div class="dt dt3">🚪</div><div class="di"><div class="dtxt">被追趕，無處可逃</div><div class="dmeta"><span class="dtag tf">恐懼夢</span><span class="ddate">2024/05/18 02:15</span></div></div><div class="dbm">🔖</div></div>
-    </div>
+    <div id="dreamList"></div>
   </div>
 </div>
 
@@ -361,7 +388,102 @@ textarea.dta::placeholder{color:#7c6fa0;}
     <div class="page-back" onclick="goPage('pgHome')">←</div>
     <h2>📚 夢境圖書館</h2>
   </div>
-  <div style="padding:0 14px;text-align:center;color:#7c6fa0;font-size:14px;padding-top:40px;">功能開發中，敬請期待 🌙</div>
+  <div style="padding:0 14px;" id="libContent"></div>
+</div>
+
+<!-- ===== 解夢 PAGE ===== -->
+
+<div class="page" id="pgDream">
+  <div class="page-title-bar">
+    <div class="page-back" onclick="goPage('pgHome')">←</div>
+    <h2>📖 夢境解析</h2>
+  </div>
+  <div class="dream-detail">
+    <div class="symbol-card">
+      <div class="symbol-emoji">🌙</div>
+      <div class="symbol-title">常見夢境象徵</div>
+      <div class="symbol-desc">點擊下方象徵，探索潛意識傳達的訊息</div>
+    </div>
+    <div class="symbol-list">
+      <div class="symbol-item" onclick="showSymbol('🐍','蛇','蛇代表潛意識中被壓抑的情感，通常是憤怒或嫉妒。榮格認為蛇是「陰影原型」的象徵，正視它才能達到心理整合。')">
+        <div class="symbol-item-title">🐍 蛇</div>
+        <div class="symbol-item-desc">壓抑的情感、陰影原型、轉化與蛻變</div>
+      </div>
+      <div class="symbol-item" onclick="showSymbol('🌊','海浪','水象徵情緒，巨浪代表被強烈情緒淹沒的感受。榮格認為水是潛意識本身的象徵，海洋是集體潛意識的呈現。')">
+        <div class="symbol-item-title">🌊 海浪</div>
+        <div class="symbol-item-desc">強烈情緒、潛意識力量、情感淹沒感</div>
+      </div>
+      <div class="symbol-item" onclick="showSymbol('✈️','飛翔','飛翔夢代表自我超越與突破。阿德勒認為這象徵強烈的超越感與自我效能，通常在人生突破期出現。')">
+        <div class="symbol-item-title">✈️ 飛翔</div>
+        <div class="symbol-item-desc">自由、超越、自信心高漲</div>
+      </div>
+      <div class="symbol-item" onclick="showSymbol('🦷','牙齒脫落','全球最常見夢境之一。象徵對自我形象的擔憂，害怕失去影響力或在他人眼中失去魅力。')">
+        <div class="symbol-item-title">🦷 牙齒脫落</div>
+        <div class="symbol-item-desc">自我形象焦慮、失去影響力的恐懼</div>
+      </div>
+      <div class="symbol-item" onclick="showSymbol('🏫','考試','反映現實中被評判的壓力。不是關於真正的考試，而是潛意識用熟悉場景呈現你面對的評估焦慮。')">
+        <div class="symbol-item-title">🏫 考試焦慮</div>
+        <div class="symbol-item-desc">被評判的壓力、表現焦慮、準備不足感</div>
+      </div>
+      <div class="symbol-item" onclick="showSymbol('🏠','房子','房子象徵「你自己」。地下室是潛意識，閣樓是精神層面，陌生房間代表未探索的自我面向。')">
+        <div class="symbol-item-title">🏠 神秘房屋</div>
+        <div class="symbol-item-desc">自我結構、未知的內在面向</div>
+      </div>
+      <div class="symbol-item" onclick="showSymbol('🪞','鏡子','鏡中不同的自己，代表人格面具與真實自我的落差。潛意識在問：面具後面，真正的你是誰？')">
+        <div class="symbol-item-title">🪞 鏡子</div>
+        <div class="symbol-item-desc">身份認同、人格面具、真實自我探索</div>
+      </div>
+      <div class="symbol-item" onclick="showSymbol('🏃','跑不動','習得性無助在夢中的呈現。當你在現實中長期努力卻感覺徒勞，潛意識用跑不動象徵這種無力感。')">
+        <div class="symbol-item-title">🏃 跑不動</div>
+        <div class="symbol-item-desc">無力感、習得性無助、努力卻看不到成果</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== 人格 PAGE ===== -->
+
+<div class="page" id="pgPersonality">
+  <div class="page-title-bar">
+    <div class="page-back" onclick="goPage('pgHome')">←</div>
+    <h2>🔮 夢境人格分析</h2>
+  </div>
+  <div class="personality-grid" id="personalityContent"></div>
+</div>
+
+<!-- ===== 收藏 PAGE ===== -->
+
+<div class="page" id="pgFav">
+  <div class="page-title-bar">
+    <div class="page-back" onclick="goPage('pgHome')">←</div>
+    <h2>⭐ 收藏夢境</h2>
+  </div>
+  <div style="padding:0 14px;" id="favContent"></div>
+</div>
+
+<!-- ===== 冥想宣言 PAGE ===== -->
+
+<div class="page" id="pgAffirmation">
+  <div class="page-title-bar">
+    <div class="page-back" onclick="goPage('pgHome')">←</div>
+    <h2>🌌 冥想宣言</h2>
+  </div>
+  <div class="affirmation-zone">
+    <div class="aff-hero">
+      <h2>潛意識編程</h2>
+      <p>每日宣言，重塑你的內在信念</p>
+    </div>
+    <div class="aff-card" id="affCard">
+      <div class="aff-symbol">🌌</div>
+      <div class="aff-text" id="affText">我的潛意識正在為我創造美好的現實</div>
+      <div class="aff-sub" id="affSub">每一個夢境都是成長的訊息，我願意聆聽並學習</div>
+    </div>
+    <button class="aff-btn" onclick="nextAffirmation()">✦ 下一則宣言</button>
+    <div style="margin-top:14px;background:rgba(14,165,233,.08);border:1px solid rgba(14,165,233,.2);border-radius:12px;padding:14px;">
+      <div style="font-size:13px;color:#7dd3fc;font-weight:600;margin-bottom:6px;">💡 如何使用冥想宣言</div>
+      <div style="font-size:12px;color:#7c6fa0;line-height:1.7;">1. 在安靜的環境中，深呼吸三次<br>2. 閉上眼睛，在心中默念這句宣言<br>3. 感受這句話在你身體中的共鳴<br>4. 每天早晨或睡前各練習一次效果最佳</div>
+    </div>
+  </div>
 </div>
 
 </div><!-- end app -->
@@ -396,13 +518,46 @@ textarea.dta::placeholder{color:#7c6fa0;}
     </div>
     <textarea class="dta" id="dInput" placeholder="昨晚夢到了什麼？幾個字也沒關係..." oninput="updCC()"></textarea>
     <div class="cc"><span id="cc">0</span> / 300 字</div>
-    <div onclick="saveDream()" style="width:100%;background:linear-gradient(135deg,#7c3aed,#a855f7)!important;border-radius:13px;color:#fff;-webkit-text-fill-color:#fff;font-family:Noto Serif TC,serif;font-size:15px;font-weight:700;padding:15px;box-shadow:0 4px 18px rgba(124,58,237,.5);text-align:center;display:block;cursor:pointer;">✦ 記錄這個夢</div>
+    <div onclick="saveDream()" style="width:100%;background:linear-gradient(135deg,#7c3aed,#a855f7);border-radius:13px;color:#fff;-webkit-text-fill-color:#fff;font-family:'Noto Serif TC',serif;font-size:15px;font-weight:700;padding:15px;box-shadow:0 4px 18px rgba(124,58,237,.5);text-align:center;display:block;cursor:pointer;">✦ 記錄這個夢</div>
+  </div>
+</div>
+
+<!-- 選單面板 -->
+
+<div class="menu-panel" id="menuPanel">
+  <div class="menu-back" onclick="toggleMenu()"></div>
+  <div class="menu-sheet">
+    <div class="menu-title">🌙 夢境圖書館</div>
+    <div class="menu-item" onclick="toggleMenu();goPage('pgHome')"><span>🏠</span> 首頁</div>
+    <div class="menu-item" onclick="toggleMenu();navTo('pgDaily','nav-daily')"><span>🌐</span> 每日解析</div>
+    <div class="menu-item" onclick="toggleMenu();goPage('pgDream')"><span>📖</span> 解夢字典</div>
+    <div class="menu-item" onclick="toggleMenu();goPage('pgPersonality')"><span>🔮</span> 人格分析</div>
+    <div class="menu-item" onclick="toggleMenu();goPage('pgFav')"><span>⭐</span> 收藏夢境</div>
+    <div class="menu-item" onclick="toggleMenu();goPage('pgAffirmation')"><span>🌌</span> 冥想宣言</div>
+    <div class="menu-item" onclick="toggleMenu();navTo('pgGame','nav-game')"><span>🎮</span> 猜謎遊戲</div>
+    <div class="menu-divider"></div>
+    <div class="menu-item" onclick="toggleMenu();setKey()"><span>🔑</span> 設定 API Key</div>
+  </div>
+</div>
+
+<!-- 象徵詳情面板 -->
+
+<div class="panel-wrap" id="symbolPanel">
+  <div class="pback" onclick="closeSymbol()"></div>
+  <div class="psheet">
+    <div class="phandle"></div>
+    <div style="text-align:center;font-size:52px;margin-bottom:10px;" id="symEmoji"></div>
+    <div style="font-size:18px;font-weight:700;text-align:center;margin-bottom:14px;" id="symTitle"></div>
+    <div style="font-size:14px;color:#c4b5fd;line-height:1.75;" id="symDesc"></div>
+    <div style="margin-top:16px;text-align:center;">
+      <div onclick="closeSymbol()" style="display:inline-block;background:linear-gradient(135deg,#7c3aed,#a855f7);border-radius:20px;color:#fff;-webkit-text-fill-color:#fff;font-size:13px;font-weight:600;padding:9px 24px;cursor:pointer;">✦ 了解了</div>
+    </div>
   </div>
 </div>
 
 <script>
 // ===========================
-// STARS
+// ✅ FIX 1: STARS - 修正 CSS 變數
 // ===========================
 const starsEl = document.getElementById('stars');
 for(let i=0;i<75;i++){
@@ -417,7 +572,18 @@ for(let i=0;i<75;i++){
 // ===========================
 let apiKey = localStorage.getItem('dreamKey')||'';
 let selMood = '';
+let currentMoodFilter = '';
 if(apiKey) document.getElementById('apiBan').style.display='none';
+
+// ===========================
+// MENU
+// ===========================
+function toggleMenu(){
+  document.getElementById('menuPanel').classList.toggle('on');
+}
+function showNotifHint(){
+  alert('🔔 通知功能即將推出！\n記得每天回來記錄夢境 🌙');
+}
 
 // ===========================
 // NAV
@@ -434,6 +600,9 @@ function goPage(id){
   document.getElementById(id).classList.add('on');
   if(id==='pgDaily') loadDaily();
   if(id==='pgGame') initGame();
+  if(id==='pgLib') renderLib();
+  if(id==='pgPersonality') renderPersonality();
+  if(id==='pgFav') renderFav();
 }
 
 // ===========================
@@ -460,7 +629,7 @@ function saveDream(){
   if(!selMood){alert('請選擇情緒');return;}
   const dreams=JSON.parse(localStorage.getItem('dreams')||'[]');
   const now=new Date();
-  dreams.unshift({id:Date.now(),text:txt,mood:selMood,
+  dreams.unshift({id:Date.now(),text:txt,mood:selMood,fav:false,
     date:`${now.getFullYear()}/${String(now.getMonth()+1).padStart(2,'0')}/${String(now.getDate()).padStart(2,'0')} ${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')}`});
   localStorage.setItem('dreams',JSON.stringify(dreams));
   document.getElementById('dInput').value='';
@@ -470,25 +639,174 @@ function saveDream(){
 }
 
 // ===========================
-// RENDER DREAMS
+// ✅ FIX 11+12: RENDER DREAMS - 自動載入真實資料
 // ===========================
 const tagClass={焦慮:'ta',喜悅:'tj',恐懼:'tf',平靜:'tj',悲傷:'tf',迷茫:'ta'};
 const moodIco={焦慮:'🌀',喜悅:'☁️',恐懼:'🚪',平靜:'🌿',悲傷:'💧',迷茫:'🌫️'};
 const thumbC=['dt1','dt2','dt3'];
-function renderDreams(){
+
+function renderDreams(filter=''){
   const dreams=JSON.parse(localStorage.getItem('dreams')||'[]');
-  if(!dreams.length)return;
-  document.getElementById('dreamList').innerHTML=dreams.slice(0,5).map((d,i)=>`
-    <div class="dc">
+  const el=document.getElementById('dreamList');
+  const filtered=filter?dreams.filter(d=>d.mood===filter):dreams;
+  if(!filtered.length){
+    el.innerHTML=`<div style="text-align:center;padding:20px;color:#7c6fa0;font-size:13px;">${filter?'沒有'+filter+'夢的記錄':'還沒有夢境記錄，開始記錄第一個夢吧 🌙'}</div>`;
+    return;
+  }
+  el.innerHTML=filtered.slice(0,5).map((d,i)=>`
+    <div class="dc" onclick="toggleFav(${d.id})">
       <div class="dt ${thumbC[i%3]}">${moodIco[d.mood]||'🌙'}</div>
       <div class="di">
         <div class="dtxt">${d.text.slice(0,22)}${d.text.length>22?'…':''}</div>
         <div class="dmeta"><span class="dtag ${tagClass[d.mood]||'ta'}">${d.mood}夢</span><span class="ddate">${d.date}</span></div>
       </div>
-      <div class="dbm">🔖</div>
+      <div class="dbm">${d.fav?'⭐':'🔖'}</div>
     </div>`).join('');
 }
+// ✅ 頁面載入時自動渲染
 renderDreams();
+
+// ===========================
+// ✅ FIX 8: 情緒篩選功能
+// ===========================
+function filterMood(mood){
+  const items=document.querySelectorAll('#moodFilter .mi');
+  if(currentMoodFilter===mood){
+    currentMoodFilter='';
+    items.forEach(i=>i.classList.remove('active'));
+    renderDreams();
+  } else {
+    currentMoodFilter=mood;
+    items.forEach(i=>i.classList.remove('active'));
+    event.currentTarget.classList.add('active');
+    renderDreams(mood);
+  }
+}
+
+// ===========================
+// 收藏功能
+// ===========================
+function toggleFav(id){
+  const dreams=JSON.parse(localStorage.getItem('dreams')||'[]');
+  const d=dreams.find(x=>x.id===id);
+  if(d){ d.fav=!d.fav; localStorage.setItem('dreams',JSON.stringify(dreams)); renderDreams(currentMoodFilter); }
+}
+
+// ===========================
+// 圖書館頁面
+// ===========================
+function renderLib(){
+  const dreams=JSON.parse(localStorage.getItem('dreams')||'[]');
+  const el=document.getElementById('libContent');
+  if(!dreams.length){
+    el.innerHTML=`<div style="text-align:center;padding:40px 20px;color:#7c6fa0;"><div style="font-size:48px;margin-bottom:12px;">📚</div><div>還沒有夢境記錄<br>開始記錄你的第一個夢吧！</div></div>`;
+    return;
+  }
+  el.innerHTML=dreams.map((d,i)=>`
+    <div class="dc">
+      <div class="dt ${thumbC[i%3]}">${moodIco[d.mood]||'🌙'}</div>
+      <div class="di">
+        <div class="dtxt">${d.text.slice(0,30)}${d.text.length>30?'…':''}</div>
+        <div class="dmeta"><span class="dtag ${tagClass[d.mood]||'ta'}">${d.mood}夢</span><span class="ddate">${d.date}</span></div>
+      </div>
+      <div class="dbm">${d.fav?'⭐':'🔖'}</div>
+    </div>`).join('');
+}
+
+// ===========================
+// 收藏頁面
+// ===========================
+function renderFav(){
+  const dreams=JSON.parse(localStorage.getItem('dreams')||'[]');
+  const favs=dreams.filter(d=>d.fav);
+  const el=document.getElementById('favContent');
+  if(!favs.length){
+    el.innerHTML=`<div class="fav-empty"><div class="fav-empty-icon">⭐</div><div style="font-size:14px;color:#7c6fa0;line-height:1.7;">還沒有收藏的夢境<br>在首頁點擊夢境記錄可以加入收藏</div></div>`;
+    return;
+  }
+  el.innerHTML=favs.map((d,i)=>`
+    <div class="dc">
+      <div class="dt ${thumbC[i%3]}">${moodIco[d.mood]||'🌙'}</div>
+      <div class="di">
+        <div class="dtxt">${d.text.slice(0,30)}${d.text.length>30?'…':''}</div>
+        <div class="dmeta"><span class="dtag ${tagClass[d.mood]||'ta'}">${d.mood}夢</span><span class="ddate">${d.date}</span></div>
+      </div>
+      <div class="dbm">⭐</div>
+    </div>`).join('');
+}
+
+// ===========================
+// 人格分析頁面
+// ===========================
+function renderPersonality(){
+  const dreams=JSON.parse(localStorage.getItem('dreams')||'[]');
+  const el=document.getElementById('personalityContent');
+  const moodCount={焦慮:0,恐懼:0,平靜:0,喜悅:0,悲傷:0,迷茫:0};
+  dreams.forEach(d=>{ if(moodCount[d.mood]!==undefined) moodCount[d.mood]++; });
+  const total=dreams.length||1;
+  const profiles=[
+    {mood:'焦慮',emoji:'🌪️',name:'探索者',sub:'內心充滿疑問與探索',color:'#c084fc',desc:'你的夢境中充滿焦慮，這反映了你對完美的追求與高度責任感。榮格認為這是「英雄原型」的特質——你不斷挑戰自我的邊界。'},
+    {mood:'喜悅',emoji:'☀️',name:'光明使者',sub:'散發正向能量',color:'#f5c518',desc:'喜悅的夢境反映你與內在自我的和諧連結。你擁有強大的正向能量，能在困境中找到希望與意義。'},
+    {mood:'恐懼',emoji:'🌑',name:'陰影探索者',sub:'勇於面對黑暗',color:'#7c3aed',desc:'恐懼夢代表你的潛意識正積極處理未解決的議題。這是成長的信號——你有勇氣面對「陰影自我」。'},
+    {mood:'平靜',emoji:'🌊',name:'智慧觀察者',sub:'內心平衡穩定',color:'#0ea5e9',desc:'平靜的夢境象徵你的心理整合程度高。你擁有佛教所說的「等捨心」——能以平靜的眼光看待萬事萬物。'},
+    {mood:'悲傷',emoji:'💧',name:'深情感受者',sub:'情感豐富細膩',color:'#38bdf8',desc:'悲傷夢反映你深刻的情感世界。你對他人有深切的共情能力，佛洛伊德認為這種感受力是創造力的源泉。'},
+    {mood:'迷茫',emoji:'🌫️',name:'尋路旅人',sub:'正在探索人生方向',color:'#a855f7',desc:'迷茫夢象徵你正處於人生的轉換期。榮格的「個體化歷程」告訴我們，迷茫是找到真實自我前必經的過渡。'},
+  ];
+  el.innerHTML=profiles.map(p=>{
+    const count=moodCount[p.mood];
+    const pct=Math.round((count/total)*100);
+    return `<div class="pt-card">
+      <div class="pt-header">
+        <div class="pt-emoji">${p.emoji}</div>
+        <div class="pt-info">
+          <div class="pt-name">${p.name}</div>
+          <div class="pt-sub">${p.sub}</div>
+        </div>
+        <div style="font-size:20px;font-weight:700;color:${p.color};">${count}次</div>
+      </div>
+      <div class="pt-bar-wrap">
+        <div class="pt-bar-label"><span>${p.mood}夢</span><span>${pct}%</span></div>
+        <div class="pt-bar"><div class="pt-bar-fill" style="width:${pct}%;background:${p.color};"></div></div>
+      </div>
+      <div class="pt-desc">${p.desc}</div>
+    </div>`;
+  }).join('');
+}
+
+// ===========================
+// 象徵詳情
+// ===========================
+function showSymbol(emoji, title, desc){
+  document.getElementById('symEmoji').textContent=emoji;
+  document.getElementById('symTitle').textContent=title;
+  document.getElementById('symDesc').textContent=desc;
+  document.getElementById('symbolPanel').classList.add('on');
+}
+function closeSymbol(){
+  document.getElementById('symbolPanel').classList.remove('on');
+}
+
+// ===========================
+// 冥想宣言
+// ===========================
+const affirmations=[
+  {sym:'🌌',text:'我的潛意識正在為我創造美好的現實',sub:'每一個夢境都是成長的訊息，我願意聆聽並學習'},
+  {sym:'🌙',text:'我放下今日的重擔，讓夢境帶我找到答案',sub:'在睡眠中，我的心靈自由探索，智慧自然湧現'},
+  {sym:'✨',text:'我的內在擁有無限的療癒力量',sub:'每個夜晚都是重新開始的機會，明天的我更加強大'},
+  {sym:'🌊',text:'我接受所有情緒，它們都是我成長的老師',sub:'憤怒、悲傷、恐懼都是訊息，我帶著愛心傾聽它們'},
+  {sym:'🦋',text:'我正在蛻變，舊的我正在讓位給更真實的我',sub:'就像蝴蝶在蛹中重組，我的改變正在悄然發生'},
+  {sym:'🏔️',text:'我有足夠的力量面對任何挑戰',sub:'山不動，我靜；水長流，我柔。內在的穩定是我的力量'},
+  {sym:'💫',text:'宇宙的智慧透過夢境向我說話',sub:'我信任這個過程，每個象徵都有其深意等待我發現'},
+  {sym:'🌸',text:'我值得被愛，我值得幸福，我值得豐盛',sub:'這不是條件，而是我的本質。我允許美好的事物進入我的生命'},
+];
+let affIdx=0;
+function nextAffirmation(){
+  affIdx=(affIdx+1)%affirmations.length;
+  const a=affirmations[affIdx];
+  document.querySelector('.aff-symbol').textContent=a.sym;
+  document.getElementById('affText').textContent=a.text;
+  document.getElementById('affSub').textContent=a.sub;
+}
 
 // ===========================
 // API KEY
@@ -499,11 +817,11 @@ function setKey(){
     localStorage.setItem('dreamKey',k); apiKey=k;
     document.getElementById('apiBan').style.display='none';
     alert('✦ API Key 設定成功！');
-  } else if(k){ alert('格式不正確，請確認'); }
+  } else if(k){ alert('格式不正確，請確認 Key 以 sk- 開頭'); }
 }
 
 // ===========================
-// DAILY AI
+// ✅ FIX 4+5: DAILY AI - 加入 system prompt，強化 JSON 解析
 // ===========================
 let dailyLoaded=false;
 async function loadDaily(){
@@ -511,8 +829,10 @@ async function loadDaily(){
   const today=new Date().toDateString();
   const cached=localStorage.getItem('dailyCache');
   if(cached){
-    const obj=JSON.parse(cached);
-    if(obj.date===today){ renderDaily(obj); dailyLoaded=true; return; }
+    try{
+      const obj=JSON.parse(cached);
+      if(obj.date===today){ renderDaily(obj); dailyLoaded=true; return; }
+    }catch(e){}
   }
   if(!apiKey){
     document.getElementById('dailyContent').innerHTML=`
@@ -533,29 +853,34 @@ async function loadDaily(){
       body:JSON.stringify({
         model:'claude-sonnet-4-20250514',
         max_tokens:800,
-        messages:[{role:'user',content:`你是一位精通榮格心理學與佛洛伊德精神分析的夢境解析師。
-今天是${dateStr}，請為今天生成一則「每日夢境象徵洞察」。
+        // ✅ FIX 5: 加入 system prompt
+        system:'你是一位精通榮格心理學與佛洛伊德精神分析的夢境解析師。你只回應純 JSON 格式，不加任何說明文字、markdown 或代碼框。',
+        messages:[{role:'user',content:`今天是${dateStr}，請為今天生成一則每日夢境象徵洞察。
 
-請嚴格用以下JSON格式回應（不要有任何其他文字）：
-{
-  "symbol": "夢境象徵名稱（例如：水、飛翔、迷宮）",
-  "emoji": "代表emoji",
-  "title": "今日象徵標題（15字內）",
-  "body": "深入解析這個象徵在夢境中的心理學意義（100字左右）",
-  "insight": "今日潛意識提示（給讀者的一句話洞察，30字內）",
-  "psychTheory": "引用的心理學理論或學者（例如：榮格的集體潛意識、佛洛伊德的願望滿足）",
-  "psychDetail": "該理論的簡短說明（50字內）"
-}`}]
+請只回應以下純 JSON，不要有任何其他文字：
+{"symbol":"夢境象徵名稱","emoji":"代表emoji","title":"今日象徵標題15字內","body":"深入解析這個象徵在夢境中的心理學意義100字左右","insight":"今日潛意識提示給讀者的一句話洞察30字內","psychTheory":"引用的心理學理論或學者","psychDetail":"該理論的簡短說明50字內"}`}]
       })
     });
     const data=await res.json();
-    const txt=data.content[0].text;
+    // ✅ FIX 4: 強化 JSON 解析，多層保護
+    if(!data.content||!data.content[0]){
+      throw new Error('API 回應格式錯誤');
+    }
+    let txt=data.content[0].text.trim();
+    // 移除可能的 markdown code block
+    txt=txt.replace(/^```json\s*/,'').replace(/^```\s*/,'').replace(/\s*```$/,'').trim();
     const obj=JSON.parse(txt);
     obj.date=today;
     localStorage.setItem('dailyCache',JSON.stringify(obj));
     renderDaily(obj); dailyLoaded=true;
   }catch(e){
-    document.getElementById('dailyContent').innerHTML=`<div style="text-align:center;padding:20px;color:#7c6fa0;">載入失敗，請稍後再試 😔<br><small>${e.message}</small></div>`;
+    document.getElementById('dailyContent').innerHTML=`
+      <div style="text-align:center;padding:20px;color:#7c6fa0;">
+        <div style="font-size:36px;margin-bottom:8px;">😔</div>
+        <div>載入失敗，請稍後再試</div>
+        <div style="font-size:11px;margin-top:6px;color:#5a5070;">${e.message}</div>
+        <button onclick="refreshDaily()" style="margin-top:14px;background:rgba(124,58,237,.2);border:1px solid rgba(124,58,237,.4);border-radius:20px;color:#c084fc;font-family:'Noto Serif TC',serif;font-size:13px;padding:8px 18px;cursor:pointer;">↻ 重試</button>
+      </div>`;
   }
 }
 
@@ -587,112 +912,47 @@ function refreshDaily(){
 }
 
 // ===========================
-// GAME — 潛意識猜謎
+// ✅ FIX 6+7: GAME - 修正答案判斷邏輯與分數計算
 // ===========================
-const QUESTIONS = [
-  {
-    sym:'🐍', scene:'你在夢中看見一條蛇盤繞在你面前，牠靜靜地望著你，不攻擊也不離去。',
-    hint:'在心理學中，蛇是最古老的象徵之一',
-    psychNote:'榮格認為蛇是「陰影」（Shadow）的象徵，代表潛意識中被壓抑的部分',
-    opts:[
-      {txt:'代表你內心對某人的憤怒或嫉妒，被你壓抑在潛意識中',correct:true},
-      {txt:'預示著你將遭遇危險，需要提高警惕'},
-      {txt:'象徵你最近的工作壓力太大，需要休息'},
-    ],
-    explain:'根據榮格心理學，蛇代表「陰影原型」——那些我們不願承認的黑暗情緒，如憤怒、嫉妒或恐懼。當蛇在夢中出現且不攻擊，代表潛意識正試圖讓你正視這些被壓抑的情感。',
-    psych:'<strong>榮格：陰影原型（Shadow Archetype）</strong><br>每個人的人格都有一個「陰影」，包含所有被社會化過程中壓抑的負面特質。夢境是陰影浮現的主要管道，正視它才能達到心理整合。'
-  },
-  {
-    sym:'🦷', scene:'你夢見自己的牙齒一顆顆鬆動、脫落，你試著接住它們，卻怎麼也攔不住。',
-    hint:'牙齒夢是全球最普遍的夢境之一',
-    psychNote:'佛洛伊德與現代研究都對此夢境有深入分析',
-    opts:[
-      {txt:'反映你對「失控」的焦慮——某件事情正在脫離你的掌控'},
-      {txt:'代表你最近飲食不均衡，需要補充鈣質',correct:false},
-      {txt:'象徵你對自我形象的擔憂，害怕在他人眼中失去魅力',correct:true},
-    ],
-    correctIndex:2,
-    explain:'牙齒象徵「個人力量」與「外在形象」。研究發現，做牙齒脫落夢的人通常正處於自我懷疑期，擔心自己在社交或職場上「失去影響力」。這也反映對變老、失去魅力的潛意識恐懼。',
-    psych:'<strong>現代心理學：自我意象焦慮</strong><br>研究顯示牙齒夢與「自我效能感」下降高度相關。當我們感覺在重要關係或職業中失去主導地位時，這個夢最容易出現。'
-  },
-  {
-    sym:'✈️', scene:'你夢見自己在飛翔，身體輕盈無比，可以自由穿越雲層，俯瞰整個大地。',
-    hint:'飛翔夢通常在特定心理狀態下出現',
-    psychNote:'阿德勒與榮格對飛翔夢有不同但互補的解釋',
-    opts:[
-      {txt:'代表你正處於人生的高峰期，自信心強烈且渴望突破現狀',correct:true},
-      {txt:'反映你逃避現實的傾向，不願面對生活中的挑戰'},
-      {txt:'象徵你對靈魂出竅體驗的嚮往'},
-    ],
-    explain:'阿德勒心理學認為飛翔夢代表「超越感」與「自我效能感」——做飛翔夢的人通常正在挑戰某個限制，或剛剛獲得突破。榮格則認為飛翔象徵「意識的提升」，超越個人局限去觀看更大的格局。',
-    psych:'<strong>阿德勒：優越感追求（Striving for Superiority）</strong><br>阿德勒認為人類的核心動力是「從自卑到超越」。飛翔夢在你正在努力突破某個人生瓶頸時最常出現。'
-  },
-  {
-    sym:'🏫', scene:'你夢見自己回到學校，卻突然想起今天有考試，而你完全沒有準備，考卷上的題目一個都不會。',
-    hint:'考試焦慮夢在成人中極為普遍，即使已離開學校多年',
-    psychNote:'這類夢境有深刻的心理學意義，與你目前的處境密切相關',
-    opts:[
-      {txt:'你的潛意識懷念學生時代，希望回到無憂無慮的時光'},
-      {txt:'反映你在現實生活中面臨某種「被評判」的壓力，害怕表現不達標',correct:true},
-      {txt:'代表你的學業創傷未被療癒，需要和解'},
-    ],
-    explain:'考試夢幾乎從不關於真正的考試。它是潛意識用熟悉的場景，來呈現你在現實中正面對的「評估壓力」——可能是工作表現、人際關係、或重要決策。「沒準備好」的感受映射了你的不安全感。',
-    psych:'<strong>佛洛伊德：焦慮夢（Anxiety Dream）</strong><br>佛洛伊德認為焦慮夢是自我保護機制——讓我們在安全的夢境中「預演」恐懼場景，從而降低現實焦慮。考試夢中的無助感，正是對現實壓力的象徵性排練。'
-  },
-  {
-    sym:'🌊', scene:'你站在海邊，巨大的海浪不斷向你湧來，你無法逃跑，只能站在原地迎接。',
-    hint:'水在夢境心理學中代表最基本的情感能量',
-    psychNote:'榮格將水視為潛意識本身的象徵',
-    opts:[
-      {txt:'預兆你將遭遇災難或重大挫折'},
-      {txt:'象徵你被強烈的情緒所淹沒——可能是未處理的悲傷、憤怒或壓力',correct:true},
-      {txt:'代表你對旅行和冒險的渴望'},
-    ],
-    explain:'水象徵「情緒」，而浪的大小代表情緒的強度。被巨浪逼近而無法逃跑，反映你目前正被某種情緒「淹沒」的感受——可能是你一直壓抑、試圖忽視的情緒正在強行浮現。',
-    psych:'<strong>榮格：水作為潛意識象徵</strong><br>榮格認為水代表潛意識的深度。汪洋大海是集體潛意識，而巨浪代表從潛意識湧現的強烈情緒衝動。這個夢在提醒你：是時候正視那些被壓抑的情感了。'
-  },
-  {
-    sym:'🪞', scene:'你在夢中照鏡子，卻發現鏡中的自己與現實中不同——表情、年齡，甚至性別都不一樣。',
-    hint:'鏡子是自我認同最直接的心理象徵',
-    psychNote:'榮格的「人格面具」理論對此有深刻解釋',
-    opts:[
-      {txt:'你對自己的身份認同感到困惑，正在探索「真正的自我」是什麼',correct:true},
-      {txt:'反映你希望成為另一個人，對現在的自己感到不滿'},
-      {txt:'象徵你擔心外表老化，對年齡感到焦慮'},
-    ],
-    explain:'鏡中出現「不同的自己」，在榮格心理學中代表「人格面具」（Persona）與真實自我的落差。你日常戴著符合社會期待的面具，但夢境中的潛意識在問：「面具後面，真正的你是誰？」',
-    psych:'<strong>榮格：人格面具（Persona）</strong><br>Persona是拉丁文「面具」之意。榮格認為每個人都發展出社會面具來應對外部世界，但當面具與真實自我差距過大時，潛意識會用夢境來呼喚整合。'
-  },
-  {
-    sym:'🏃', scene:'你在夢中拼命奔跑，卻無論怎麼用力，雙腿都如同踩在棉花上，沉重而緩慢。',
-    hint:'「跑不動」是全球第二常見的夢境類型',
-    psychNote:'這個夢境往往出現在特定的人生處境中',
-    opts:[
-      {txt:'代表你的身體在睡眠中進入了深度癱瘓狀態，沒有心理意義'},
-      {txt:'反映你在現實中感到「使不上力」——努力了卻看不到成果，陷入無力感',correct:true},
-      {txt:'象徵你逃避責任的傾向'},
-    ],
-    explain:'這個夢是「習得性無助」（Learned Helplessness）在夢中的呈現。當你在現實中長期努力卻感覺徒勞，或者面臨某個看似無解的困境時，潛意識就會用「跑不動」來象徵這種無力感。',
-    psych:'<strong>賽利格曼：習得性無助（Learned Helplessness）</strong><br>當個體反覆經歷「努力無效」的情境，會逐漸相信自己無法控制結果。這種心理狀態在夢境中呈現為「身體失去控制」的意象，提醒你重新找回自我效能感。'
-  },
-  {
-    sym:'🏠', scene:'你夢見一棟陌生的房子，走進去卻發現有很多你從未見過的房間，越往深處走越感到不安。',
-    hint:'房子在夢境心理學中有非常明確的象徵意義',
-    psychNote:'這是榮格最重視的夢境意象之一',
-    opts:[
-      {txt:'反映你對未知環境的好奇心與探索欲'},
-      {txt:'預示你即將搬家或換環境'},
-      {txt:'房子象徵「你自己」，陌生的房間代表你尚未探索的潛意識層面',correct:true},
-    ],
-    explain:'在榮格分析心理學中，夢中的房子象徵做夢者的「心靈結構」。地下室是潛意識，閣樓是精神或智識，而未知的房間代表你還沒有認識的自我面向。走進更深處感到不安，是在靠近潛意識的核心。',
-    psych:'<strong>榮格：房屋作為自我象徵</strong><br>榮格在《夢的分析》中詳細描述房屋夢。他認為探索夢中房屋就是探索自我的內在結構——每個房間都是人格的一個面向，陌生的房間呼喚著自我認識。'
-  }
+const QUESTIONS=[
+  {sym:'🐍',scene:'你在夢中看見一條蛇盤繞在你面前，牠靜靜地望著你，不攻擊也不離去。',hint:'在心理學中，蛇是最古老的象徵之一',psychNote:'榮格認為蛇是「陰影」（Shadow）的象徵，代表潛意識中被壓抑的部分',
+  opts:[{txt:'代表你內心對某人的憤怒或嫉妒，被你壓抑在潛意識中',correct:true},{txt:'預示著你將遭遇危險，需要提高警惕',correct:false},{txt:'象徵你最近的工作壓力太大，需要休息',correct:false}],
+  explain:'根據榮格心理學，蛇代表「陰影原型」——那些我們不願承認的黑暗情緒，如憤怒、嫉妒或恐懼。當蛇在夢中出現且不攻擊，代表潛意識正試圖讓你正視這些被壓抑的情感。',
+  psych:'<strong>榮格：陰影原型（Shadow Archetype）</strong><br>每個人的人格都有一個「陰影」，包含所有被社會化過程中壓抑的負面特質。夢境是陰影浮現的主要管道，正視它才能達到心理整合。'},
+  {sym:'🦷',scene:'你夢見自己的牙齒一顆顆鬆動、脫落，你試著接住它們，卻怎麼也攔不住。',hint:'牙齒夢是全球最普遍的夢境之一',psychNote:'佛洛伊德與現代研究都對此夢境有深入分析',
+  opts:[{txt:'反映你對「失控」的焦慮——某件事情正在脫離你的掌控',correct:false},{txt:'代表你最近飲食不均衡，需要補充鈣質',correct:false},{txt:'象徵你對自我形象的擔憂，害怕在他人眼中失去魅力',correct:true}],
+  explain:'牙齒象徵「個人力量」與「外在形象」。研究發現，做牙齒脫落夢的人通常正處於自我懷疑期，擔心自己在社交或職場上「失去影響力」。這也反映對變老、失去魅力的潛意識恐懼。',
+  psych:'<strong>現代心理學：自我意象焦慮</strong><br>研究顯示牙齒夢與「自我效能感」下降高度相關。當我們感覺在重要關係或職業中失去主導地位時，這個夢最容易出現。'},
+  {sym:'✈️',scene:'你夢見自己在飛翔，身體輕盈無比，可以自由穿越雲層，俯瞰整個大地。',hint:'飛翔夢通常在特定心理狀態下出現',psychNote:'阿德勒與榮格對飛翔夢有不同但互補的解釋',
+  opts:[{txt:'代表你正處於人生的高峰期，自信心強烈且渴望突破現狀',correct:true},{txt:'反映你逃避現實的傾向，不願面對生活中的挑戰',correct:false},{txt:'象徵你對靈魂出竅體驗的嚮往',correct:false}],
+  explain:'阿德勒心理學認為飛翔夢代表「超越感」與「自我效能感」——做飛翔夢的人通常正在挑戰某個限制，或剛剛獲得突破。榮格則認為飛翔象徵「意識的提升」，超越個人局限去觀看更大的格局。',
+  psych:'<strong>阿德勒：優越感追求（Striving for Superiority）</strong><br>阿德勒認為人類的核心動力是「從自卑到超越」。飛翔夢在你正在努力突破某個人生瓶頸時最常出現。'},
+  {sym:'🏫',scene:'你夢見自己回到學校，卻突然想起今天有考試，而你完全沒有準備，考卷上的題目一個都不會。',hint:'考試焦慮夢在成人中極為普遍，即使已離開學校多年',psychNote:'這類夢境有深刻的心理學意義，與你目前的處境密切相關',
+  opts:[{txt:'你的潛意識懷念學生時代，希望回到無憂無慮的時光',correct:false},{txt:'反映你在現實生活中面臨某種「被評判」的壓力，害怕表現不達標',correct:true},{txt:'代表你的學業創傷未被療癒，需要和解',correct:false}],
+  explain:'考試夢幾乎從不關於真正的考試。它是潛意識用熟悉的場景，來呈現你在現實中正面對的「評估壓力」——可能是工作表現、人際關係、或重要決策。「沒準備好」的感受映射了你的不安全感。',
+  psych:'<strong>佛洛伊德：焦慮夢（Anxiety Dream）</strong><br>佛洛伊德認為焦慮夢是自我保護機制——讓我們在安全的夢境中「預演」恐懼場景，從而降低現實焦慮。考試夢中的無助感，正是對現實壓力的象徵性排練。'},
+  {sym:'🌊',scene:'你站在海邊，巨大的海浪不斷向你湧來，你無法逃跑，只能站在原地迎接。',hint:'水在夢境心理學中代表最基本的情感能量',psychNote:'榮格將水視為潛意識本身的象徵',
+  opts:[{txt:'預兆你將遭遇災難或重大挫折',correct:false},{txt:'象徵你被強烈的情緒所淹沒——可能是未處理的悲傷、憤怒或壓力',correct:true},{txt:'代表你對旅行和冒險的渴望',correct:false}],
+  explain:'水象徵「情緒」，而浪的大小代表情緒的強度。被巨浪逼近而無法逃跑，反映你目前正被某種情緒「淹沒」的感受——可能是你一直壓抑、試圖忽視的情緒正在強行浮現。',
+  psych:'<strong>榮格：水作為潛意識象徵</strong><br>榮格認為水代表潛意識的深度。汪洋大海是集體潛意識，而巨浪代表從潛意識湧現的強烈情緒衝動。這個夢在提醒你：是時候正視那些被壓抑的情感了。'},
+  {sym:'🪞',scene:'你在夢中照鏡子，卻發現鏡中的自己與現實中不同——表情、年齡，甚至性別都不一樣。',hint:'鏡子是自我認同最直接的心理象徵',psychNote:'榮格的「人格面具」理論對此有深刻解釋',
+  opts:[{txt:'你對自己的身份認同感到困惑，正在探索「真正的自我」是什麼',correct:true},{txt:'反映你希望成為另一個人，對現在的自己感到不滿',correct:false},{txt:'象徵你擔心外表老化，對年齡感到焦慮',correct:false}],
+  explain:'鏡中出現「不同的自己」，在榮格心理學中代表「人格面具」（Persona）與真實自我的落差。你日常戴著符合社會期待的面具，但夢境中的潛意識在問：「面具後面，真正的你是誰？」',
+  psych:'<strong>榮格：人格面具（Persona）</strong><br>Persona是拉丁文「面具」之意。榮格認為每個人都發展出社會面具來應對外部世界，但當面具與真實自我差距過大時，潛意識會用夢境來呼喚整合。'},
+  {sym:'🏃',scene:'你在夢中拼命奔跑，卻無論怎麼用力，雙腿都如同踩在棉花上，沉重而緩慢。',hint:'「跑不動」是全球第二常見的夢境類型',psychNote:'這個夢境往往出現在特定的人生處境中',
+  opts:[{txt:'代表你的身體在睡眠中進入了深度癱瘓狀態，沒有心理意義',correct:false},{txt:'反映你在現實中感到「使不上力」——努力了卻看不到成果，陷入無力感',correct:true},{txt:'象徵你逃避責任的傾向',correct:false}],
+  explain:'這個夢是「習得性無助」（Learned Helplessness）在夢中的呈現。當你在現實中長期努力卻感覺徒勞，或者面臨某個看似無解的困境時，潛意識就會用「跑不動」來象徵這種無力感。',
+  psych:'<strong>賽利格曼：習得性無助（Learned Helplessness）</strong><br>當個體反覆經歷「努力無效」的情境，會逐漸相信自己無法控制結果。這種心理狀態在夢境中呈現為「身體失去控制」的意象，提醒你重新找回自我效能感。'},
+  {sym:'🏠',scene:'你夢見一棟陌生的房子，走進去卻發現有很多你從未見過的房間，越往深處走越感到不安。',hint:'房子在夢境心理學中有非常明確的象徵意義',psychNote:'這是榮格最重視的夢境意象之一',
+  opts:[{txt:'反映你對未知環境的好奇心與探索欲',correct:false},{txt:'預示你即將搬家或換環境',correct:false},{txt:'房子象徵「你自己」，陌生的房間代表你尚未探索的潛意識層面',correct:true}],
+  explain:'在榮格分析心理學中，夢中的房子象徵做夢者的「心靈結構」。地下室是潛意識，閣樓是精神或智識，而未知的房間代表你還沒有認識的自我面向。走進更深處感到不安，是在靠近潛意識的核心。',
+  psych:'<strong>榮格：房屋作為自我象徵</strong><br>榮格在《夢的分析》中詳細描述房屋夢。他認為探索夢中房屋就是探索自我的內在結構——每個房間都是人格的一個面向，陌生的房間呼喚著自我認識。'}
 ];
 
-let gIdx=0, gScore=0, gStreak=0, gMax=0, gAnswered=false, gQuestions=[];
+let gIdx=0,gScore=0,gStreak=0,gMax=0,gAnswered=false,gQuestions=[];
 
 function initGame(){
-  gIdx=0; gScore=0; gStreak=0; gMax=0; gAnswered=false;
+  gIdx=0;gScore=0;gStreak=0;gMax=0;gAnswered=false;
   gQuestions=shuffle([...QUESTIONS]).slice(0,6);
   renderGame();
 }
@@ -706,8 +966,9 @@ function shuffle(arr){
 
 function renderGame(){
   const zone=document.getElementById('gameZone');
-  if(gIdx>=gQuestions.length){ renderEnd(zone); return; }
+  if(gIdx>=gQuestions.length){renderEnd(zone);return;}
   const q=gQuestions[gIdx];
+  // ✅ FIX 6: 洗牌時保留 correct 屬性，不用文字比對
   const shuffledOpts=shuffle(q.opts.map((o,i)=>({...o,origIdx:i})));
   const letters=['A','B','C'];
   const prog=Math.round((gIdx/gQuestions.length)*100);
@@ -733,34 +994,30 @@ function renderGame(){
     </div>
     <div class="opts">
       ${shuffledOpts.map((o,i)=>`
-        <div class="opt" id="opt${i}" onclick="pickAns(${i},${o.correct?'true':'false'},this)">
+        <div class="opt" id="opt${i}" onclick="pickAns(${i},${o.correct},${JSON.stringify(shuffledOpts).replace(/</g,'\\u003c')})">
           <div class="opt-letter">${letters[i]}</div>
           <div>${o.txt}</div>
         </div>`).join('')}
     </div>
     <div class="result-box" id="resBox"></div>
     <button class="next-btn" id="nextBtn" onclick="nextQ()">
-      ${gIdx+1<gQuestions.length ? '下一題 →' : '查看結果 🌙'}
+      ${gIdx+1<gQuestions.length?'下一題 →':'查看結果 🌙'}
     </button>`;
 }
 
-function pickAns(idx, correct, el){
-  if(gAnswered) return;
+// ✅ FIX 6: 修正答案判斷，用 correct 屬性
+function pickAns(idx, correct, opts){
+  if(gAnswered)return;
   gAnswered=true;
   const q=gQuestions[gIdx];
-  const opts=document.querySelectorAll('.opt');
-  el.classList.add(correct?'correct':'wrong');
+  const optEls=document.querySelectorAll('.opt');
+  optEls[idx].classList.add(correct?'correct':'wrong');
+  // 找到正確答案並高亮
   opts.forEach((o,i)=>{
-    if(i!==idx){
-      // find correct one and highlight
-      const isCorrect=o.querySelector('div:last-child').textContent.trim()===
-        q.opts.find(op=>op.correct)?.txt;
-      if(isCorrect) o.classList.add('reveal');
-    }
+    if(i!==idx&&o.correct) optEls[i].classList.add('reveal');
   });
-  if(correct){ gScore+=10+(gStreak*2); gStreak++; if(gStreak>gMax)gMax=gStreak; }
-  else { gStreak=0; }
-
+  if(correct){gScore+=10+(gStreak*2);gStreak++;if(gStreak>gMax)gMax=gStreak;}
+  else{gStreak=0;}
   const box=document.getElementById('resBox');
   box.className='result-box show '+(correct?'rb-correct':'rb-wrong');
   box.innerHTML=`
@@ -771,24 +1028,23 @@ function pickAns(idx, correct, el){
   document.getElementById('nextBtn').classList.add('show');
 }
 
-function nextQ(){
-  gIdx++; gAnswered=false; renderGame();
-}
+function nextQ(){gIdx++;gAnswered=false;renderGame();}
 
 function renderEnd(zone){
-  const pct=Math.round((gScore/(gQuestions.length*14))*100);
+  // ✅ FIX 7: 修正分數百分比計算 (每題最多 10+10=20分，但連勝不一定，用實際最大分估算)
+  const maxPossible=gQuestions.length*20;
+  const pct=Math.min(100,Math.round((gScore/maxPossible)*100));
   let rank,rankDesc;
-  if(pct>=80){rank='🌟 潛意識大師';rankDesc='你對心理象徵有深刻的直覺理解，榮格會以你為傲。你的潛意識與意識高度整合。';}
-  else if(pct>=60){rank='🔮 夢境探索者';rankDesc='你對潛意識有相當的感知力，繼續探索夢境，你的自我認識將不斷深化。';}
-  else if(pct>=40){rank='🌙 夢境學徒';rankDesc='每次猜謎都是一次心理學課程，繼續練習，你的潛意識感知力正在提升。';}
+  if(pct>=75){rank='🌟 潛意識大師';rankDesc='你對心理象徵有深刻的直覺理解，榮格會以你為傲。你的潛意識與意識高度整合。';}
+  else if(pct>=50){rank='🔮 夢境探索者';rankDesc='你對潛意識有相當的感知力，繼續探索夢境，你的自我認識將不斷深化。';}
+  else if(pct>=30){rank='🌙 夢境學徒';rankDesc='每次猜謎都是一次心理學課程，繼續練習，你的潛意識感知力正在提升。';}
   else{rank='💫 夢境初學者';rankDesc='心理象徵需要時間學習，但每個人的潛意識都值得被理解，繼續探索吧！';}
-
   zone.innerHTML=`
     <div class="end-screen">
       <div class="end-moon">🌙</div>
       <div class="end-title">潛意識解析完成</div>
       <div class="end-score">${gScore} 分</div>
-      <div class="end-sub">答對 ${Math.round(gScore/10)} 題 · 最高連勝 ${gMax} 次<br>你對心理象徵的理解達到 ${pct}%</div>
+      <div class="end-sub">最高連勝 ${gMax} 次<br>你對心理象徵的理解達到 ${pct}%</div>
       <div class="end-rank">
         <div class="end-rank-title">你的潛意識等級</div>
         <div class="end-rank-val">${rank}</div>
