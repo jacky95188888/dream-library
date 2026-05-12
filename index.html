@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>夢境圖書館</title>
+<link href="https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&family=Noto+Sans+TC:wght@300;400;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:#07071a; --s1:#0e0e24; --s2:#14142e; --s3:#1c1c3a;
+  --border:#252550; --accent:#9370db; --accent2:#c084fc;
+  --gold:#d4a843; --teal:#4ec9c9; --rose:#e07090;
+  --green:#4ecf8a; --orange:#e0904a;
+  --text:#ddd8f5; --muted:#5a5478; --sub:#8a80a8;
+  --r:16px;
+}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:'Noto Sans TC',sans-serif;font-weight:300;min-height:100vh;overflow-x:hidden}
+#sky{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden}
+.st{position:absolute;border-radius:50%;background:#fff;animation:twk var(--d,3s) ease-in-out infinite alternate;animation-delay:var(--dl,0s)}
+@keyframes twk{from{opacity:var(--lo,.05)}to{opacity:var(--hi,.6)}}
+.nebula{position:absolute;border-radius:50%;filter:blur(60px);opacity:.07}
+#app{position:relative;z-index:1;max-width:500px;margin:0 auto;padding:0 16px 120px}
+header{padding:28px 0 16px;display:flex;align-items:flex-end;justify-content:space-between}
+.logo{font-family:'Ma Shan Zheng',cursive;font-size:26px;color:var(--accent2);letter-spacing:4px}
+.logo-sub{font-size:10px;color:var(--muted);margin-top:3px;letter-spacing:1px}
+.hd-right{text-align:right}
+.dream-count{font-size:11px;color:var(--muted);border:1px solid var(--border);border-radius:20px;padding:3px 10px}
+nav{display:flex;gap:6px;margin-bottom:22px;background:var(--s1);padding:6px;border-radius:14px;border:1px solid var(--border);overflow-x:auto;scrollbar-width:none}
+nav::-webkit-scrollbar{display:none}
+.nb{flex-shrink:0;padding:8px 10px;border-radius:10px;border:none;font-family:'Noto Sans TC',sans-serif;font-size:11px;cursor:pointer;transition:all .2s;background:transparent;color:var(--muted);white-space:nowrap}
+.nb.on{background:var(--accent);color:#fff;font-weight:600}
+.nb:hover:not(.on){color:var(--text)}
+.view{display:none;animation:fadeUp .4s ease both}
+.view.on{display:block}
+@keyframes fadeUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+.card{background:var(--s1);border:1px solid var(--border);border-radius:var(--r)}
+.section-label{font-size:10px;color:var(--muted);letter-spacing:2px;margin-bottom:8px;text-transform:uppercase}
+.tag{font-size:11px;padding:3px 9px;border-radius:8px;background:var(--s2);color:var(--accent);border:1px solid var(--border)}
+.tags{display:flex;flex-wrap:wrap;gap:6px}
+textarea{width:100%;background:var(--s1);border:1px solid var(--border);border-radius:12px;padding:14px;color:var(--text);font-size:14px;line-height:1.8;font-family:'Noto Sans TC',sans-serif;font-weight:300;resize:none;transition:border-color .2s}
+textarea:focus{outline:none;border-color:var(--accent)}
+textarea::placeholder{color:var(--muted)}
+input[type=text]{background:var(--s1);border:1px solid var(--border);border-radius:10px;padding:10px 14px;color:var(--text);font-size:13px;font-family:'Noto Sans TC',sans-serif;outline:none;transition:border-color .2s}
+input[type=text]:focus{border-color:var(--accent)}
+input[type=text]::placeholder{color:var(--muted)}
+button{cursor:pointer;font-family:'Noto Sans TC',sans-serif;transition:all .2s}
+.btn-main{width:100%;padding:13px;border-radius:12px;border:none;background:linear-gradient(135deg,#6d28d9,#a855f7);color:#fff;font-size:15px;font-weight:600;letter-spacing:2px}
+.btn-main:hover{filter:brightness(1.1);transform:translateY(-1px)}
+.btn-main:disabled{background:var(--s2);color:var(--muted);transform:none;filter:none}
+.btn-ghost{background:transparent;border:1px solid var(--border);color:var(--sub);border-radius:10px;padding:10px 16px;font-size:13px}
+.btn-ghost:hover{border-color:var(--accent);color:var(--text)}
+.btn-ok{color:var(--green)!important;border-color:var(--green)!important}
+.back{background:none;border:none;color:var(--muted);font-size:13px;padding:0;margin-bottom:14px}
+.rec-moon{text-align:center;font-size:50px;margin-bottom:12px}
+.rec-hint{text-align:center;font-size:12px;color:var(--muted);margin-bottom:18px;letter-spacing:1px}
+.emo-row{display:flex;flex-wrap:wrap;gap:7px;margin:14px 0}
+.ec{padding:5px 11px;border-radius:20px;border:1px solid var(--border);background:var(--s1);font-size:12px;color:var(--muted);cursor:pointer;transition:all .2s}
+.ec.on{border-color:var(--accent);background:#7c3aed22;color:var(--accent2)}
+.style-row{display:flex;gap:8px;margin:12px 0}
+.sc{flex:1;padding:8px 6px;border-radius:10px;border:1px solid var(--border);background:var(--s1);font-size:11px;color:var(--muted);cursor:pointer;text-align:center;transition:all .2s}
+.sc.on{border-color:var(--gold);background:#d4a84322;color:var(--gold)}
+.dream-card{background:var(--s1);border:1px solid var(--border);border-radius:18px;overflow:hidden}
+.card-stripe{height:4px}
+.card-body{padding:20px}
+.card-title{font-family:'Ma Shan Zheng',cursive;font-size:22px;color:var(--text);margin-bottom:4px}
+.emo-badge{display:inline-block;font-size:11px;padding:3px 9px;border-radius:8px;margin-bottom:14px}
+.cs-label{font-size:10px;color:var(--muted);letter-spacing:2px;margin-bottom:6px}
+.cs-body{font-size:14px;line-height:1.85;color:var(--sub)}
+.story-body{font-size:14px;line-height:1.95;color:var(--text);white-space:pre-line}
+.poem-box{border-left:2px solid var(--accent);padding-left:12px;font-style:italic;font-size:14px;line-height:1.8;color:var(--text)}
+.action-row{display:flex;gap:8px;margin-top:18px}
+.action-row .btn-ghost{flex:1;text-align:center}
+.di{margin-bottom:10px;padding:14px 16px;background:var(--s1);border-radius:14px;border:1px solid var(--border);border-left:4px solid;cursor:pointer;transition:all .2s}
+.di:hover{background:var(--s2);transform:translateX(3px)}
+.di-head{display:flex;justify-content:space-between;align-items:center}
+.di-title{font-size:15px;color:var(--text);font-weight:600}
+.di-date{font-size:11px;color:var(--muted)}
+.di-preview{font-size:12px;color:var(--muted);margin-top:3px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.di-tags{display:flex;gap:4px;margin-top:6px;flex-wrap:wrap}
+.di-tag{font-size:10px;padding:2px 6px;border-radius:5px;background:var(--s2);color:var(--accent)}
+.pa-hero{text-align:center;padding:24px 0 16px}
+.pa-icon{font-size:52px;margin-bottom:8px}
+.pa-type{font-family:'Ma Shan Zheng',cursive;font-size:26px;color:var(--accent2)}
+.pa-desc{font-size:13px;color:var(--sub);margin-top:6px;line-height:1.7}
+.gauge-wrap{margin:8px 0}
+.gauge-label{display:flex;justify-content:space-between;font-size:12px;color:var(--sub);margin-bottom:5px}
+.gauge-track{height:8px;background:var(--s3);border-radius:8px;overflow:hidden}
+.gauge-fill{height:100%;border-radius:8px;transition:width .8s cubic-bezier(.4,0,.2,1)}
+.col-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.col-card{border-radius:14px;overflow:hidden;border:1px solid var(--border);cursor:pointer;transition:transform .2s}
+.col-card:hover{transform:scale(1.03)}
+.col-card-inner{padding:14px;min-height:140px;display:flex;flex-direction:column;justify-content:space-between}
+.col-card-title{font-family:'Ma Shan Zheng',cursive;font-size:16px;line-height:1.3}
+.col-card-date{font-size:10px;opacity:.6;margin-top:4px}
+.col-card-poem{font-size:11px;font-style:italic;opacity:.8;margin-top:8px;line-height:1.5}
+.col-card-emo{font-size:10px;padding:2px 7px;border-radius:6px;background:#ffffff22;display:inline-block;margin-top:6px}
+.rank-item{display:flex;align-items:center;gap:12px;padding:12px 14px;background:var(--s1);border-radius:12px;margin-bottom:8px;border:1px solid var(--border)}
+.rank-num{font-size:18px;width:28px;text-align:center;flex-shrink:0}
+.rank-info{flex:1;min-width:0}
+.rank-title{font-size:14px;color:var(--text);font-weight:600}
+.rank-sub{font-size:11px;color:var(--muted);margin-top:2px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.bar-row{display:flex;align-items:center;gap:8px;margin-bottom:8px}
+.bar-label{width:52px;font-size:12px;color:var(--text)}
+.bar-track{flex:1;height:8px;background:var(--s3);border-radius:6px;overflow:hidden}
+.bar-fill{height:100%;border-radius:6px;transition:width .6s ease}
+.bar-n{width:18px;font-size:11px;color:var(--muted);text-align:right}
+.share-box{margin-top:24px;padding:14px;border-radius:14px}
+.share-label{font-size:11px;color:var(--muted);margin-bottom:10px;letter-spacing:1px}
+.empty{text-align:center;padding:56px 20px;color:var(--muted)}
+.empty .e-icon{font-size:46px;margin-bottom:12px}
+::-webkit-scrollbar{width:4px}
+::-webkit-scrollbar-track{background:var(--bg)}
+::-webkit-scrollbar-thumb{background:var(--border);border-radius:2px}
+.overlay{display:none;position:fixed;inset:0;background:#000000cc;z-index:100;align-items:center;justify-content:center;padding:20px}
+.overlay.on{display:flex}
+.modal{background:var(--s1);border-radius:20px;max-width:360px;width:100%;border:1px solid var(--border);overflow:hidden}
+.modal-body{padding:22px}
+.modal-close{display:block;width:100%;padding:12px;border:none;background:var(--s2);color:var(--sub);font-size:14px;font-family:'Noto Sans TC',sans-serif;cursor:pointer}
+/* 冥想宣言 */
+.aff-sound-panel{background:var(--s1);border:1px solid var(--border);border-radius:14px;padding:14px;margin-bottom:16px}
+.aff-sound-title{font-size:10px;color:var(--gold);letter-spacing:2px;margin-bottom:10px}
+.aff-sound-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.aff-snd-btn{padding:11px 8px;background:var(--s2);border:1px solid var(--border);border-radius:10px;font-size:12px;color:var(--muted);text-align:center;transition:.2s}
+.aff-snd-btn.on{background:rgba(78,201,201,.15);border-color:var(--teal);color:var(--teal)}
+.aff-cats{display:flex;gap:6px;overflow-x:auto;padding-bottom:8px;margin-bottom:14px;scrollbar-width:none}
+.aff-cats::-webkit-scrollbar{display:none}
+.aff-cat{flex-shrink:0;padding:6px 14px;background:var(--s1);border:1px solid var(--border);border-radius:50px;font-size:12px;color:var(--muted);cursor:pointer;transition:.2s}
+.aff-cat.on{background:rgba(147,112,219,.2);border-color:var(--accent);color:var(--accent2)}
+.aff-display{background:linear-gradient(135deg,rgba(147,112,219,.12),rgba(78,201,201,.05));border:1px solid rgba(147,112,219,.25);border-radius:18px;padding:28px 18px;text-align:center;margin-bottom:14px;min-height:170px;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:14px}
+.aff-icon{font-size:44px}
+.aff-text{font-family:'Ma Shan Zheng',cursive;font-size:18px;color:var(--text);line-height:1.7;letter-spacing:1px}
+.aff-hint{font-size:11px;color:var(--muted)}
+.aff-next-btn{width:100%;padding:13px;background:linear-gradient(135deg,var(--accent),var(--teal));border:none;border-radius:12px;color:#fff;font-size:14px;font-weight:600;letter-spacing:1px;margin-bottom:14px}
+.how-box{background:var(--s1);border:1px solid var(--border);border-radius:14px;padding:16px}
+.how-box h4{font-size:10px;color:var(--gold);letter-spacing:2px;margin-bottom:10px}
+.how-box ol{padding-left:18px}
+.how-box li{font-size:12px;color:var(--sub);line-height:2.2}
+/* 聊天室 */
+.chat-setup-box{background:var(--s1);border:1px solid var(--border);border-radius:18px;padding:24px;text-align:center;margin-top:10px}
+.chat-setup-box h3{font-family:'Ma Shan Zheng',cursive;font-size:22px;color:var(--accent2);margin-bottom:8px}
+.chat-setup-box p{font-size:12px;color:var(--sub);line-height:1.8;margin-bottom:18px}
+.nick-row{display:flex;gap:8px}
+.nick-row input{flex:1}
+.nick-go{padding:10px 18px;background:var(--accent);border:none;border-radius:10px;color:#fff;font-size:13px;white-space:nowrap}
+.chat-wrap{background:var(--s1);border:1px solid var(--border);border-radius:16px;overflow:hidden;margin-top:4px}
+.chat-top{display:flex;align-items:center;justify-content:space-between;padding:12px 16px;border-bottom:1px solid var(--border)}
+.chat-top-title{font-size:14px;color:var(--text)}
+.chat-online{font-size:11px;color:var(--green)}
+.chat-msgs{background:var(--s2);min-height:280px;max-height:280px;overflow-y:auto;padding:12px;display:flex;flex-direction:column;gap:8px}
+.cmsg{display:flex;flex-direction:column;gap:2px;max-width:82%}
+.cmsg.mine{align-self:flex-end;align-items:flex-end}
+.cmsg.other{align-self:flex-start}
+.cmsg-nick{font-size:10px;color:var(--muted)}
+.cmsg-bubble{padding:8px 13px;border-radius:14px;font-size:13px;line-height:1.5}
+.cmsg.mine .cmsg-bubble{background:rgba(147,112,219,.3);color:var(--text);border-bottom-right-radius:4px}
+.cmsg.other .cmsg-bubble{background:var(--s3);color:var(--text);border-bottom-left-radius:4px}
+.cmsg-time{font-size:9px;color:var(--muted)}
+.chat-input-row{display:flex;gap:8px;padding:10px 12px;border-top:1px solid var(--border)}
+.chat-input-row input{flex:1;background:var(--s2);border:1px solid var(--border);border-radius:50px;padding:9px 15px;color:var(--text);font-size:13px;outline:none}
+.chat-send{background:linear-gradient(135deg,var(--accent),var(--accent2));border:none;color:#fff;width:38px;height:38px;border-radius:50%;font-size:16px;flex-shrink:0;display:flex;align-items:center;justify-content:center}
+.chat-hint{font-size:11px;color:var(--muted);text-align:center;padding:10px}
+</style>
+</head>
+<body>
+<div id="sky"></div>
+<div id="app">
+
+<header>
+  <div>
+    <div class="logo">夢境圖書館</div>
+    <div class="logo-sub">每一個夢，都是你給自己的信</div>
+  </div>
+  <div class="hd-right">
+    <div class="dream-count" id="cntEl">0 個夢</div>
+  </div>
+</header>
+
+<nav>
+  <button class="nb on" onclick="go('rec')">🌙 記錄</button>
+  <button class="nb" onclick="go('lib')">📚 圖書館</button>
+  <button class="nb" onclick="go('pa')">🧠 人格</button>
+  <button class="nb" onclick="go('col')">🎴 收藏</button>
+  <button class="nb" onclick="go('rank')">🏆 排行</button>
+  <button class="nb" onclick="go('aff')">🌌 冥想宣言</button>
+  <button class="nb" onclick="go('chat')">💬 聊天室</button>
+</nav>
+
+<div id="v-rec" class="view on">
+  <div class="rec-moon">🌙</div>
+  <div class="rec-hint">今晚做了什麼夢？</div>
+  <textarea id="dreamIn" placeholder="把記得的片段說出來……哪怕只有一句話" rows="5"></textarea>
+  <div style="font-size:11px;color:var(--muted);margin:14px 0 8px;letter-spacing:1px">今天的心情</div>
+  <div class="emo-row" id="emoRow">
+    <div class="ec" data-e="平靜">🌊 平靜</div>
+    <div class="ec" data-e="喜悅">✨ 喜悅</div>
+    <div class="ec" data-e="焦慮">🌀 焦慮</div>
+    <div class="ec" data-e="恐懼">🌑 恐懼</div>
+    <div class="ec" data-e="悲傷">🌧 悲傷</div>
+    <div class="ec" data-e="迷茫">🌫 迷茫</div>
+    <div class="ec" data-e="溫暖">🕯 溫暖</div>
+    <div class="ec" data-e="興奮">⚡ 興奮</div>
+  </div>
+  <div style="font-size:11px;color:var(--muted);margin:14px 0 8px;letter-spacing:1px">故事風格</div>
+  <div class="style-row" id="styleRow">
+    <div class="sc on" data-s="電影感">🎬 電影感</div>
+    <div class="sc" data-s="動漫">✏️ 動漫</div>
+    <div class="sc" data-s="現實">🏙 現實</div>
+    <div class="sc" data-s="奇幻">🧙 奇幻</div>
+  </div>
+  <button class="btn-main" id="subBtn" onclick="handleSubmit()" style="margin-top:12px">解析這個夢</button>
+  <div class="share-box card" style="margin-top:24px">
+    <div class="share-label">把夢境圖書館分享給朋友</div>
+    <button class="btn-ghost" id="shareAppBtn" onclick="shareApp()" style="width:100%;text-align:center">🔗 複製分享文字</button>
+  </div>
+</div>
+
+<div id="v-res" class="view">
+  <button class="back" onclick="go('rec')">← 返回記錄</button>
+  <div id="resContent"></div>
+  <div class="action-row">
+    <button class="btn-ghost" onclick="go('rec')" style="flex:1;text-align:center">再記錄一個 ✦</button>
+    <button class="btn-ghost" onclick="go('lib')" style="flex:1;text-align:center">看圖書館 ◈</button>
+  </div>
+</div>
+
+<div id="v-lib" class="view"><div id="libContent"></div></div>
+<div id="v-det" class="view">
+  <button class="back" onclick="go('lib')">← 返回圖書館</button>
+  <div id="detContent"></div>
+</div>
+<div id="v-pa" class="view"><div id="paContent"></div></div>
+<div id="v-col" class="view"><div id="colContent"></div></div>
+<div id="v-rank" class="view"><div id="rankContent"></div></div>
+
+<div id="v-aff" class="view">
+  <div style="font-family:'Ma Shan Zheng',cursive;font-size:22px;color:var(--accent2);margin-bottom:4px;margin-top:8px">冥想宣言</div>
+  <div style="font-size:11px;color:var(--muted);margin-bottom:16px;letter-spacing:1px">每日宣言，重塑你的內在信念</div>
+  <div class="aff-sound-panel">
+    <div class="aff-sound-title">🎵 冥想環境音</div>
+    <div class="aff-sound-grid">
+      <button class="aff-snd-btn" onclick="toggleSound('ocean',this)">🌊 海浪聲</button>
+      <button class="aff-snd-btn" onclick="toggleSound('rain',this)">🌧️ 雨聲</button>
+      <button class="aff-snd-btn" onclick="toggleSound('space',this)">🌌 宇宙聲</button>
+      <button class="aff-snd-btn" onclick="toggleSound('forest',this)">🌿 森林聲</button>
+    </div>
+  </div>
+  <div class="aff-cats">
+    <button class="aff-cat on" onclick="setAffCat(this,0)">💪 健康</button>
+    <button class="aff-cat" onclick="setAffCat(this,1)">💰 財富</button>
+    <button class="aff-cat" onclick="setAffCat(this,2)">🍀 幸運</button>
+    <button class="aff-cat" onclick="setAffCat(this,3)">💝 姻緣</button>
+    <button class="aff-cat" onclick="setAffCat(this,4)">🏆 工作</button>
+    <button class="aff-cat" onclick="setAffCat(this,5)">🤝 人際</button>
+  </div>
+  <div class="aff-display">
+    <div class="aff-icon" id="affIcon">💪</div>
+    <div class="aff-text" id="affText">我的身體每天都在變得更強壯、更健康</div>
+    <div class="aff-hint">深呼吸，感受這句話在你心中共鳴</div>
+  </div>
+  <button class="aff-next-btn" onclick="nextAff()">✦ 下一則宣言</button>
+  <div class="how-box">
+    <h4>💡 如何使用冥想宣言</h4>
+    <ol>
+      <li>在安靜的環境中，深呼吸三次</li>
+      <li>閉上眼睛，在心中默念這句宣言</li>
+      <li>感受這句話在你身體中的共鳴</li>
+      <li>每天早晨或睡前各練習一次效果最佳</li>
+    </ol>
+  </div>
+</div>
+
+<div id="v-chat" class="view">
+  <div id="chatSetupArea">
+    <div class="chat-setup-box">
+      <h3>🌙 夢境聊天室</h3>
+      <p>與來自各地的夢境旅人即時交流<br>最多 100 人同時在線，完全免費</p>
+      <div class="nick-row">
+        <input type="text" id="nickInput" placeholder="輸入你的夢境暱稱..." maxlength="12">
+        <button class="nick-go" onclick="joinChat()">進入</button>
+      </div>
+    </div>
+  </div>
+  <div id="chatRoomArea" style="display:none">
+    <div class="chat-wrap">
+      <div class="chat-top">
+        <span class="chat-top-title" id="chatTitle">🌙 夢境聊天室</span>
+        <span class="chat-online" id="chatOnline">● 連線中...</span>
+      </div>
+      <div class="chat-msgs" id="chatMsgs">
+        <div style="text-align:center;color:var(--muted);font-size:12px;padding:20px">正在連接夢境頻道...</div>
+      </div>
+      <div class="chat-input-row">
+        <input type="text" id="chatInput" placeholder="分享你的夢境..." maxlength="100" onkeydown="if(event.key==='Enter')sendMsg()">
+        <button class="chat-send" onclick="sendMsg()">➤</button>
+      </div>
+    </div>
+    <div class="chat-hint">請保持友善，分享美好的夢境故事 🌙</div>
+  </div>
+</div>
+
+<div class="overlay" id="cardOverlay" onclick="closeOverlay(event)">
+  <div class="modal">
+    <div class="modal-body" id="cardModal"></div>
+    <button class="modal-close" onclick="closeModal()">關閉</button>
+  </div>
+</div>
+
+</div>
+
+<script type="module">
+import{initializeApp}from"https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import{getDatabase,ref,push,onValue,set,onDisconnect}from"https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
+import{getAuth,signInAnonymously}from"https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+const cfg={apiKey:"AIzaSyBJz75IN4z930h--w0WNtokHIfo38wZuuw",authDomain:"dream-library-5994d.firebaseapp.com",databaseURL:"https://dream-library-5994d-default-rtdb.asia-southeast1.firebasedatabase.app",projectId:"dream-library-5994d",storageBucket:"dream-library-5994d.firebasestorage.app",messagingSenderId:"787534117246",appId:"1:787534117246:web:e43308aa3d8c2e65d6db2f"};
+const fbApp=initializeApp(cfg);
+const db=getDatabase(fbApp);
+const auth=getAuth(fbApp);
+let myUid=null;
+signInAnonymously(auth).then(r=>{
+  myUid=r.user.uid;
+  window._fbSend=(nick,text)=>push(ref(db,'chatroom/messages'),{text,nickname:nick,uid:myUid,ts:Date.now()});
+  window._fbListen=()=>{
+    onValue(ref(db,'chatroom/messages'),snap=>{
+      const el=document.getElementById('chatMsgs');if(!el)return;
+      const list=[];snap.forEach(c=>list.push(c.val()));
+      const recent=list.slice(-50);
+      el.innerHTML=recent.length?recent.map(m=>{
+        const mine=m.uid===myUid;
+        const t=m.ts?new Date(m.ts).toLocaleTimeString('zh-TW',{hour:'2-digit',minute:'2-digit'}):'';
+        return`<div class="cmsg ${mine?'mine':'other'}"><span class="cmsg-nick">${mine?'你':m.nickname||'旅人'}</span><div class="cmsg-bubble">${(m.text||'').replace(/</g,'&lt;')}</div><span class="cmsg-time">${t}</span></div>`;
+      }).join(''):'<div style="text-align:center;color:var(--muted);font-size:12px;padding:20px">還沒有訊息，第一個說話吧 🌙</div>';
+      el.scrollTop=el.scrollHeight;
+    });
+    const presRef=ref(db,'presence/'+myUid);
+    set(presRef,{ts:Date.now()});
+    onDisconnect(presRef).remove();
+    onValue(ref(db,'presence'),snap=>{
+      let cnt=0;snap.forEach(()=>cnt++);
+      const el=document.getElementById('chatOnline');
+      if(el)el.textContent='● '+cnt+' 人在線';
+    });
+  };
+}).catch(e=>console.log('fb',e));
+</script>
+
+<script>
+(function(){
+  const sky=document.getElementById('sky');
+  for(let i=0;i<70;i++){
+    const s=document.createElement('div');s.className='st';
+    const sz=Math.random()*2+.5;
+    s.style.cssText=`width:${sz}px;height:${sz}px;left:${Math.random()*100}%;top:${Math.random()*100}%;--d:${2+Math.random()*4}s;--dl:${Math.random()*5}s;--lo:${.03+Math.random()*.05};--hi:${.3+Math.random()*.5}`;
+    sky.appendChild(s);
+  }
+  [{c:'#6030c0',l:'10%',t:'20%',sz:'300px'},{c:'#203080',l:'70%',t:'60%',sz:'250px'},{c:'#601030',l:'40%',t:'80%',sz:'200px'}].forEach(n=>{
+    const d=document.createElement('div');d.className='nebula';
+    d.style.cssText=`background:${n.c};left:${n.l};top:${n.t};width:${n.sz};height:${n.sz}`;
+    sky.appendChild(d);
+  });
+})();
+
+const SK='dlv2';
+let dreams=[],selEmo='',selStyle='電影感';
+function load(){try{dreams=JSON.parse(localStorage.getItem(SK)||'[]')}catch{dreams=[]}updateCnt()}
+function save(){try{localStorage.setItem(SK,JSON.stringify(dreams))}catch{}updateCnt()}
+function updateCnt(){document.getElementById('cntEl').textContent=dreams.length+' 個夢'}
+
+function go(v){
+  document.querySelectorAll('.view').forEach(el=>el.classList.remove('on'));
+  document.querySelectorAll('.nb').forEach(b=>b.classList.remove('on'));
+  const views=['rec','lib','pa','col','rank','aff','chat'];
+  document.getElementById('v-'+v)?.classList.add('on');
+  const idx=views.indexOf(v);
+  if(idx>=0)document.querySelectorAll('.nb')[idx].classList.add('on');
+  if(v==='lib')renderLib();
+  if(v==='pa')renderPA();
+  if(v==='col')renderCol();
+  if(v==='rank')renderRank();
+  if(v==='chat')initChat();
+}
+
+document.getElementById('emoRow').addEventListener('click',e=>{
+  const c=e.target.closest('.ec');if(!c)return;
+  document.querySelectorAll('.ec').forEach(x=>x.classList.remove('on'));
+  c.classList.add('on');selEmo=c.dataset.e;
+});
+document.getElementById('styleRow').addEventListener('click',e=>{
+  const c=e.target.closest('.sc');if(!c)return;
+  document.querySelectorAll('.sc').forEach(x=>x.classList.remove('on'));
+  c.classList.add('on');selStyle=c.dataset.s;
+});
+
+const THEMES={
+  水:{kw:['海','河','湖','水','游泳','洪水','溺','雨','淹','船','魚','波浪','泉'],color:'#4ec9c9',titles:['海底的信','流動的時光','河流的耳語','水中倒影','潮汐之間'],analysis:'水象徵潛意識的流動。你的心裡有些情緒還沒有被說出口，也許是時候允許自己感受它們了。',poem:'水不問去向，只是流。你也是。',tags:['潛意識','情緒','流動','轉化'],stories:{電影感:['灰藍色的光線從水面透下來，像碎掉的鏡子。你站在水底，卻能呼吸——不是氧氣，是記憶。'],動漫:['水面突然裂開，露出一扇古老的門！你跨越進去，發現裡面是另一個世界的港口，有人在等你。'],現實:['你站在河邊，不知道幾點，對岸有個模糊的身影在走動。水是冷的，但你沒有離開。'],奇幻:['海神的女兒向你伸出手，她的聲音像貝殼裡的迴響：「你終於來了。」']}},
+  飛:{kw:['飛','翱翔','升空','翅膀','雲端','浮','漂','風','高空','飛機'],color:'#9370db',titles:['高空之上','翅膀的重量','風的邀請','離地三尺','越過雲層'],analysis:'飛翔代表突破限制的渴望。你的靈魂在某個角落，還渴望著更大的自由。',poem:'風托起翅膀，不是因為翅膀完美，而是你願意張開它。',tags:['自由','渴望','突破','高度'],stories:{電影感:['城市縮成棋盤，燈光變成像素。你沒有翅膀，但你在飛——不靠任何東西，只靠你想飛的意志。'],動漫:['你的背上突然長出發光的羽翼！巨大的風從身體內部湧出，把你推向天空！'],現實:['夢裡你站在頂樓，風很大，你知道這是夢，所以往前走了一步，然後輕輕飄了起來。'],奇幻:['天空是倒過來的海洋，雲是珊瑚，你游過去，發現太陽是一座島。']}},
+  追:{kw:['追','逃','跑','躲','被追','快跑','逃跑','奔跑','逃脫','抓'],color:'#e07090',titles:['奔跑的理由','影子的追逐','停下來的勇氣','另一個我','追不到的距離'],analysis:'被追的夢往往來自現實中的壓力或未解決的衝突。你是否有什麼事情一直在逃避？',poem:'停下來，你會發現追你的，其實是你自己的影子。',tags:['壓力','逃避','衝突','速度'],stories:{電影感:['跑。只知道要跑。街燈在身旁閃過，鞋底踩過積水，你不知道在跑什麼，但你知道不能停。'],動漫:['一道黑影在屋頂間跳躍，緊追著你！你衝進一條死巷，卻發現牆上有一扇從未見過的門。'],現實:['不知道從哪裡開始跑的，也不知道跑了多久。腳很重，地面卻好像在加速向你靠近。'],奇幻:['黑暗之中，千隻眼睛在追你。但老巫師說：它們只是你放棄過的夢想，想回來而已。']}},
+  家:{kw:['家','房子','回家','媽媽','爸爸','父母','兄弟','姐妹','老家','童年','廚房'],color:'#d4a843',titles:['回家的路','某個房間的光','媽媽的聲音','舊時的門','消失的住址'],analysis:'夢見家，是心靈在尋找安全感。也許你正在思念某個人，或某段再也回不去的時光。',poem:'家不一定是地方，是某個人笑著說「你回來了」的瞬間。',tags:['歸屬','安全感','記憶','親情'],stories:{電影感:['走廊的盡頭，廚房透出昏黃的燈光。你站在門口，聞到的不是食物，是時間。'],動漫:['放學路上，你的舊家突然出現在陌生的街道！你衝進去，媽媽正在煮你最愛的湯，像什麼都沒變。'],現實:['你站在媽媽的房間門口，她背對著你坐著，你想叫她，嘴巴動了，沒有聲音出來。'],奇幻:['家的地基下藏著一個秘密的房間，裡面放的，是你所有已經忘記的童年。']}},
+  迷:{kw:['迷路','找不到','迷失','迷宮','走錯','路','方向','陌生','出口'],color:'#8a80a8',titles:['沒有地圖的旅程','迷宮的中心','陌生的走廊','找不到的出口','第一千個轉角'],analysis:'迷失的夢象徵人生轉折期的迷惘。你現在可能面對一個沒有地圖的選擇，而這正是成長的開始。',poem:'迷路的人才能找到從未被人走過的路。',tags:['迷惘','轉折','方向','探索'],stories:{電影感:['每個走廊都一樣，每扇門後面都是下一條走廊。你走了很久，開始懷疑：也許根本沒有出口。'],動漫:['你進入了傳說中的無限迷宮！突然，牆壁上出現了字：「往內走，不是往外。」'],現實:['你在一個城市裡，手機沒訊號，地名都是陌生的語言，只有你不知道自己在哪裡。'],奇幻:['迷宮有生命，它呼吸，它會移動。老者說：它是用你的恐懼建造的，你越怕，它越大。']}},
+  死:{kw:['死','死亡','葬禮','消失','鬼','靈魂','墓地','黑暗','盡頭'],color:'#5b6fd4',titles:['一場告別','落葉之前','消失的練習','盡頭之後','還沒說的話'],analysis:'死亡在夢裡通常代表結束與重生，不是壞事。某件舊事也許正在走向終點，好讓新的開始進來。',poem:'落葉從不哀悼，因為它知道春天的事。',tags:['結束','重生','告別','蛻變'],stories:{電影感:['葬禮上，你看見自己躺在那裡。你沒有害怕，只是走過去，拍了拍那個你的肩膀說：「辛苦了。」'],動漫:['你變成了幽靈！但你發現，當幽靈有一個好處：你可以去任何你生前沒去過的地方。'],現實:['他走了，但在夢裡他還在。你們沒有說什麼特別的話，只是坐在那裡，陪著對方。'],奇幻:['靈魂是有重量的，它不消失，只是換一個地方存放。']}},
+  愛:{kw:['愛','戀人','親吻','擁抱','喜歡','牽手','約會','婚禮','思念'],color:'#e07090',titles:['靠近的距離','未說出口的話','夢裡的溫度','你的輪廓','雨天的傘'],analysis:'愛的夢境折射出你心底深藏的連結渴望。那份溫柔，你值得給自己，也值得給別人。',poem:'你夢見愛，是因為愛也在夢見你。',tags:['連結','溫柔','渴望','心'],stories:{電影感:['雨中的路口，你看見他/她的背影。你喊了名字，風把聲音吹散，但那個人轉過身來了。'],動漫:['粉色的花瓣從天上飄下來，那個人站在樹下，笑著對你揮手，全世界只剩下這一幕。'],現實:['你們坐在同一條長椅上，不說話，看同一個方向。肩膀靠著肩膀，這件事讓你覺得一切都可以了。'],奇幻:['宇宙說：你們的緣分寫在星圖上，早在你們出生前就已經排好了。']}},
+  考:{kw:['考試','考場','作業','學校','老師','忘記','交卷','遲到','補考','試卷'],color:'#e0904a',titles:['忘了帶筆','還沒準備好','空白的考卷','時間到了','遲到的那天'],analysis:'考試的夢源自對「表現」的焦慮。你對自己的要求很高，記得在某個地方，你已經夠好了。',poem:'不是所有的答案都需要寫在格子裡。',tags:['焦慮','期待','評價','表現'],stories:{電影感:['考卷發下來了，全部是空白的。你的筆也找不到。時鐘的指針在轉，轉得比平常快。'],動漫:['期末大魔王考試！題目全是謎語！突然學霸朋友從窗外飛進來：「我來救你了！」'],現實:['你遲到了，沒有位子，老師說了什麼，你聽不清楚。你坐在地板上，試著開始作答。'],奇幻:['考題只有一道：「你真正想要什麼？」你盯著空白，寫了又擦，最後交了一張白卷。']}},
+  動:{kw:['老虎','獅子','狗','貓','蛇','鳥','魚','昆蟲','熊','馬','龍','怪物','動物'],color:'#4ecf8a',titles:['森林的訪客','牠看著我','野性的呼喚','隱藏的力量','那雙眼睛'],analysis:'夢中出現的動物往往是你內心某種本能或力量的象徵。也許有什麼情緒，還沒被你看見。',poem:'野獸出現，不是來傷你，是來提醒你，你也擁有那份力量。',tags:['本能','力量','野性','象徵'],stories:{電影感:['森林裡，那隻動物停在三公尺外，一動也不動地看著你。你們對視了很久，你先移開眼睛。'],動漫:['一隻發光的神獸從天而降！牠說：「我是你的守護靈獸，你終於召喚我了！」'],現實:['一條狗跟著你走了很久，你不知道牠從哪來，也不知道牠要去哪，但你讓牠跟著。'],奇幻:['龍把你帶到山頂，說：「從這裡你能看見你的過去和未來，但只能選一個看。」']}},
+};
+const GEN_INTERPS=[
+  {a:'這個夢像一面鏡子，映照出你此刻無法用語言說清楚的感受。試著不要急著解開它，只是和它坐在一起。',p:'有些夢不需要答案，它只是想讓你記得，你還活著。',stories:{電影感:['鏡頭是主觀視角，你在一個說不清楚的地方，光線是暖的，聲音是遠的。'],動漫:['夢境有自己的顏色，你的夢是淡淡的橙色，帶著你還不明白的溫柔。'],現實:['很普通的場景，但你醒來以後，心裡有一塊地方，不一樣了。'],奇幻:['夢說：我沒有名字，但我認識你。']}},
+  {a:'夢境是潛意識的語言。即使你不完全明白它的意思，它也已經輕輕地碰觸了你內心某個柔軟的角落。',p:'你不需要讀懂每一個夢，有時候，感受到它就夠了。',stories:{電影感:['畫面是模糊的，像隔著霧，但你記得那個感覺，清晰得像刀。'],動漫:['夢裡的世界有點卡通，但情緒是真的。'],現實:['說不清哪裡不一樣，但醒來的你，和睡前的你，不完全是同一個人了。'],奇幻:['宇宙寄給你一封信，郵戳是「夢境」，你剛拆開。']}},
+];
+const EMO_EXTRA={恐懼:'　在這份不安裡，有什麼是你想要保護的嗎？',焦慮:'　你願意的話，試著問問自己：最壞的情況，我能承受嗎？',溫暖:'　這份美好，你可以把它帶進醒著的日子裡。',喜悅:'　讓這份輕盈多停留一會兒吧。',悲傷:'　悲傷也是愛的一種形式，說明你在乎過。'};
+function pick(a){return a[Math.floor(Math.random()*a.length)]}
+function detectTheme(text){let best=null,bc=0;for(const[th,d]of Object.entries(THEMES)){const c=d.kw.filter(k=>text.includes(k)).length;if(c>bc){bc=c;best=th}}return best}
+function buildStory(td,style,input){const ss=td?.stories?.[style]||td?.stories?.['電影感']||[];const base=ss.length?pick(ss):'';const mp={電影感:'【電影感】\n',動漫:'【動漫風格】\n',現實:'【現實視角】\n',奇幻:'【奇幻世界】\n'}[style]||'';return mp+base+(base?'\n\n':'')+'「'+input.slice(0,30)+(input.length>30?'……':'')+'」'}
+function analyse(text,emo,style){
+  const theme=detectTheme(text);let td,analysis,poem,title,tags,color;
+  if(theme){td=THEMES[theme];analysis=td.analysis+(EMO_EXTRA[emo]||'');poem=td.poem;title=pick(td.titles);tags=td.tags.slice();color=td.color}
+  else{const g=pick(GEN_INTERPS);td={stories:g.stories};analysis=g.a+(EMO_EXTRA[emo]||'');poem=g.p;title=pick(['無名之夢','夜的碎片','說不清的夢','意識的邊緣','模糊的影像']);tags=['潛意識','感受','探索','夢境'];color='#9370db'}
+  return{id:Date.now().toString(),input:text,title,analysis,poem,tags,color,emotion:emo||'迷茫',style,story:buildStory(td,style,text),createdAt:new Date().toISOString(),weirdScore:Math.floor(Math.random()*40)+60}
+}
+function handleSubmit(){
+  const input=document.getElementById('dreamIn').value.trim();if(!input)return;
+  const btn=document.getElementById('subBtn');btn.textContent='正在進入夢境…';btn.disabled=true;
+  setTimeout(()=>{const d=analyse(input,selEmo,selStyle);dreams.unshift(d);save();document.getElementById('dreamIn').value='';selEmo='';document.querySelectorAll('.ec').forEach(x=>x.classList.remove('on'));btn.textContent='解析這個夢';btn.disabled=false;renderResult(d);go('res')},900);
+}
+const EMO_COL={平靜:'#4ec9c9',喜悅:'#d4a843',焦慮:'#9370db',恐懼:'#4a4a9a',悲傷:'#5b8bd4',迷茫:'#7a7a9a',溫暖:'#e0904a',興奮:'#e07090'};
+function eCol(e){return EMO_COL[e]||'#9370db'}
+function fmtDate(iso){const d=new Date(iso);return d.getFullYear()+'/'+(d.getMonth()+1).toString().padStart(2,'0')+'/'+d.getDate().toString().padStart(2,'0')}
+function buildCardHTML(d,showStory){
+  const col=d.color||eCol(d.emotion);
+  return`<div class="dream-card"><div class="card-stripe" style="background:linear-gradient(90deg,${col},${eCol(d.emotion)})"></div><div class="card-body"><div class="card-title">${d.title}</div><span class="emo-badge" style="background:${eCol(d.emotion)}33;color:${eCol(d.emotion)}">${d.emotion} · ${d.style}</span><div class="cs-label">💭 夢境片段</div><div class="cs-body" style="margin-bottom:14px">${d.input}</div>${showStory?`<div class="cs-label">✨ 夢境故事</div><div class="story-body" style="margin-bottom:14px">${d.story}</div>`:''}<div class="cs-label">🔍 夢境解析</div><div class="cs-body" style="margin-bottom:14px">${d.analysis}</div><div class="cs-label">🎁 從夢裡帶回的禮物</div><div class="poem-box" style="margin-bottom:14px">${d.poem}</div><div class="tags">${d.tags.map(t=>`<span class="tag">#${t}</span>`).join('')}</div><button class="btn-ghost" id="resShare" style="width:100%;margin-top:14px;text-align:center">🔗 複製分享文字</button></div></div>`
+}
+function renderResult(d){document.getElementById('resContent').innerHTML=buildCardHTML(d,true);attachShare('resShare',d)}
+function attachShare(id,d){const btn=document.getElementById(id);if(!btn)return;btn.onclick=()=>{const txt=`🌙 ${d.title}\n${fmtDate(d.createdAt)} · ${d.emotion} · ${d.style}\n\n📖 ${d.input}\n\n✨ ${d.story}\n\n🔍 ${d.analysis}\n\n🎁 ${d.poem}\n\n#夢境圖書館`;navigator.clipboard.writeText(txt).then(()=>{btn.textContent='✓ 已複製！';btn.classList.add('btn-ok');setTimeout(()=>{btn.textContent='🔗 複製分享文字';btn.classList.remove('btn-ok')},2000)})}}
+function renderLib(){
+  const el=document.getElementById('libContent');
+  if(!dreams.length){el.innerHTML=`<div class="empty"><div class="e-icon">📚</div>還沒有夢境記錄<br>去記錄第一個夢吧</div>`;return}
+  el.innerHTML=dreams.map(d=>`<div class="di" style="border-left-color:${d.color||eCol(d.emotion)}" onclick="openDetail('${d.id}')"><div class="di-head"><span class="di-title">${d.title}</span><span class="di-date">${fmtDate(d.createdAt)}</span></div><div class="di-preview">${d.input}</div><div class="di-tags">${d.tags.map(t=>`<span class="di-tag">#${t}</span>`).join('')}</div></div>`).join('')
+}
+function openDetail(id){const d=dreams.find(x=>x.id===id);if(!d)return;document.getElementById('detContent').innerHTML=buildCardHTML(d,true)+`<div class="action-row" style="margin-top:18px"><button class="btn-ghost" onclick="deleteDream('${d.id}')" style="flex:1;text-align:center;color:#e07090;border-color:#e07090">🗑 刪除</button></div>`;attachShare('resShare',d);go('det')}
+function deleteDream(id){if(!confirm('確定要刪除這個夢嗎？'))return;dreams=dreams.filter(x=>x.id!==id);save();go('lib')}
+const PA_TYPES=[{name:'深海探索者',icon:'🌊',emo:['平靜','迷茫'],desc:'你的內心像深海，靜謐卻深不可測。你習慣獨自思考，對情緒有高度敏感。你需要的，往往不是答案，而是空間。'},{name:'天空流浪者',icon:'🪶',emo:['喜悅','興奮'],desc:'你的靈魂渴望自由，不喜歡被束縛。你對新事物充滿好奇，容易被美好的事感動。'},{name:'夜行守護者',icon:'🌑',emo:['恐懼','焦慮'],desc:'你把很多事情放在心裡。你是那種不說但很在乎的人，外表冷靜，內心有一座需要被看見的火山。'},{name:'月光詩人',icon:'🌕',emo:['悲傷','溫暖'],desc:'你感情豐富，容易被細節感動。你把思念和愛都藏在日常裡，一首歌、一個味道，就能讓你想起很多事。'}];
+function renderPA(){
+  const el=document.getElementById('paContent');
+  if(dreams.length<2){el.innerHTML=`<div class="empty"><div class="e-icon">🧠</div>再記錄幾個夢<br>人格分析就會出現</div>`;return}
+  const emoCnt={};dreams.forEach(d=>{emoCnt[d.emotion]=(emoCnt[d.emotion]||0)+1});
+  const topEmo=Object.entries(emoCnt).sort((a,b)=>b[1]-a[1])[0]?.[0]||'迷茫';
+  const type=PA_TYPES.find(t=>t.emo.includes(topEmo))||PA_TYPES[0];
+  const anx=Math.round(((emoCnt['焦慮']||0)+(emoCnt['恐懼']||0)+(emoCnt['悲傷']||0))/dreams.length*100);
+  const joy=Math.round(((emoCnt['喜悅']||0)+(emoCnt['溫暖']||0)+(emoCnt['興奮']||0))/dreams.length*100);
+  const myst=Math.round(((emoCnt['迷茫']||0)+(emoCnt['平靜']||0))/dreams.length*100);
+  const thCnt={};dreams.forEach(d=>{const th=detectTheme(d.input);if(th)thCnt[th]=(thCnt[th]||0)+1});
+  const topTh=Object.entries(thCnt).sort((a,b)=>b[1]-a[1]).slice(0,3);
+  const thN={水:'水與情緒',飛:'自由渴望',追:'壓力逃避',家:'歸屬安全',迷:'人生迷惘',死:'結束重生',愛:'愛與連結',考:'表現焦慮',動:'本能力量'};
+  el.innerHTML=`<div class="pa-hero"><div class="pa-icon">${type.icon}</div><div class="pa-type">${type.name}</div><div class="pa-desc">${type.desc}</div></div><div class="card" style="padding:18px;margin-bottom:12px"><div class="section-label">內在能量指數（共 ${dreams.length} 個夢）</div>${gauge('焦慮/壓力',anx,eCol('焦慮'))}${gauge('喜悅/溫暖',joy,eCol('喜悅'))}${gauge('迷惘/沉靜',myst,eCol('迷茫'))}</div>${topTh.length?`<div class="card" style="padding:18px;margin-bottom:12px"><div class="section-label">潛意識最常出現的主題</div>${topTh.map(([th,n])=>`<div class="bar-row"><span class="bar-label">${thN[th]||th}</span><div class="bar-track" style="flex:1"><div class="bar-fill" style="width:${Math.round(n/dreams.length*100)}%;background:${THEMES[th]?.color||'#9370db'}"></div></div><span class="bar-n">${n}</span></div>`).join('')}</div>`:''}<div class="card" style="padding:18px"><div class="section-label">潛意識需求提示</div><div style="font-size:14px;line-height:1.9;color:var(--sub)">${anx>50?'你的夢境透露出較高的壓力，試著每天留5分鐘給自己，不做任何事，只是呼吸。':''}${joy>50?'你的夢境充滿正能量！繼續讓自己接觸讓你感到快樂的事物。':''}${myst>50?'你的夢境偏向沉思，你可能正在人生的路口，需要時間，不需要急。':''}${dreams.length<5?'繼續記錄夢境，分析會更準確。':'你的夢境資料庫已夠豐富，這份分析反映了你近期真實的內在狀態。'}</div></div>`;
+}
+function gauge(label,val,color){return`<div class="gauge-wrap"><div class="gauge-label"><span>${label}</span><span>${val}%</span></div><div class="gauge-track"><div class="gauge-fill" style="width:${val}%;background:${color}"></div></div></div>`}
+function renderCol(){
+  const el=document.getElementById('colContent');
+  if(!dreams.length){el.innerHTML=`<div class="empty"><div class="e-icon">🎴</div>還沒有收藏卡<br>記錄夢境就會自動生成</div>`;return}
+  el.innerHTML=`<div style="font-size:12px;color:var(--muted);margin-bottom:14px;letter-spacing:1px">點選卡片可查看完整內容</div><div class="col-grid">${dreams.map(d=>`<div class="col-card" onclick="openCard('${d.id}')" style="background:linear-gradient(135deg,${(d.color||'#9370db')}44,${eCol(d.emotion)}22)"><div class="col-card-inner" style="border-top:3px solid ${d.color||eCol(d.emotion)}"><div><div class="col-card-title">${d.title}</div><div class="col-card-date">${fmtDate(d.createdAt)}</div></div><div><div class="col-card-poem">${d.poem}</div><span class="col-card-emo">${d.emotion}</span></div></div></div>`).join('')}</div>`
+}
+function openCard(id){const d=dreams.find(x=>x.id===id);if(!d)return;document.getElementById('cardModal').innerHTML=`<div style="border-top:4px solid ${d.color||eCol(d.emotion)};margin:-22px -22px 16px;padding:16px 20px 12px;background:${(d.color||'#9370db')}22"><div style="font-family:'Ma Shan Zheng',cursive;font-size:22px;color:var(--text)">${d.title}</div><div style="font-size:11px;color:var(--muted);margin-top:4px">${fmtDate(d.createdAt)} · ${d.emotion} · ${d.style}</div></div><div class="cs-label">✨ 夢境故事</div><div style="font-size:13px;line-height:1.85;color:var(--text);white-space:pre-line;margin-bottom:14px">${d.story}</div><div class="poem-box" style="margin-bottom:14px">${d.poem}</div><div class="tags">${d.tags.map(t=>`<span class="tag">#${t}</span>`).join('')}</div><button class="btn-ghost" style="width:100%;margin-top:14px;text-align:center" id="modalShare">🔗 複製分享</button>`;document.getElementById('cardOverlay').classList.add('on');attachShare('modalShare',d)}
+function closeModal(){document.getElementById('cardOverlay').classList.remove('on')}
+function closeOverlay(e){if(e.target.id==='cardOverlay')closeModal()}
+function renderRank(){
+  const el=document.getElementById('rankContent');
+  if(dreams.length<2){el.innerHTML=`<div class="empty"><div class="e-icon">🏆</div>再多記錄幾個夢<br>排行榜就會出現</div>`;return}
+  const ranked=[...dreams].sort((a,b)=>b.weirdScore-a.weirdScore).slice(0,10);
+  const medals=['🥇','🥈','🥉'];
+  el.innerHTML=`<div style="font-size:12px;color:var(--muted);margin-bottom:16px;letter-spacing:1px">你最離奇的夢 Top ${ranked.length}</div>${ranked.map((d,i)=>`<div class="rank-item" onclick="openDetail('${d.id}')" style="cursor:pointer;border-left:3px solid ${d.color||eCol(d.emotion)}"><div class="rank-num">${medals[i]||'#'+(i+1)}</div><div class="rank-info"><div class="rank-title">${d.title}</div><div class="rank-sub">${d.input}</div></div><div style="font-size:12px;color:var(--muted);flex-shrink:0">${d.weirdScore}分</div></div>`).join('')}<div style="margin-top:20px;padding:14px;background:var(--s1);border-radius:12px;border:1px solid var(--border)"><button class="btn-ghost" id="rankShareBtn" style="width:100%;text-align:center" onclick="shareRank()">🔗 複製排行榜</button></div>`
+}
+function shareRank(){const top3=[...dreams].sort((a,b)=>b.weirdScore-a.weirdScore).slice(0,3);const txt=`🏆 我的夢境排行榜\n\n${top3.map((d,i)=>['🥇','🥈','🥉'][i]+' '+d.title+'\n「'+d.poem+'」').join('\n\n')}\n\n#夢境圖書館`;navigator.clipboard.writeText(txt).then(()=>{const btn=document.getElementById('rankShareBtn');btn.textContent='✓ 已複製！';btn.classList.add('btn-ok');setTimeout(()=>{btn.textContent='🔗 複製排行榜';btn.classList.remove('btn-ok')},2000)})}
+function shareApp(){const txt='🌙 夢境圖書館\n每一個夢，都是你給自己的信\n\n記錄夢境 · 生成故事 · 分析人格 · 收藏夢卡';navigator.clipboard.writeText(txt).then(()=>{const btn=document.getElementById('shareAppBtn');btn.textContent='✓ 已複製！';btn.classList.add('btn-ok');setTimeout(()=>{btn.textContent='🔗 複製分享文字';btn.classList.remove('btn-ok')},2000)})}
+
+// 冥想宣言
+const AFFS=[
+  {icon:'💪',items:['我的身體每天都在變得更強壯、更健康','我的細胞充滿活力，自我修復能力強大','我擁有充沛的能量，每天精神飽滿','我的免疫系統強大，保護我遠離疾病','我愛護我的身體，給它最好的照顧','健康是我最重要的財富，我珍惜它','我的睡眠深沉，每天醒來神清氣爽','我的身體知道如何療癒自己','我選擇對身體有益的食物和習慣','我的心靈平靜，帶來身體的和諧','每一次呼吸都讓我更加充滿生命力','我感謝我的身體每天為我所做的一切','我的脊椎挺直，姿態優雅有力','我的五臟六腑運作順暢，生命力旺盛','健康的能量從我體內向外散發','我每天都在創造更健康的自己','我的身體是神聖的殿堂，我善待它','我值得擁有完美的健康與活力']},
+  {icon:'💰',items:['財富自然而然地流向我','我擁有創造豐盛的能力','金錢是我忠實的夥伴，永遠支持我','我的收入每天都在增加','我值得擁有豐盛的物質生活','財富的大門為我敞開','我善用金錢，讓它為我創造更多','我對金錢抱持正面的態度','豐盛是我的自然狀態','我的事業蒸蒸日上，財源滾滾','我吸引金錢輕鬆且愉快地進入我的生命','我有能力創造我想要的財富','錢來找我，而不是我去追錢','我的財富為我和家人帶來幸福','我對豐盛充滿感恩','每一天我都更接近財務自由','我的潛意識充滿了財富的藍圖','我是財富的磁鐵，吸引無限豐盛']},
+  {icon:'🍀',items:['我天生好運，幸運總是眷顧我','每天都有美好的事情發生在我身上','我走到哪裡，好運就跟到哪裡','幸運是我生命的底色','我總是在對的時間出現在對的地方','好事情不斷地向我湧來','我的直覺帶領我做出最幸運的選擇','宇宙總是站在我這邊','我的人生充滿了驚喜和好運','每一個轉折都是幸運的開始','我感謝生命中每一個幸運的瞬間','幸運女神對我特別眷顧','我相信最好的事情正在發生','奇蹟每天都在我生命中出現','我是幸運的人，幸福是我的天命','好運從四面八方向我湧來','我的每一天都充滿意外的驚喜','幸運已經刻在我的基因裡']},
+  {icon:'💝',items:['我值得被深深地愛與珍惜','真愛正在朝我走來','我的心是開放的，準備好迎接愛','我吸引與我靈魂共鳴的伴侶','愛在我的生命中自然流動','我給予愛，也接受愛','我的關係建立在尊重與信任上','宇宙正在為我準備完美的緣分','我相信美好的愛情正在等待我','我散發出愛的能量，吸引愛回來','我的另一半正在尋找我','愛讓我的生命更完整更美好','我在愛中成長，在愛中療癒','我值得一段幸福長久的關係','緣分已經在路上，我靜心等待','我的心充滿愛，愛自然降臨','我吸引健康、快樂的愛情關係','真正的愛正向我靠近']},
+  {icon:'🏆',items:['我的工作充滿意義和成就感','我在工作中發揮最大的潛能','每一天我都更接近我的職業目標','我的才能被看見，我的努力被認可','工作的機會不斷地向我湧來','我在職場上受人尊重與喜愛','我的事業每天都在向上攀升','我解決問題的能力讓人刮目相看','工作讓我充實，也讓我自由','我的創意和想法為工作帶來突破','我與同事和諧合作，共創佳績','成功是我努力後自然的結果','我的專業能力每天都在提升','我熱愛我的工作，工作也回報我','升遷和機會自然地找上我','我在工作中展現最好的自己','我的努力為家人創造更好的生活','工作順利，財源廣進，一切如意']},
+  {icon:'🤝',items:['我吸引善良、正向的人進入我的生命','我的人際關係充滿愛與和諧','我輕鬆地與人建立真誠的連結','我身邊圍繞著支持我的人','我給予他人溫暖，也接受他人的善意','我的存在讓周圍的人感到快樂','我與家人的關係日益深厚','友誼在我的生命中自然綻放','我懂得傾聽，也懂得表達','人們喜歡和我在一起','我化解衝突，帶來和平','我的人脈網絡每天都在擴展','我值得被真心對待','我散發正能量，吸引正能量的人','每一段關係都讓我成長','我真心欣賞並感謝生命中的每個人','我的笑容和善意感染身邊的人','我建立的每一段關係都是祝福']}
+];
+let affCat=0,affIdx=0;
+function setAffCat(el,idx){document.querySelectorAll('.aff-cat').forEach(b=>b.classList.remove('on'));el.classList.add('on');affCat=idx;affIdx=0;showAff()}
+function showAff(){const c=AFFS[affCat];document.getElementById('affIcon').textContent=c.icon;document.getElementById('affText').textContent=c.items[affIdx%c.items.length]}
+function nextAff(){affIdx=(affIdx+1)%AFFS[affCat].items.length;showAff()}
+
+// 環境音
+let audioCtx=null,soundNode=null,soundType=null;
+function getACtx(){if(!audioCtx)audioCtx=new(window.AudioContext||window.webkitAudioContext)();return audioCtx}
+function toggleSound(type,btn){
+  if(soundType===type){stopSound();document.querySelectorAll('.aff-snd-btn').forEach(b=>b.classList.remove('on'));return}
+  document.querySelectorAll('.aff-snd-btn').forEach(b=>b.classList.remove('on'));
+  stopSound();playSound(type);btn.classList.add('on');soundType=type;
+}
+function stopSound(){if(soundNode){try{soundNode.stop()}catch(e){}soundNode=null}soundType=null}
+function playSound(type){
+  const ctx=getACtx();const r=ctx.sampleRate;const buf=ctx.createBuffer(1,r*4,r);const d=buf.getChannelData(0);
+  if(type==='ocean')for(let i=0;i<d.length;i++)d[i]=(Math.random()*2-1)*Math.sin(i/r*2*Math.PI*.3)*.3;
+  else if(type==='rain')for(let i=0;i<d.length;i++)d[i]=(Math.random()*2-1)*.15;
+  else if(type==='space')for(let i=0;i<d.length;i++)d[i]=(Math.random()*2-1)*Math.sin(i/r*2*Math.PI*40)*.05;
+  else if(type==='forest')for(let i=0;i<d.length;i++)d[i]=(Math.random()*2-1)*.1*(1+Math.sin(i/r*2*Math.PI*3));
+  const src=ctx.createBufferSource();src.buffer=buf;src.loop=true;
+  const g=ctx.createGain();g.gain.value=.35;src.connect(g);g.connect(ctx.destination);src.start();soundNode=src;
+}
+
+// 聊天室
+let chatInited=false;
+function initChat(){
+  const nick=localStorage.getItem('dlNick')||'';
+  if(nick)showChatRoom(nick);
+  else{document.getElementById('chatSetupArea').style.display='block';document.getElementById('chatRoomArea').style.display='none'}
+}
+function joinChat(){
+  const nick=document.getElementById('nickInput').value.trim();
+  if(!nick){alert('請輸入暱稱');return}
+  localStorage.setItem('dlNick',nick);showChatRoom(nick);
+}
+function showChatRoom(nick){
+  document.getElementById('chatSetupArea').style.display='none';
+  document.getElementById('chatRoomArea').style.display='block';
+  document.getElementById('chatTitle').textContent='🌙 '+nick+' 的夢境聊天室';
+  if(!chatInited){chatInited=true;if(window._fbListen)window._fbListen();else setTimeout(()=>window._fbListen&&window._fbListen(),2000)}
+}
+function sendMsg(){
+  const input=document.getElementById('chatInput');const text=input.value.trim();if(!text)return;
+  const nick=localStorage.getItem('dlNick')||'旅人';
+  if(window._fbSend){window._fbSend(nick,text);input.value=''}else alert('連線中，請稍後...')
+}
+
+load();showAff();
+</script>
+
+</body>
+</html>
