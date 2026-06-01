@@ -481,7 +481,9 @@ function handleSubmit(){
     }).then(r=>r.json()).then(data=>{
       let ai={};
       try{
-        const txt=data.content[0].text;
+                if(data.error){throw new Error(data.error.message||'API error');}
+        const txt=(data.content||[]).filter(b=>b&&b.type==='text').map(b=>b.text).join('');
+
         ai=JSON.parse(txt.replace(/```json|```/g,'').trim());
       }catch(e){toast('AI解析失敗，使用本地分析');ai={};}
       const local=analyse(input,selEmo,selStyle);
@@ -927,7 +929,8 @@ async function sendToLuna(text){
         toast('API 錯誤：' + data.error.message);
         showLunaReply('…我感受到了你的靈魂波動。繼續說下去，我在聆聽呢。');
       } else {
-        const reply = data.content?.[0]?.text || '…我感受到了你的靈魂波動。';
+                const reply = (data.content || []).filter(b => b && b.type === 'text').map(b => b.text).join('') || '…我感受到了你的靈魂波動。繼續說下去，我在聆聽呢。';
+
         showLunaReply(reply);
       }
     } else {
