@@ -479,7 +479,8 @@ function handleSubmit(){
     fetch('https://api.anthropic.com/v1/messages',{
       method:'POST',
       headers:{'Content-Type':'application/json','x-api-key':apiKey,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},
-      body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:1000,messages:[{role:'user',content:prompt}]})
+      body:JSON.stringify({model:'claude-sonnet-4-6'
+',max_tokens:1000,messages:[{role:'user',content:prompt}]})
     }).then(r=>r.json()).then(data=>{
       let ai={};
       try{
@@ -913,7 +914,8 @@ async function sendToLuna(text){
           'anthropic-dangerous-direct-browser-access':'true'
         },
         body:JSON.stringify({
-          model:'claude-sonnet-4-20250514',
+          model:'claude-sonnet-4-6'
+
           max_tokens:200,
           messages:[{role:'user',content:userMsg}]
         })
