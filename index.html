@@ -217,17 +217,15 @@ textarea::placeholder{color:rgba(180,160,255,0.25);font-style:italic}
       </div>
     </div>
 
-    <!-- API Key 欄（疊在圖上） -->
-   <div style="position:relative;padding:12px 16px 24px;margin-bottom:20px;z-index:10">
-
-
-      <div style="background:rgba(8,4,20,0.65);border:1px solid rgba(160,110,255,0.25);border-radius:12px;padding:7px 12px;display:flex;align-items:center;gap:8px;backdrop-filter:blur(8px)">
-        <span>🔑</span>
-        <input id="apiKeyInp" type="password" placeholder="貼上 Anthropic API Key 開啟 AI 解析（sk-ant-...）" style="flex:1;background:transparent;border:none;color:#e8e0ff;font-size:.66rem;outline:none;font-family:Noto Serif TC,serif">
-       <button onclick="event.stopPropagation();var k=prompt('請貼上你的 Anthropic API Key（sk-ant-開頭）：');if(k){saveApiKey(k.trim());}" style="background:linear-gradient(135deg,#7c3aed,#a855f7);border:none;color:#fff;padding:5px 10px;border-radius:8px;font-size:.66rem;cursor:pointer">儲存</button>
-
+       <!-- API Key 欄（疊在圖上）-->
+      <div style="position:relative;padding:12px 16px 24px;margin-bottom:20px;z-index:10" onclick="event.stopPropagation()">
+        <div style="background:rgba(8,4,20,0.65);border:1px solid rgba(160,110,255,0.25);border-radius:12px;padding:7px 12px;display:flex;align-items:center;gap:8px;backdrop-filter:blur(8px)">
+          <span>🔑</span>
+          <input id="apiKeyInp" type="password" placeholder="貼上 Anthropic API Key（sk-ant-...）" autocomplete="off" style="flex:1;background:transparent;border:none;color:#e8e0ff;font-size:.66rem;outline:none;font-family:Noto Serif TC,serif">
+          <button onclick="event.stopPropagation();saveApiKey(document.getElementById('apiKeyInp').value)" style="background:linear-gradient(135deg,#7c3aed,#a855f7);border:none;color:#fff;padding:5px 10px;border-radius:8px;font-size:.66rem;cursor:pointer">儲存</button>
+        </div>
       </div>
-    </div>
+
 
     <!-- 左側資訊（疊在圖上） -->
     <div style="position:absolute;left:8px;top:120px;z-index:10;display:flex;flex-direction:column;gap:5px;width:80px">
@@ -639,11 +637,12 @@ window.togSnd=togSnd;window.setVol=setVol;
 // API Key
 function getApiKey(){return localStorage.getItem('dlApiKey')||'';}
 function saveApiKey(k){
-  const key = k.trim();
-  if(!key){toast('請先貼上 API Key');return;}
-  if(!key.startsWith('sk-ant-')){toast('API Key 格式不對，應以 sk-ant- 開頭');return;}
+  if(!k){toast('請先貼上 API Key');return;}
+  const key=String(k).replace(/[\s\u200B-\u200D\uFEFF]/g,'').replace(/['‘’"“”]/g,'');
+  if(!key.startsWith('sk-ant-')){toast('格式不對，應以 sk-ant- 開頭');return;}
   localStorage.setItem('dlApiKey',key);
   toast('✅ API Key 已儲存，Luna AI 啟動！');
+  ['apiKeyInp','apiKeyInp2'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='••••••••••••';});
 }
 window.saveApiKey=saveApiKey;
 
@@ -1043,7 +1042,10 @@ setInterval(()=>{
 load();renderRecent();renderDeclTabs();updateLunaStats();
 if(currentLang==="en")applyLang();
 // 恢復已儲存的API key
-const savedKey=getApiKey();if(savedKey){const inp=document.getElementById("apiKeyInp");if(inp)inp.value="••••••••••••";}
+const savedKey=getApiKey();
+if(savedKey){['apiKeyInp','apiKeyInp2'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='••••••••••••';});}
+['apiKeyInp','apiKeyInp2'].forEach(id=>{const el=document.getElementById(id);if(el)el.addEventListener('focus',function(){if(this.value==='••••••••••••')this.value='';});});
+
 </script>
 </body>
 </html>
