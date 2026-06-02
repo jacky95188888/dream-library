@@ -921,7 +921,8 @@ async function sendToLuna(text){
       if(!res.ok){
         const err = await res.text();
         console.error('Luna API HTTP error:', res.status, err);
-        toast('API 錯誤 ' + res.status);
+        toast('API 錯誤 ' + res.status + '：' + err);
+
         showLunaReply('…我感受到了你的靈魂波動。繼續說下去，我在聆聽呢。');
         lunaThinking = false;
         return;
