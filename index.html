@@ -1047,5 +1047,69 @@ if(savedKey){['apiKeyInp','apiKeyInp2'].forEach(id=>{const el=document.getElemen
 ['apiKeyInp','apiKeyInp2'].forEach(id=>{const el=document.getElementById(id);if(el)el.addEventListener('focus',function(){if(this.value==='••••••••••••')this.value='';});});
 
 </script>
+  <script>
+(function(){
+  // 找到 Luna 講話的框
+  function getLunaText(){
+    var el = document.getElementById('luna-text');
+    if(!el) return '';
+    // 取純文字（去掉 <br> 換行標籤，變成正常句子）
+    return el.innerText || el.textContent || '';
+  }
+
+  // 用手機內建語音唸出來
+  function speakLuna(){
+    var txt = getLunaText().trim();
+    if(!txt){ return; }
+    // 先停掉正在唸的，避免重疊
+    window.speechSynthesis.cancel();
+    var u = new SpeechSynthesisUtterance(txt);
+    u.lang = 'zh-TW';      // 中文（台灣）
+    u.rate = 0.85;         // 語速放慢一點，配合 Luna 溫柔感
+    u.pitch = 1.05;        // 音調稍微柔一點
+    // 盡量挑中文女聲
+    var voices = window.speechSynthesis.getVoices();
+    var zh = voices.find(function(v){
+      return v.lang && v.lang.toLowerCase().indexOf('zh') === 0;
+    });
+    if(zh){ u.voice = zh; }
+    window.speechSynthesis.speak(u);
+  }
+
+  // 建立 🔊 按鈕
+  function addSpeakerButton(){
+    if(document.getElementById('luna-speaker-btn')) return; // 避免重複加
+    var lunaBox = document.getElementById('luna-text');
+    if(!lunaBox) return;
+    var btn = document.createElement('div');
+    btn.id = 'luna-speaker-btn';
+    btn.textContent = '🔊';
+    btn.style.cssText =
+      'display:inline-block;margin-top:4px;cursor:pointer;'+
+      'background:rgba(100,60,200,0.4);border:1px solid rgba(140,100,255,0.45);'+
+      'border-radius:50%;width:26px;height:26px;line-height:26px;'+
+      'text-align:center;font-size:.8rem;user-select:none';
+    btn.onclick = function(e){
+      e.stopPropagation();   // 不要觸發點圖跟 Luna 對話
+      speakLuna();
+    };
+    // 加在 luna-text 框的下面
+    lunaBox.parentNode.appendChild(btn);
+  }
+
+  // iOS Safari 有時語音清單要等一下才載入
+  if(window.speechSynthesis){
+    window.speechSynthesis.onvoiceschanged = function(){};
+  }
+
+  // 頁面載入後加按鈕
+  if(document.readyState === 'loading'){
+    document.addEventListener('DOMContentLoaded', addSpeakerButton);
+  } else {
+    addSpeakerButton();
+  }
+})();
+</script>
+
 </body>
 </html>
