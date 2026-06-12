@@ -417,7 +417,8 @@ textarea::placeholder{color:rgba(180,160,255,0.25);font-style:italic}
 <div id="tabBar">
   <button class="nb on" id="tb-home" onclick="goTab('home')"><span class="ni">🏠</span><span class="nl">首頁</span></button>
   <button class="nb" id="tb-lib" onclick="goTab('lib')"><span class="ni">📚</span><span class="nl">圖書館</span></button>
-  <div class="nc" onclick="goTab('rec')">＋</div>
+  <div    <button class="nb" id="tb-luna" onclick="goTab('home');setTimeout(function(){var i=document.getElementById('luna-input');if(i){i.focus();i.scrollIntoView({behavior:'smooth',block:'center'})}},150)"><span class="ni">🌙</span><span class="nl">找Luna</span></button>
+
   <button class="nb" id="tb-aff" onclick="goTab('aff')"><span class="ni">🌟</span><span class="nl">宣言</span></button>
   <button class="nb" id="tb-chat" onclick="goTab('chat')"><span class="ni">💕</span><span class="nl">聊天室</span></button>
 </div>
