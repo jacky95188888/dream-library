@@ -465,6 +465,8 @@ const AV=['home','rec','res','lib','det','pa','col','rank','aff','chat','ambient
 const TM={home:'tb-home',lib:'tb-lib',aff:'tb-aff',chat:'tb-chat'};
 function goTab(v){AV.forEach(id=>document.getElementById('v-'+id)?.classList.remove('on'));document.getElementById('v-'+v)?.classList.add('on');Object.entries(TM).forEach(([k,id])=>document.getElementById(id)?.classList.toggle('on',k===v));if(v==='home')renderRecent();if(v==='lib')renderLib(null);if(v==='pa')renderPA();if(v==='col')renderCol();if(v==='rank')renderRank();if(v==='aff')renderDeclTabs();if(v==='chat')initChat();if(v==='ambient'){}window.scrollTo(0,0);}
 window.goTab=goTab;
+function findLuna(){goTab('home');setTimeout(function(){var i=document.getElementById('luna-input');if(i){i.focus();i.scrollIntoView({behavior:'smooth',block:'center'});}},200);}window.findLuna=findLuna;
+
 function quickEmo(emo){selEmo=emo;goTab('rec');setTimeout(()=>document.querySelectorAll('.mtag').forEach(x=>x.classList.toggle('on',x.dataset.e===emo)),100);}
 window.quickEmo=quickEmo;
 const SK='dlv2';let dreams=[],selEmo='',selStyle='電影感';
