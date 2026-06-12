@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="zh-TW">
 <head>
@@ -271,6 +272,18 @@ textarea::placeholder{color:rgba(180,160,255,0.25);font-style:italic}
   </div>
 
   <!-- 對話區（Luna 下方） -->
+    <!-- 首頁主入口：記錄夢境 -->
+  <div style="padding:14px 16px 4px;position:relative;z-index:3;margin-top:-14px">
+    <div onclick="goTab('rec')" style="background:linear-gradient(135deg,#2d1a6e,#1e1050);border:1px solid rgba(140,100,255,0.4);border-radius:18px;padding:16px 18px;display:flex;align-items:center;gap:14px;cursor:pointer;box-shadow:0 6px 24px rgba(124,58,237,0.35)">
+      <div style="width:48px;height:48px;border-radius:14px;flex-shrink:0;background:rgba(120,70,220,0.55);display:flex;align-items:center;justify-content:center;font-size:1.6rem">📖</div>
+      <div style="flex:1">
+        <div style="font-size:1.05rem;font-weight:700;color:#fff;margin-bottom:2px">說出你的夢，Luna 為你解析</div>
+        <div style="font-size:.8rem;color:rgba(200,180,255,0.7)">點這裡記錄昨晚的夢 →</div>
+      </div>
+    </div>
+  </div>
+
+
   <div style="padding:8px 16px 0;position:relative;z-index:3;margin-top:-20px">
     <div style="display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;padding-bottom:6px">
       <button onclick="sendToLuna('我想聊天')" style="flex-shrink:0;padding:6px 12px;background:rgba(100,60,200,0.35);border:1px solid rgba(140,100,255,0.45);border-radius:20px;color:#c4b5fd;font-size:.68rem;font-family:Noto Serif TC,serif;cursor:pointer;white-space:nowrap">我想聊天</button>
