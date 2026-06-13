@@ -447,10 +447,12 @@ const app=initializeApp(cfg);const db=getDatabase(app);const auth=getAuth(app);l
 signInAnonymously(auth).then(r=>{myUid=r.user.uid;
 window._fbSend=(nick,text)=>push(ref(db,'chatroom/messages'),{text,nickname:nick,uid:myUid,ts:Date.now()});
 window._fbListen=()=>{
+if(window.__listening)return;window.__listening=true;
 onValue(ref(db,'chatroom/messages'),snap=>{const el=document.getElementById('chatMsgs');if(!el)return;const list=[];snap.forEach(c=>list.push(c.val()));const recent=list.slice(-50);el.innerHTML=recent.length?recent.map(m=>{const mine=m.uid===myUid;const t=m.ts?new Date(m.ts).toLocaleTimeString('zh-TW',{hour:'2-digit',minute:'2-digit'}):'';return'<div class="cmsg '+(mine?'mine':'other')+'"><span class="cmsg-nick">'+(mine?'你':m.nickname||'旅人')+'</span><div class="cmsg-bubble">'+((m.text||'').replace(/</g,'&lt;'))+'</div><span class="cmsg-time">'+t+'</span></div>';}).join(''):'<div style="text-align:center;color:var(--muted);font-size:.72rem;padding:20px">還沒有訊息 🌙</div>';el.scrollTop=el.scrollHeight;});
 const pr=ref(db,'presence/'+myUid);set(pr,{ts:Date.now()});onDisconnect(pr).remove();
 onValue(ref(db,'presence'),snap=>{let n=0;snap.forEach(()=>n++);const el=document.getElementById('chatOnline');if(el)el.textContent='● '+n+' 人在線';});
 };
+
 }).catch(e=>console.log(e));
 </script>
 <script>
