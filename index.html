@@ -577,19 +577,13 @@ window.switchCat=switchCat;window.nextD=nextD;window.prevD=prevD;window.randD=ra
 let chatInited=false;
 function initChat(){const nick=localStorage.getItem('dlNick')||'';if(nick)showChatRoom(nick);else{document.getElementById('chatSetupArea').style.display='block';document.getElementById('chatRoomArea').style.display='none';}}
 function joinChat(){const nick=document.getElementById('nickInput').value.trim();if(!nick){toast('請輸入暱稱 ✦');return;}localStorage.setItem('dlNick',nick);showChatRoom(nick);}
-function showChatRoom(nick){
-  document.getElementById('chatSetupArea').style.display='none';
-  document.getElementById('chatRoomArea').style.display='block';
-  document.getElementById('chatTitle').textContent='🌙 '+nick+' 的夢境頻道';
-  if(!chatInited){
-    chatInited=true;
-    function tryListen(){
-      if(window._fbListen){window._fbListen();}
-      else{setTimeout(tryListen,500);}
-    }
-    tryListen();
-  }
-}
+580  function showChatRoom(nick){
+581    document.getElementById('chatSetupArea')...
+582    document.getElementById('chatRoomArea')...
+583    document.getElementById('chatTitle')...
+       setTimeout(function(){if(window._fbListen){window._fbListen();}},300);  ← 新的一行
+592  }
+
 function sendMsg(){const input=document.getElementById('chatInput');const text=input.value.trim();if(!text)return;const nick=localStorage.getItem('dlNick')||'旅人';if(window._fbSend){window._fbSend(nick,text);input.value='';}else toast('連線中，請稍後...');}
 window.joinChat=joinChat;window.sendMsg=sendMsg;
 function toast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');clearTimeout(window._tt);window._tt=setTimeout(()=>t.classList.remove('show'),2200);}
