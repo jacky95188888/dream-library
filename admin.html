@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="zh-Hant"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>夢境圖書館 · 發碼台</title>
+<style>
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+body{font-family:-apple-system,"PingFang TC",sans-serif;max-width:520px;margin:0 auto;padding:20px;background:#0f1020;color:#e8e8f0;line-height:1.6}
+h1{font-size:20px;text-align:center;color:#b9a4ff}
+.card{background:#1a1b33;border:1px solid #33345c;border-radius:14px;padding:16px;margin:14px 0}
+.card h2{font-size:15px;margin:0 0 10px;color:#8fb8ff}
+label{font-size:13px;color:#9a9ab5;display:block;margin:8px 0 4px}
+input,textarea{width:100%;padding:11px;border-radius:9px;border:1px solid #3a3b60;background:#12132a;color:#fff;font-size:15px}
+textarea{min-height:70px;resize:vertical}
+button{width:100%;padding:13px;margin-top:10px;border:none;border-radius:9px;background:#6c5ce7;color:#fff;font-size:15px;font-weight:600}
+button:active{background:#5a4bd0}
+.out{margin-top:10px;padding:11px;border-radius:9px;background:#0a0b18;border:1px solid #2a2b4a;font-size:13px;white-space:pre-wrap;word-break:break-all;min-height:20px;color:#a8f0c0}
+.err{color:#ff8f8f !important}
+.hint{font-size:12px;color:#777;margin-top:4px}
+.big{font-size:22px;font-weight:700;color:#ffd479;text-align:center;letter-spacing:2px}
+</style></head><body>
+<h1>🌙 夢境圖書館 · 發碼台</h1>
+<div class="card"><h2>① 發放通行碼</h2>
+<label>ADMIN_PASS（你設定的發碼密語）</label>
+<input id="admin" placeholder="輸入你的發碼密語" autocomplete="off">
+<button onclick="issue()">產生一組通行碼</button>
+<div class="out" id="o1"></div></div>
+<div class="card"><h2>② 測試對話（Luna·Haiku）</h2>
+<label>通行碼</label><input id="c1" placeholder="自動帶入" autocomplete="off">
+<label>訊息</label><input id="msg" value="哈囉 Luna">
+<button onclick="chat()">送出對話</button>
+<div class="out" id="o2"></div></div>
+<div class="card"><h2>③ 測試解夢（Sonnet）</h2>
+<label>通行碼</label><input id="c2" placeholder="自動帶入" autocomplete="off">
+<label>夢境描述</label><textarea id="dream">我夢到自己在飛，飛過一片海，但突然開始下墜。</textarea>
+<button onclick="analyze()">分析夢境</button>
+<div class="out" id="o3"></div></div>
+<script>
+const API="https://dream-worker.rhtm9y855y.workers.dev";
+async function post(body,el){el.textContent="⏳ 連線中…";el.classList.remove("err");
+try{const r=await fetch(API,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(body)});
+const d=await r.json();if(d.error){el.classList.add("err");el.textContent="⚠️ "+d.error;return null}return d}
+catch(e){el.classList.add("err");el.textContent="⚠️ 連線失敗："+e.message;return null}}
+async function issue(){const admin=document.getElementById("admin").value.trim();const o=document.getElementById("o1");
+if(!admin){o.classList.add("err");o.textContent="請先輸入 ADMIN_PASS";return}
+const d=await post({action:"issue",admin},o);
+if(d&&d.code){o.innerHTML='<div class="big">'+d.code+'</div><div class="hint">已產生！已自動帶入下方</div>';
+document.getElementById("c1").value=d.code;document.getElementById("c2").value=d.code}}
+async function chat(){const code=document.getElementById("c1").value.trim();const message=document.getElementById("msg").value.trim();
+const o=document.getElementById("o2");const d=await post({action:"chat",code,message,history:[]},o);
+if(d)o.textContent="💬 Luna："+d.reply+"\n\n剩餘 對話"+d.remaining.chat+" 解夢"+d.remaining.dream+" 試用剩"+d.remaining.trialDaysLeft+"天"}
+async function analyze(){const code=document.getElementById("c2").value.trim();const dream=document.getElementById("dream").value.trim();
+const o=document.getElementById("o3");const d=await post({action:"dream",code,dream},o);
+if(d)o.textContent="🔮 "+d.reply+"\n\n剩餘 對話"+d.remaining.chat+" 解夢"+d.remaining.dream+" 試用剩"+d.remaining.trialDaysLeft+"天"}
+</script></body></html>
