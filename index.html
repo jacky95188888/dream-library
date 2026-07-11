@@ -1130,7 +1130,119 @@ if(savedKey){['apiKeyInp','apiKeyInp2'].forEach(id=>{const el=document.getElemen
     addSpeakerButton();
   }
 })();
+<script>
+/* ===== 通行碼模式補丁 v1（貼於 </body> 之前，自動覆蓋舊功能） ===== */
+(function(){
+var WORKER='https://dream-worker.rhtm9y855y.workers.dev';
+
+function getApiKey(){return localStorage.getItem('dream_trial_code')||'';}
+window.getApiKey=getApiKey;
+
+function saveApiKey(k){
+  var raw=k;
+  if(!raw||raw==='••••••••••••'){
+    var a=document.getElementById('apiKeyInp'),b=document.getElementById('apiKeyInp2');
+    raw=(a&&a.value&&a.value!=='••••••••••••')?a.value:((b&&b.value!=='••••••••••••')?b.value:'');
+  }
+  var code=String(raw||'').replace(/[\s\u200B-\u200D\uFEFF]/g,'').toUpperCase();
+  if(!/^DREAM-[A-Z2-9]{5}$/.test(code)){toast('通行碼格式不對，應像 DREAM-XXXXX');return;}
+  localStorage.setItem('dream_trial_code',code);
+  toast('✅ 通行碼已儲存，Luna 啟動！');
+  ['apiKeyInp','apiKeyInp2'].forEach(function(id){var el=document.getElementById(id);if(el)el.value='••••••••••••';});
+}
+window.saveApiKey=saveApiKey;
+
+window.sendToLuna=async function(text){
+  if(!text||!text.trim())return;
+  var code=getApiKey();
+  if(!code){toast('請先輸入通行碼 🔑');return;}
+  var input=document.getElementById('luna-input');
+  if(input)input.value='';
+  var msgEl=document.getElementById('luna-text');
+  if(msgEl)msgEl.innerHTML='Luna 正在感受你的靈魂波動…';
+  try{
+    var r=await fetch(WORKER,{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({action:'chat',code:code,message:text,history:[]})
+    });
+    var d=await r.json();
+    if(d.error){toast('⚠️ '+d.error);if(msgEl)msgEl.textContent='…我在聆聽呢。';}
+    else{
+      if(msgEl)msgEl.textContent=d.reply||'…我在聆聽呢。';
+      if(d.remaining!=null){
+        var c=document.getElementById('today-chat');
+        if(c)c.textContent=(d.remaining.chat!=null?d.remaining.chat:d.remaining)+' 次剩餘';
+      }
+    }
+  }catch(e){toast('連線失敗');if(msgEl)msgEl.textContent='…我在聆聽呢。';}
+};
+
+window.handleSubmit=async function(){
+  var input=document.getElementById('dreamIn').value.trim();
+  if(!input){toast('請先寫下你的夢境 ✦');return;}
+  var btn=document.getElementById('subBtn');
+  btn.textContent='正在進入夢境…';btn.disabled=true;
+  function done(d){
+    dreams.unshift(d);save();
+    document.getElementById('dreamIn').value='';
+    document.getElementById('char-c').textContent='0 字';
+    selEmo='';
+    document.querySelectorAll('.mtag').forEach(function(x){x.classList.remove('on');});
+    btn.textContent='解析這個夢 ✦';btn.disabled=false;
+    renderResult(d);goTab('res');
+  }
+  var code=getApiKey();
+  if(!code){
+    setTimeout(function(){done(analyse(input,selEmo,selStyle));},900);
+    return;
+  }
+  try{
+    var r=await fetch(WORKER,{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({action:'analyze',code:code,dream:input,emotion:selEmo||'',style:selStyle})
+    });
+    var d=await r.json();
+    if(d.error){toast('⚠️ '+d.error+'，使用本地分析');done(analyse(input,selEmo,selStyle));return;}
+    var ai=d.result||d;
+    var local=analyse(input,selEmo,selStyle);
+    done(Object.assign(local,{
+      title:ai.title||local.title,
+      analysis:ai.analysis||local.analysis,
+      story:ai.story||local.story,
+      poem:ai.poem||local.poem,
+      tags:ai.tags||local.tags,
+      isAI:true
+    }));
+    if(d.remaining!=null){
+      var c=document.getElementById('today-chat');
+      if(c&&d.remaining.chat!=null)c.textContent=d.remaining.chat+' 次剩餘';
+    }
+  }catch(e){
+    toast('網路錯誤，使用本地分析');
+    done(analyse(input,selEmo,selStyle));
+  }
+};
+
+var p1=document.getElementById('apiKeyInp');
+if(p1)p1.placeholder='輸入通行碼（DREAM-XXXXX）';
+var p2=document.getElementById('apiKeyInp2');
+if(p2)p2.placeholder='DREAM-XXXXX';
+document.querySelectorAll('.api-box').forEach(function(box){
+  var lbl=box.querySelector('span');
+  if(lbl)lbl.textContent='· 夢境通行碼 ·';
+  var desc=box.querySelector('p');
+  if(desc)desc.textContent='輸入五日免費試用通行碼，即可啟用 Luna AI 對話與 AI 解夢。';
+  var b=box.querySelector('button');
+  if(b)b.textContent='儲存通行碼 ✦';
+});
+if(getApiKey()){
+  ['apiKeyInp','apiKeyInp2'].forEach(function(id){var el=document.getElementById(id);if(el)el.value='••••••••••••';});
+}
+})();
 </script>
+
 
 </body>
 </html>
