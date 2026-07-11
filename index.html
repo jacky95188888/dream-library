@@ -1243,6 +1243,60 @@ if(getApiKey()){
 }
 })();
 </script>
+<script>
+/* ===== Luna 語音按鈕加強版（貼於 </body> 之前） ===== */
+(function(){
+var st=document.createElement('style');
+st.textContent='@keyframes lunaSpk{0%,100%{box-shadow:0 0 6px rgba(160,110,255,.5)}50%{box-shadow:0 0 16px rgba(200,160,255,.9)}}'+
+'#luna-speak-btn{display:flex;align-items:center;justify-content:center;gap:5px;margin-top:6px;padding:6px 10px;'+
+'background:linear-gradient(135deg,#7c3aed,#a855f7);border:1px solid rgba(200,160,255,.6);border-radius:14px;'+
+'color:#fff;font-size:.62rem;font-family:"Noto Serif TC",serif;cursor:pointer;user-select:none;'+
+'animation:lunaSpk 2.2s ease-in-out infinite;white-space:nowrap}'+
+'#luna-speak-btn:active{transform:scale(.94)}'+
+'#luna-speak-btn.playing{background:linear-gradient(135deg,#0ea5e9,#38bdf8);animation:none}';
+document.head.appendChild(st);
+
+function getTxt(){
+  var el=document.getElementById('luna-text');
+  if(!el)return '';
+  return (el.innerText||el.textContent||'').trim();
+}
+
+function speak(btn){
+  var txt=getTxt();
+  if(!txt||!window.speechSynthesis)return;
+  window.speechSynthesis.cancel();
+  var u=new SpeechSynthesisUtterance(txt);
+  u.lang='zh-TW';u.rate=.85;u.pitch=1.1;u.volume=1;
+  var vs=window.speechSynthesis.getVoices();
+  var zh=vs.find(function(v){return v.lang&&v.lang.toLowerCase().indexOf('zh')===0;});
+  if(zh)u.voice=zh;
+  btn.classList.add('playing');
+  btn.innerHTML='🔊 Luna 說話中…';
+  u.onend=function(){btn.classList.remove('playing');btn.innerHTML='🔊 點我聽 Luna 說';};
+  u.onerror=function(){btn.classList.remove('playing');btn.innerHTML='🔊 點我聽 Luna 說';};
+  window.speechSynthesis.speak(u);
+}
+
+function addBtn(){
+  var old=document.getElementById('luna-speaker-btn');
+  if(old)old.remove();
+  if(document.getElementById('luna-speak-btn'))return;
+  var box=document.getElementById('luna-text');
+  if(!box)return;
+  var btn=document.createElement('div');
+  btn.id='luna-speak-btn';
+  btn.innerHTML='🔊 點我聽 Luna 說';
+  btn.onclick=function(e){e.stopPropagation();speak(btn);};
+  box.parentNode.appendChild(btn);
+}
+
+if(window.speechSynthesis)window.speechSynthesis.onvoiceschanged=function(){};
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',addBtn);
+else addBtn();
+setTimeout(addBtn,800);
+})();
+</script>
 
 
 </body>
