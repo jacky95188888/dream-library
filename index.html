@@ -443,17 +443,35 @@ import{getDatabase,ref,push,onValue,set,onDisconnect}from"https://www.gstatic.co
 import{getAuth,signInAnonymously}from"https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
 const cfg={apiKey:"AIzaSyBJz75IN4z930h--w0WNtokHIfo38wZuuw",authDomain:"dream-library-5994d.firebaseapp.com",databaseURL:"https://dream-library-5994d-default-rtdb.asia-southeast1.firebasedatabase.app",projectId:"dream-library-5994d",storageBucket:"dream-library-5994d.firebasestorage.app",messagingSenderId:"787534117246",appId:"1:787534117246:web:e43308aa3d8c2e65d6db2f"};
 const app=initializeApp(cfg);const db=getDatabase(app);const auth=getAuth(app);let myUid=null;
-signInAnonymously(auth).then(r=>{myUid=r.user.uid;
-window._fbSend=(nick,text)=>push(ref(db,'chatroom/messages'),{text,nickname:nick,uid:myUid,ts:Date.now()});
+window._fbSend=(nick,text)=>push(ref(db,'chatroom/messages'),{text:text,nickname:nick,uid:myUid||'',ts:Date.now()});
+function esc(s){return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+function chatStatus(msg){const el=document.getElementById('chatMsgs');if(el)el.innerHTML='<div style="text-align:center;color:#f4c753;font-size:.72rem;padding:20px">'+msg+'</div>';}
+function renderMsgs(snap){
+  const el=document.getElementById('chatMsgs');if(!el)return;
+  const list=[];snap.forEach(c=>{list.push(c.val());});
+  const recent=list.slice(-50);
+  if(recent.length===0){el.innerHTML='<div style="text-align:center;color:#b8a9d9;padding:20px">還沒有訊息 🌙</div>';return;}
+  let html='';
+  for(const m of recent){
+    try{
+      if(!m||!m.text)continue;
+      const mine=!!(m.uid&&myUid&&m.uid===myUid);
+      const t=m.ts?new Date(m.ts).toLocaleTimeString('zh-TW',{hour:'2-digit',minute:'2-digit'}):'';
+      html+='<div class="cmsg '+(mine?'mine':'other')+'"><span class="cmsg-nick">'+(mine?'你':(esc(m.nickname)||'旅人'))+'</span><div class="cmsg-bubble">'+esc(m.text)+'</div><span class="cmsg-time">'+t+'</span></div>';
+    }catch(e){html+='<div style="color:#ff8a8a;font-size:.7rem;text-align:center">⚠ 有一則訊息無法顯示（'+esc(e.message)+'）</div>';}
+  }
+  el.innerHTML=html;el.scrollTop=el.scrollHeight;
+}
 window._fbListen=()=>{
-const el0=document.getElementById('chatMsgs');if(el0)el0.innerHTML='<div style="text-align:center;color:#f4c753;font-size:.72rem;padding:20px">連線中… myUid='+(myUid||'無')+'</div>';
-onValue(ref(db,'chatroom/messages'),snap=>{const el=document.getElementById('chatMsgs');if(!el)return;const list=[];snap.forEach(c=>list.push(c.val()));const recent=list.slice(-50);el.innerHTML=recent.length?recent.map(m=>{const mine=m.uid===myUid;const t=m.ts?new Date(m.ts).toLocaleTimeString('zh-TW',{hour:'2-digit',minute:'2-digit'}):'';return'<div class="cmsg '+(mine?'mine':'other')+'"><span class="cmsg-nick">'+(mine?'你':m.nickname||'旅人')+'</span><div class="cmsg-bubble">'+((m.text||'').replace(/</g,'&lt;'))+'</div><span class="cmsg-time">'+t+'</span></div>';}).join(''):'<div style="text-align:center;color:var(--muted);font-size:.72rem;padding:20px">還沒有訊息 🌙</div>';el.scrollTop=el.scrollHeight;},err=>{const el=document.getElementById('chatMsgs');if(el)el.innerHTML='<div style="color:#ff6b6b;padding:20px;font-size:.72rem">讀取錯誤：'+err.message+'</div>';});
-const pr=ref(db,'presence/'+myUid);set(pr,{ts:Date.now()});onDisconnect(pr).remove();
-onValue(ref(db,'presence'),snap=>{let n=0;snap.forEach(()=>n++);const el=document.getElementById('chatOnline');if(el)el.textContent='● '+n+' 人在線';});
+  chatStatus('連線中…');
+  onValue(ref(db,'chatroom/messages'),snap=>{try{renderMsgs(snap);}catch(e){chatStatus('❌ 顯示錯誤：'+esc(e.message));}},err=>{chatStatus('❌ 讀取失敗：'+esc(err.message));});
+  onValue(ref(db,'presence'),snap=>{let n=0;snap.forEach(()=>{n++;});const el=document.getElementById('chatOnline');if(el)el.textContent='● '+n+' 人在線';});
 };
-_fbListen();
-}).catch(e=>{const el=document.getElementById('chatMsgs');if(el)el.innerHTML='<div style="color:#ff6b6b;padding:20px;font-size:.72rem">登入失敗：'+e.message+'</div>';console.log(e);});
-;
+signInAnonymously(auth).then(r=>{
+  myUid=r.user.uid;
+  const pr=ref(db,'presence/'+myUid);set(pr,{ts:Date.now()});onDisconnect(pr).remove();
+}).catch(e=>{chatStatus('❌ 登入失敗：'+esc(e.message));});
+
 </script>
 <script>
 (function(){const s=document.getElementById('stars');for(let i=0;i<160;i++){const el=document.createElement('div');const big=i<20,med=i>=20&&i<70;const sz=big?(3+Math.random()*2):med?(1.5+Math.random()):(.5+Math.random());const op=big?(.6+Math.random()*.4):med?(.35+Math.random()*.4):(.2+Math.random()*.3);el.className='star'+(big?' big':'');el.style.cssText='width:'+sz+'px;height:'+sz+'px;top:'+(Math.random()*100)+'%;left:'+(Math.random()*100)+'%;--d:'+(1.5+Math.random()*4)+'s;--o:'+op+';animation-delay:'+(Math.random()*5)+'s';s.appendChild(el);}})();
