@@ -137,27 +137,45 @@ textarea::placeholder{color:rgba(180,160,255,0.25);font-style:italic}
 .dl-title{font-size:.68rem;letter-spacing:.15em;color:var(--muted);margin:12px 0 10px}
 .dl-item{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:13px 15px;margin-bottom:8px;font-size:.82rem;line-height:1.8;cursor:pointer;display:flex;align-items:flex-start;gap:10px}
 .dl-item:active{border-color:var(--glow2)}.dl-n{font-size:.62rem;color:var(--muted);flex-shrink:0;margin-top:4px;min-width:22px}
-.chat-setup-box{background:var(--card);border:1px solid var(--border);border-radius:18px;padding:24px;text-align:center;margin:16px}
-.chat-setup-box p{font-size:.72rem;color:var(--muted);line-height:1.8;margin-bottom:18px}
-.nick-row{display:flex;gap:8px}
-.nick-inp{flex:1;background:rgba(255,255,255,0.05);border:1px solid var(--border);border-radius:12px;padding:10px 14px;color:var(--text);font-family:'Noto Serif TC',serif;font-size:.85rem;outline:none}
-.nick-inp:focus{border-color:var(--glow2)}
-.nick-go{padding:10px 18px;background:linear-gradient(135deg,#7c3aed,#a855f7);border:none;border-radius:12px;color:#fff;font-size:.82rem;font-family:'Noto Serif TC',serif;cursor:pointer;white-space:nowrap}
-.chat-wrap{background:var(--card);border:1px solid var(--border);border-radius:16px;overflow:hidden;margin:0 16px}
-.chat-msgs{background:rgba(10,8,30,0.6);min-height:280px;max-height:300px;overflow-y:auto;padding:12px;display:flex;flex-direction:column;gap:8px;scrollbar-width:none}
+#v-chat{padding-bottom:82px}
+#v-chat .pg-hd{padding-bottom:16px}
+#v-chat .pg-hd h2{font-size:1.22rem;letter-spacing:.1em;text-shadow:0 0 22px rgba(167,139,250,.35)}
+#v-chat .pg-hd p{margin-top:7px}
+.chat-setup-box,.chat-wrap{position:relative;isolation:isolate;overflow:hidden;background:linear-gradient(155deg,rgba(28,21,64,.92),rgba(10,8,31,.96));border:1px solid rgba(190,153,255,.28);box-shadow:0 24px 55px rgba(0,0,0,.35),inset 0 1px 0 rgba(255,255,255,.06)}
+.chat-setup-box:before,.chat-wrap:before{content:"";position:absolute;z-index:-1;inset:0;background:radial-gradient(circle at 78% 0,rgba(139,92,246,.24),transparent 38%),radial-gradient(circle at 8% 88%,rgba(244,199,83,.08),transparent 32%);pointer-events:none}
+.chat-setup-box{border-radius:26px;padding:34px 22px 26px;text-align:center;margin:4px 16px 16px}
+.chat-setup-box:after{content:"✦";display:grid;place-items:center;width:58px;height:58px;margin:0 auto 17px;border:1px solid rgba(225,190,108,.55);border-radius:50%;color:#f4cf77;font-size:1.25rem;background:radial-gradient(circle,rgba(139,92,246,.28),rgba(11,8,32,.4));box-shadow:0 0 0 7px rgba(139,92,246,.06),0 0 30px rgba(139,92,246,.32)}
+.chat-setup-title{font-size:1.04rem;color:#f5eeff;letter-spacing:.12em;margin-bottom:8px}
+.chat-setup-box p{font-size:.72rem;color:var(--muted);line-height:1.8;margin-bottom:21px}
+.chat-privacy{display:flex;align-items:center;justify-content:center;gap:6px;margin-top:15px;font-size:.62rem;color:rgba(196,181,253,.62)}
+.nick-row{display:flex;gap:9px}
+.nick-inp{min-width:0;flex:1;background:rgba(6,4,22,.65);border:1px solid rgba(167,139,250,.3);border-radius:15px;padding:12px 14px;color:var(--text);font-family:'Noto Serif TC',serif;font-size:.84rem;outline:none;box-shadow:inset 0 1px 7px rgba(0,0,0,.2);transition:.25s}
+.nick-inp:focus{border-color:#c4a9ff;box-shadow:0 0 0 3px rgba(139,92,246,.12),inset 0 1px 7px rgba(0,0,0,.2)}
+.nick-go{padding:11px 19px;background:linear-gradient(135deg,#6335c9,#a65ce5);border:1px solid rgba(255,255,255,.12);border-radius:15px;color:#fff;font-size:.82rem;font-family:'Noto Serif TC',serif;cursor:pointer;white-space:nowrap;box-shadow:0 7px 20px rgba(93,45,190,.35);transition:.2s}
+.nick-go:active,.chat-send:active{transform:scale(.94)}
+.chat-room-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:4px 16px 10px;padding:0 3px}
+.chat-room-identity{min-width:0}
+.chat-room-identity h2{font-size:.98rem;color:#f4eeff;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.chat-room-identity p{font-size:.62rem;color:var(--muted);margin-top:3px}
+.chat-online-pill{flex-shrink:0;display:flex;align-items:center;gap:6px;padding:7px 11px;border:1px solid rgba(78,207,138,.2);border-radius:99px;background:rgba(34,98,71,.16);font-size:.62rem;color:#75dfa6}
+.chat-online-pill:before{content:"";width:6px;height:6px;border-radius:50%;background:#4ecf8a;box-shadow:0 0 9px #4ecf8a;animation:pulse 1.8s infinite}
+.chat-wrap{border-radius:25px;margin:0 12px}
+.chat-msgs{background:linear-gradient(180deg,rgba(8,6,27,.72),rgba(16,10,43,.66));height:calc(100dvh - 268px);min-height:360px;max-height:600px;overflow-y:auto;padding:18px 14px;display:flex;flex-direction:column;gap:11px;scrollbar-width:none;overscroll-behavior:contain}
 .chat-msgs::-webkit-scrollbar{display:none}
-.cmsg{display:flex;flex-direction:column;gap:2px;max-width:82%}
+.cmsg{display:flex;flex-direction:column;gap:3px;max-width:84%;animation:chatIn .3s ease both}
 .cmsg.mine{align-self:flex-end;align-items:flex-end}.cmsg.other{align-self:flex-start}
-.cmsg-nick{font-size:.62rem;color:var(--muted)}
-.cmsg-bubble{padding:8px 13px;border-radius:14px;font-size:.82rem;line-height:1.5}
-.cmsg.mine .cmsg-bubble{background:rgba(124,58,237,0.35);color:var(--text);border-bottom-right-radius:4px}
-.cmsg.other .cmsg-bubble{background:rgba(255,255,255,0.06);color:var(--text);border-bottom-left-radius:4px}
-.cmsg-time{font-size:.55rem;color:var(--muted)}
-.chat-input-row{display:flex;gap:8px;padding:10px 12px;border-top:1px solid var(--border)}
-.chat-input-row input{flex:1;background:rgba(255,255,255,0.04);border:1px solid var(--border);border-radius:20px;padding:9px 15px;color:var(--text);font-family:'Noto Serif TC',serif;font-size:.82rem;outline:none}
-.chat-input-row input:focus{border-color:var(--glow2)}
-.chat-send{background:linear-gradient(135deg,#7c3aed,#a855f7);border:none;color:#fff;width:38px;height:38px;border-radius:50%;font-size:1rem;flex-shrink:0;display:flex;align-items:center;justify-content:center;cursor:pointer}
-.chat-hint{font-size:.65rem;color:var(--muted);text-align:center;padding:10px}
+.cmsg-nick{font-size:.59rem;color:rgba(196,181,253,.6);padding:0 5px}
+.cmsg-bubble{position:relative;padding:10px 14px;border:1px solid rgba(255,255,255,.06);border-radius:18px;font-size:.8rem;line-height:1.65;letter-spacing:.02em;box-shadow:0 8px 20px rgba(0,0,0,.14);overflow-wrap:anywhere}
+.cmsg.mine .cmsg-bubble{background:linear-gradient(135deg,rgba(104,57,196,.86),rgba(126,62,174,.74));color:#fff;border-color:rgba(202,170,255,.2);border-bottom-right-radius:5px}
+.cmsg.other .cmsg-bubble{background:linear-gradient(145deg,rgba(255,255,255,.09),rgba(255,255,255,.045));color:var(--text);border-bottom-left-radius:5px}
+.cmsg-time{font-size:.52rem;color:rgba(184,169,217,.45);padding:0 5px}
+.chat-input-row{display:flex;align-items:center;gap:9px;padding:11px 12px calc(11px + env(safe-area-inset-bottom));border-top:1px solid rgba(167,139,250,.16);background:rgba(8,5,26,.72);backdrop-filter:blur(16px)}
+.chat-input-row input{min-width:0;flex:1;background:rgba(255,255,255,.055);border:1px solid rgba(167,139,250,.24);border-radius:22px;padding:11px 16px;color:var(--text);font-family:'Noto Serif TC',serif;font-size:.81rem;outline:none;transition:.25s}
+.chat-input-row input:focus{border-color:#ae8cf8;background:rgba(255,255,255,.075);box-shadow:0 0 0 3px rgba(139,92,246,.1)}
+.chat-send{background:linear-gradient(135deg,#7041d4,#b060e1);border:1px solid rgba(255,255,255,.14);color:#fff;width:42px;height:42px;border-radius:50%;font-size:.94rem;flex-shrink:0;display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 7px 20px rgba(112,65,212,.38);transition:.2s}
+.chat-hint{font-size:.61rem;color:rgba(184,169,217,.58);text-align:center;padding:10px 12px 0;letter-spacing:.04em}
+@keyframes chatIn{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:none}}
+@media(max-width:370px){.chat-setup-box{padding-left:16px;padding-right:16px}.nick-go{padding-left:14px;padding-right:14px}.chat-msgs{height:calc(100dvh - 258px)}}
 #tabBar{position:fixed;bottom:0;left:0;right:0;height:64px;z-index:200;background:rgba(10,8,26,0.96);backdrop-filter:blur(20px);border-top:1px solid rgba(120,80,255,0.18);display:flex;align-items:center;justify-content:space-around;max-width:500px}
 @media(min-width:500px){#tabBar{left:50%;transform:translateX(-50%);width:500px}}
 .nb{flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;cursor:pointer;padding:6px 0;color:rgba(160,140,220,0.45);background:none;border:none;font-family:'Noto Serif TC',serif}
@@ -401,15 +419,15 @@ textarea::placeholder{color:rgba(180,160,255,0.25);font-style:italic}
 <div id="v-chat" class="view">
   <div id="chatSetupArea">
     <div class="pg-hd"><h2>🌙 夢境聊天室</h2><p>與來自各地的夢境旅人交流</p></div>
-    <div class="chat-setup-box"><p>進入聊天室，靈魂相遇的地方</p><div class="nick-row"><input class="nick-inp" type="text" id="nickInput" placeholder="輸入你的夢境暱稱..." maxlength="12"><button class="nick-go" onclick="joinChat()">進入</button></div></div>
+    <div class="chat-setup-box"><div class="chat-setup-title">進入夢境頻道</div><p>為自己取一個夢境暱稱<br>讓靈魂在星光下溫柔相遇</p><div class="nick-row"><input class="nick-inp" type="text" id="nickInput" placeholder="輸入你的夢境暱稱..." maxlength="12" onkeydown="if(event.key==='Enter')joinChat()"><button class="nick-go" onclick="joinChat()">開啟頻道</button></div><div class="chat-privacy">◇ 匿名進入・不顯示真實身分 ◇</div></div>
   </div>
   <div id="chatRoomArea" style="display:none">
-    <div class="pg-hd" style="padding-bottom:8px"><h2 id="chatTitle">🌙 夢境聊天室</h2><p id="chatOnline" style="color:#4ecf8a">● 連線中...</p></div>
+    <div class="chat-room-head"><div class="chat-room-identity"><h2 id="chatTitle">🌙 夢境聊天室</h2><p>Dreamers' Whisper Room</p></div><div id="chatOnline" class="chat-online-pill">連線中...</div></div>
     <div class="chat-wrap">
       <div class="chat-msgs" id="chatMsgs"><div style="text-align:center;color:var(--muted);font-size:.72rem;padding:20px">正在連接夢境頻道...</div></div>
-      <div class="chat-input-row"><input type="text" id="chatInput" placeholder="分享你的夢境..." maxlength="100" onkeydown="if(event.key==='Enter')sendMsg()"><button class="chat-send" onclick="sendMsg()">➤</button></div>
+      <div class="chat-input-row"><input type="text" id="chatInput" placeholder="分享你的夢境..." maxlength="100" enterkeyhint="send" onkeydown="if(event.key==='Enter')sendMsg()"><button class="chat-send" onclick="sendMsg()" aria-label="傳送訊息">➤</button></div>
     </div>
-    <div class="chat-hint">請保持友善 🌙</div>
+    <div class="chat-hint">月光守則｜請保持友善，尊重每一段夢境 🌙</div>
   </div>
 </div>
 </div>
@@ -465,7 +483,7 @@ function renderMsgs(snap){
 window._fbListen=()=>{
   chatStatus('連線中…');
   onValue(ref(db,'chatroom/messages'),snap=>{try{renderMsgs(snap);}catch(e){chatStatus('❌ 顯示錯誤：'+esc(e.message));}},err=>{chatStatus('❌ 讀取失敗：'+esc(err.message));});
-  onValue(ref(db,'presence'),snap=>{let n=0;snap.forEach(()=>{n++;});const el=document.getElementById('chatOnline');if(el)el.textContent='● '+n+' 人在線';});
+  onValue(ref(db,'presence'),snap=>{let n=0;snap.forEach(()=>{n++;});const el=document.getElementById('chatOnline');if(el)el.textContent=n+' 人在線';});
 };
 signInAnonymously(auth).then(r=>{
   myUid=r.user.uid;
@@ -720,9 +738,9 @@ const LANG = {
     chatTitle: '🌙 夢境聊天室',
     chatDesc: '與來自各地的夢境旅人即時交流',
     chatPlaceholder: '輸入你的夢境暱稱...',
-    chatEnter: '進入',
+    chatEnter: '開啟頻道',
     chatInputPlaceholder: '分享你的夢境...',
-    chatHint: '請保持友善，分享美好的夢境故事 🌙',
+    chatHint: '月光守則｜請保持友善，尊重每一段夢境 🌙',
     affTitle: '冥想宣言',
     affDesc: '每日宣言，重塑你的內在信念',
     ambTitle: '🎵 夢境環境音',
@@ -769,9 +787,9 @@ const LANG = {
     chatTitle: '🌙 Dream Chat Room',
     chatDesc: 'Connect with dream travelers worldwide',
     chatPlaceholder: 'Enter your dream nickname...',
-    chatEnter: 'Enter',
+    chatEnter: 'Enter Room',
     chatInputPlaceholder: 'Share your dream...',
-    chatHint: 'Be kind, share beautiful dream stories 🌙',
+    chatHint: 'Moonlight Rule｜Be kind and honor every dream 🌙',
     affTitle: 'Affirmations',
     affDesc: 'Daily affirmations to reshape your beliefs',
     ambTitle: '🎵 Ambient Sounds',
