@@ -1,0 +1,69 @@
+{
+  "version": 1,
+  "style": "Celestial Luxury",
+  "assets": [
+    {
+      "key": "dream-interpretation",
+      "file": "feature-dream-interpretation.webp",
+      "title": "解夢",
+      "subtitle": "探索象徵與訊息",
+      "icon": "夢"
+    },
+    {
+      "key": "library",
+      "file": "feature-library.webp",
+      "title": "圖書館",
+      "subtitle": "夢境知識庫",
+      "icon": "書"
+    },
+    {
+      "key": "personality",
+      "file": "feature-personality.webp",
+      "title": "人格",
+      "subtitle": "內在性格特質",
+      "icon": "心"
+    },
+    {
+      "key": "collection",
+      "file": "feature-collection.webp",
+      "title": "收藏",
+      "subtitle": "重要夢境",
+      "icon": "藏"
+    },
+    {
+      "key": "daily-insight",
+      "file": "feature-daily-insight.webp",
+      "title": "每日解析",
+      "subtitle": "AI 潛意識洞察",
+      "icon": "析"
+    },
+    {
+      "key": "dream-connection",
+      "file": "feature-dream-connection.webp",
+      "title": "夢境交友",
+      "subtitle": "靈魂頻率配對",
+      "icon": "緣"
+    },
+    {
+      "key": "meditation",
+      "file": "feature-meditation.webp",
+      "title": "冥想宣言",
+      "subtitle": "潛意識編程",
+      "icon": "願"
+    },
+    {
+      "key": "ambient-music",
+      "file": "feature-ambient-music.webp",
+      "title": "環境音樂",
+      "subtitle": "夢境氛圍音效",
+      "icon": "音"
+    }
+  ],
+  "placement": {
+    "assetWidthPercent": "30-36%",
+    "mobileReferenceWidth": "390-430px",
+    "lighting": "cool violet moonlight + restrained champagne-gold rim light",
+    "textIsHtml": true,
+    "emojiAsProductionArt": false
+  }
+}
