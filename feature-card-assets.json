@@ -4,56 +4,56 @@
   "assets": [
     {
       "key": "dream-interpretation",
-      "file": "feature-dream-interpretation.webp",
+      "file": "assets/feature-dream-interpretation.svg",
       "title": "解夢",
       "subtitle": "探索象徵與訊息",
       "icon": "夢"
     },
     {
       "key": "library",
-      "file": "feature-library.webp",
+      "file": "assets/feature-library.svg",
       "title": "圖書館",
       "subtitle": "夢境知識庫",
       "icon": "書"
     },
     {
       "key": "personality",
-      "file": "feature-personality.webp",
+      "file": "assets/feature-personality.svg",
       "title": "人格",
       "subtitle": "內在性格特質",
       "icon": "心"
     },
     {
       "key": "collection",
-      "file": "feature-collection.webp",
+      "file": "assets/feature-collection.svg",
       "title": "收藏",
       "subtitle": "重要夢境",
       "icon": "藏"
     },
     {
       "key": "daily-insight",
-      "file": "feature-daily-insight.webp",
+      "file": "assets/feature-daily-insight.svg",
       "title": "每日解析",
       "subtitle": "AI 潛意識洞察",
       "icon": "析"
     },
     {
       "key": "dream-connection",
-      "file": "feature-dream-connection.webp",
+      "file": "assets/feature-dream-connection.svg",
       "title": "夢境交友",
       "subtitle": "靈魂頻率配對",
       "icon": "緣"
     },
     {
       "key": "meditation",
-      "file": "feature-meditation.webp",
+      "file": "assets/feature-meditation.svg",
       "title": "冥想宣言",
       "subtitle": "潛意識編程",
       "icon": "願"
     },
     {
       "key": "ambient-music",
-      "file": "feature-ambient-music.webp",
+      "file": "assets/feature-ambient-music.svg",
       "title": "環境音樂",
       "subtitle": "夢境氛圍音效",
       "icon": "音"
