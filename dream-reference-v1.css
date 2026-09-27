@@ -134,3 +134,24 @@
 #v-home .dream-primary-icon { width: 42px !important; height: 42px !important; border-radius: 12px !important; font-size: 1.15rem !important; }
 #v-home .dream-primary-copy strong { font-size: .9rem !important; line-height: 1.25 !important; }
 #v-home .dream-primary-copy small { font-size: .64rem !important; line-height: 1.3 !important; }
+
+/* Illustrated feature cards matched to the painted demo artwork. */
+#v-home .feat-grid .fc:after {
+  width: 68% !important;
+  height: 100% !important;
+  right: 0 !important;
+  bottom: 0 !important;
+  opacity: 1 !important;
+  background-size: cover !important;
+  background-position: right center !important;
+  filter: drop-shadow(0 0 8px rgba(211,154,255,.3)) saturate(1.08) !important;
+  mask-image: linear-gradient(90deg, transparent 0%, rgba(0,0,0,.2) 12%, #000 38%) !important;
+}
+#v-home .feat-grid .fc:nth-child(1):after { background-image: url("assets/feature-card-dream.webp") !important; }
+#v-home .feat-grid .fc:nth-child(2):after { background-image: url("assets/feature-card-library.webp") !important; }
+#v-home .feat-grid .fc:nth-child(3):after { background-image: url("assets/feature-card-personality.webp") !important; }
+#v-home .feat-grid .fc:nth-child(4):after { background-image: url("assets/feature-card-collection.webp") !important; }
+#v-home .feat-grid .fc:nth-child(5):after { background-image: url("assets/feature-card-daily.webp") !important; }
+#v-home .feat-grid .fc:nth-child(6):after { background-image: url("assets/feature-card-connection.webp") !important; }
+#v-home .feat-grid .fc:nth-child(7):after { background-image: url("assets/feature-card-meditation.webp") !important; }
+#v-home .feat-grid .fc:nth-child(8):after { background-image: url("assets/feature-card-ambient.webp") !important; }
