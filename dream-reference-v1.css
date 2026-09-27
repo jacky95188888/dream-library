@@ -126,3 +126,11 @@
   #v-home .luna-rail.left { width: 82px !important; }
   #v-home .luna-rail.right { width: 72px !important; }
 }
+
+/* Second balance pass: slightly larger Luna, shorter dream-entry card. */
+#v-home .luna-stage { height: clamp(370px, 100vw, 420px) !important; }
+#v-home .luna-art { height: 100% !important; object-position: center 42% !important; }
+#v-home .dream-primary { min-height: 70px !important; padding: 9px 13px !important; gap: 10px !important; margin-top: 7px !important; margin-bottom: 10px !important; box-sizing: border-box !important; }
+#v-home .dream-primary-icon { width: 42px !important; height: 42px !important; border-radius: 12px !important; font-size: 1.15rem !important; }
+#v-home .dream-primary-copy strong { font-size: .9rem !important; line-height: 1.25 !important; }
+#v-home .dream-primary-copy small { font-size: .64rem !important; line-height: 1.3 !important; }
