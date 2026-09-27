@@ -287,27 +287,10 @@ textarea::placeholder{color:rgba(180,160,255,0.25);font-style:italic}
     
 
 
-  <div class="luna-chatbox">
-    <div class="luna-prompts">
-      <button onclick="sendToLuna('我想聊天')">我想聊天</button>
-      <button onclick="sendToLuna('我的夢境怎麼了？')">我的夢境怎麼了？</button>
-      <button onclick="sendToLuna('最近有什麼特別的？')">最近有什麼特別的？</button>
-      <button onclick="sendToLuna('你在想什麼？')">你在嗎？</button>
-    </div>
-    <div class="luna-compose">
-      <button class="luna-mic" onclick="startVoice()" aria-label="語音輸入">🎤</button>
-      <input type="text" id="luna-input" placeholder="在這裡輸入你的話…" maxlength="100" enterkeyhint="send" onkeydown="if(event.key==='Enter'){sendToLuna(this.value)}">
-      <button class="luna-send" onclick="sendToLuna(document.getElementById('luna-input').value)" aria-label="傳送給 Luna">➤</button>
-    </div>
-  </div>
+
 </div>
 <!-- 功能選單 -->
-<div class="home-shortcuts">
-  <button onclick="goTab('lib')"><b>冊</b><span>我的夢境書</span></button>
-  <button onclick="goTab('rank')"><b>章</b><span>圖書館任務</span></button>
-  <button onclick="goTab('col')"><b>◇</b><span>記憶碎片</span></button>
-  <button onclick="goTab('aff')"><b>✦</b><span>靈魂占卜</span></button>
-</div>
+
   <div class="stitle">· 依情緒找夢 ·</div>
   <div class="emo-row">
     <div class="emo-chip" onclick="quickEmo('焦慮')"><div class="emo-ring"><img class="mood-illustration" src="assets/mood-anxious-v1.webp" alt="" loading="lazy"></div><span>焦慮夢</span></div>
@@ -330,6 +313,19 @@ textarea::placeholder{color:rgba(180,160,255,0.25);font-style:italic}
   </div>
   <div class="stitle">最近記錄 <a onclick="goTab('lib')">查看全部 ›</a></div>
   <div class="recent-wrap"><div id="recent-list"></div><div id="recent-empty" class="recent-empty" style="display:none">還沒有夢境記錄 🌙</div></div>
+  <div class="luna-chatbox">
+    <div class="luna-prompts">
+      <button onclick="sendToLuna('我想聊天')">我想聊天</button>
+      <button onclick="sendToLuna('我的夢境怎麼了？')">我的夢境怎麼了？</button>
+      <button onclick="sendToLuna('最近有什麼特別的？')">最近有什麼特別的？</button>
+      <button onclick="sendToLuna('你在想什麼？')">你在嗎？</button>
+    </div>
+    <div class="luna-compose">
+      <button class="luna-mic" onclick="startVoice()" aria-label="語音輸入">🎤</button>
+      <input type="text" id="luna-input" placeholder="在這裡輸入你的話…" maxlength="100" enterkeyhint="send" onkeydown="if(event.key==='Enter'){sendToLuna(this.value)}">
+      <button class="luna-send" onclick="sendToLuna(document.getElementById('luna-input').value)" aria-label="傳送給 Luna">➤</button>
+    </div>
+  </div>
   <div style="height:8px"></div>
 </div>
 <div id="v-rec" class="view">
