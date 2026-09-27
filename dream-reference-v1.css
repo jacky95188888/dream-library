@@ -105,3 +105,24 @@
 #v-home .dream-api { top: 73px !important; bottom: auto !important; left: 12px !important; right: auto !important; width: 132px !important; }
 #v-home .dream-api details { border-color: rgba(228,196,128,.28) !important; background: rgba(16,9,36,.58) !important; }
 #v-home .dream-api summary { padding: 7px 8px !important; font-size: 10px !important; color: rgba(242,222,177,.78) !important; }
+
+/* Mobile focus pass: give Luna more of the first screen and reduce overlay weight. */
+#v-home .luna-stage { height: clamp(340px, 92vw, 385px) !important; }
+#v-home .luna-portrait, #v-home .luna-art { height: 100% !important; }
+#v-home .luna-art { object-position: center 42% !important; }
+#v-home .luna-rail { top: clamp(145px, 35vw, 170px) !important; gap: 5px !important; }
+#v-home .luna-rail.left { left: 10px !important; width: 88px !important; }
+#v-home .luna-rail.right { right: 10px !important; width: 78px !important; }
+#v-home .luna-glass { padding: 6px !important; border-radius: 12px !important; }
+#v-home .luna-name { font-size: .82rem !important; }
+#v-home .luna-role, #v-home .luna-level, #v-home .metric-label { font-size: 8px !important; }
+#v-home .metric-value { font-size: 12px !important; }
+#v-home .sync-ring svg { width: 34px !important; height: 34px !important; }
+#v-home .luna-tap { bottom: 31px !important; padding: 5px 9px !important; font-size: 9px !important; }
+#v-home .dream-api { width: 108px !important; top: 68px !important; }
+#v-home .dream-api summary { padding: 5px 6px !important; font-size: 9px !important; }
+@media (max-width: 370px) {
+  #v-home .luna-stage { height: 340px !important; }
+  #v-home .luna-rail.left { width: 82px !important; }
+  #v-home .luna-rail.right { width: 72px !important; }
+}
