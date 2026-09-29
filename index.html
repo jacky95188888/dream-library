@@ -205,7 +205,7 @@ textarea::placeholder{color:rgba(180,160,255,0.25);font-style:italic}
 #toast.show{opacity:1}
 </style>
 <link rel="stylesheet" href="dream-luxury-v3.css?v=20260925-0742">
-<link rel="stylesheet" href="dream-reference-v1.css?v=20260927-6">
+<link rel="stylesheet" href="dream-reference-v1.css?v=20260927-6">\n<link rel="stylesheet" href="dream-keepers-v1.css?v=20260929-1">
 </head>
 <body>
 <div id="stars"></div>
@@ -284,7 +284,20 @@ textarea::placeholder{color:rgba(180,160,255,0.25);font-style:italic}
   <!-- 首頁主入口：記錄夢境 -->
    <div class="dream-primary" onclick="goTab('rec')"><div class="dream-primary-icon">夢</div><div class="dream-primary-copy"><strong>把昨夜的夢，放進圖書館</strong><small>Luna 將為你閱讀潛意識留下的訊息</small></div><div class="dream-primary-arrow">›</div></div>
 
-  <!-- 對話區（Luna 下方） -->
+  <section class="keepers-entry" aria-labelledby="keepers-title">
+    <div class="keepers-head">
+      <div><div class="keepers-kicker">SIX DREAM KEEPERS</div><div class="keepers-title" id="keepers-title">選擇陪你走進夢境的管理員</div><div class="keepers-sub">六種靈魂，同一座圖書館。你的選擇會被記住。</div></div>
+      <button class="keepers-change" type="button" onclick="document.querySelector('.keepers-grid').scrollIntoView({behavior:'smooth',block:'center'})">更換管理員</button>
+    </div>
+    <div class="keepers-grid">
+      <article class="keeper-card" data-keeper="luna" role="button" tabindex="0" aria-pressed="true"><div class="keeper-art"><img src="assets/luna-library-hero-v1.webp" alt="Luna 夢境館長"></div><div class="keeper-body"><div class="keeper-name">Luna</div><div class="keeper-role">夢境館長</div><div class="keeper-line">溫柔陪伴 · 夢境收藏</div><button class="keeper-select" type="button">選擇她</button></div></article>
+      <article class="keeper-card" data-keeper="seraphine" role="button" tabindex="0" aria-pressed="false"><div class="keeper-art is-placeholder" data-sigil="✧"></div><div class="keeper-body"><div class="keeper-name">Seraphine</div><div class="keeper-role">心靈解讀者</div><div class="keeper-line">心理解析 · 情緒療癒</div><button class="keeper-select" type="button">選擇她</button></div></article>
+      <article class="keeper-card" data-keeper="nyx" role="button" tabindex="0" aria-pressed="false"><div class="keeper-art is-placeholder" data-sigil="✦"></div><div class="keeper-body"><div class="keeper-name">Nyx</div><div class="keeper-role">象徵探索者</div><div class="keeper-line">夢境象徵 · 潛意識探索</div><button class="keeper-select" type="button">選擇她</button></div></article>
+      <article class="keeper-card" data-keeper="aurelia" role="button" tabindex="0" aria-pressed="false"><div class="keeper-art is-placeholder" data-sigil="❀"></div><div class="keeper-body"><div class="keeper-name">Aurelia</div><div class="keeper-role">創意啟發者</div><div class="keeper-line">創意靈感 · 未來想像</div><button class="keeper-select" type="button">選擇她</button></div></article>
+      <article class="keeper-card" data-keeper="celeste" role="button" tabindex="0" aria-pressed="false"><div class="keeper-art is-placeholder" data-sigil="✶"></div><div class="keeper-body"><div class="keeper-name">Celeste</div><div class="keeper-role">星象指引者</div><div class="keeper-line">星象連結 · 夢境指引</div><button class="keeper-select" type="button">選擇她</button></div></article>
+      <article class="keeper-card" data-keeper="elara" role="button" tabindex="0" aria-pressed="false"><div class="keeper-art is-placeholder" data-sigil="❧"></div><div class="keeper-body"><div class="keeper-name">Elara</div><div class="keeper-role">自然療癒者</div><div class="keeper-line">自然能量 · 生活平衡</div><button class="keeper-select" type="button">選擇她</button></div></article>
+    </div>
+  </section>\n\n  <!-- 對話區（Luna 下方） -->
     
 
 <!-- 功能選單 -->
@@ -1146,7 +1159,7 @@ if(savedKey){['apiKeyInp','apiKeyInp2'].forEach(id=>{const el=document.getElemen
 })();
     </script>
 <script>
-/* ===== 通行碼模式補丁 v1（貼於 </body> 之前，自動覆蓋舊功能） ===== */
+/* ===== 通行碼模式補丁 v1（貼於 <script src="dream-keepers-v1.js?v=20260929-1"></script>\n</body> 之前，自動覆蓋舊功能） ===== */
 (function(){
 var WORKER='https://dream-worker.rhtm9y855y.workers.dev';
 
