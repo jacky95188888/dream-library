@@ -2,7 +2,7 @@
 <html lang="zh-TW">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 <title>夢境圖書館</title>
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -204,7 +204,7 @@ textarea::placeholder{color:rgba(180,160,255,0.25);font-style:italic}
 #toast{position:fixed;bottom:76px;left:50%;transform:translateX(-50%);background:var(--card);border:1px solid var(--glow2);border-radius:20px;padding:9px 22px;font-size:.8rem;color:var(--glow2);backdrop-filter:blur(16px);white-space:nowrap;opacity:0;pointer-events:none;transition:opacity .35s;z-index:500;box-shadow:0 0 18px rgba(124,58,237,0.35)}
 #toast.show{opacity:1}
 </style>
-<link rel="stylesheet" href="dream-luxury-v3.css?v=20260925-0742">
+<link rel="stylesheet" href="dream-luxury-v3.css?v=20261123-1">
 <link rel="stylesheet" href="dream-reference-v1.css?v=20260927-6">
 </head>
 <body>
@@ -300,14 +300,14 @@ textarea::placeholder{color:rgba(180,160,255,0.25);font-style:italic}
   </div>
   <div class="stitle">· 功能入口 ·</div>
   <div class="feat-grid">
-    <div class="fc fc1" onclick="goTab('rec')"><div class="fc-ico">夢</div><div class="fc-name">解夢</div><div class="fc-desc">探索象徵與訊息</div><div class="fc-arr">›</div></div>
-    <div class="fc fc2" onclick="goTab('lib')"><div class="fc-ico">書</div><div class="fc-name">圖書館</div><div class="fc-desc">夢境知識庫</div><div class="fc-arr">›</div></div>
-    <div class="fc fc3" onclick="goTab('pa')"><div class="fc-ico">心</div><div class="fc-name">人格</div><div class="fc-desc">內在性格特質</div><div class="fc-arr">›</div></div>
-    <div class="fc fc4" onclick="goTab('col')"><div class="fc-ico">藏</div><div class="fc-name">收藏</div><div class="fc-desc">重要夢境</div><div class="fc-arr">›</div></div>
-    <div class="fc fc5" onclick="goTab('rank')"><div class="fc-ico">析</div><div class="fc-name">每日解析</div><div class="fc-desc">AI潛意識洞察</div><div class="fc-arr">›</div></div>
-    <div class="fc fc6" onclick="goTab('chat')"><div class="fc-ico">緣</div><div class="fc-name">夢境交友</div><div class="fc-desc">靈魂頻率配對</div><div class="fc-arr">›</div></div>
-    <div class="fc fc7" onclick="goTab('aff')"><div class="fc-ico">願</div><div class="fc-name">冥想宣言</div><div class="fc-desc">潛意識編程</div><div class="fc-arr">›</div></div>
-    <div class="fc fc8" onclick="goTab('ambient')"><div class="fc-ico">音</div><div class="fc-name">環境音樂</div><div class="fc-desc">夢境氛圍音效</div><div class="fc-arr">›</div></div>
+    <button type="button" class="fc fc1" onclick="goTab('rec')"><span class="fc-name">解夢</span><span class="fc-desc">探索象徵與訊息</span><span class="fc-arr" aria-hidden="true">›</span></button>
+    <button type="button" class="fc fc2" onclick="goTab('lib')"><span class="fc-name">圖書館</span><span class="fc-desc">夢境知識庫</span><span class="fc-arr" aria-hidden="true">›</span></button>
+    <button type="button" class="fc fc3" onclick="goTab('pa')"><span class="fc-name">人格</span><span class="fc-desc">內在性格特質</span><span class="fc-arr" aria-hidden="true">›</span></button>
+    <button type="button" class="fc fc4" onclick="goTab('col')"><span class="fc-name">收藏</span><span class="fc-desc">重要夢境</span><span class="fc-arr" aria-hidden="true">›</span></button>
+    <button type="button" class="fc fc5" onclick="goTab('rank')"><span class="fc-name">每日解析</span><span class="fc-desc">AI潛意識洞察</span><span class="fc-arr" aria-hidden="true">›</span></button>
+    <button type="button" class="fc fc6" onclick="goTab('chat')"><span class="fc-name">夢境交友</span><span class="fc-desc">靈魂頻率配對</span><span class="fc-arr" aria-hidden="true">›</span></button>
+    <button type="button" class="fc fc7" onclick="goTab('aff')"><span class="fc-name">冥想宣言</span><span class="fc-desc">潛意識編程</span><span class="fc-arr" aria-hidden="true">›</span></button>
+    <button type="button" class="fc fc8" onclick="goTab('ambient')"><span class="fc-name">環境音樂</span><span class="fc-desc">夢境氛圍音效</span><span class="fc-arr" aria-hidden="true">›</span></button>
   </div>
   <div class="stitle">最近記錄 <a onclick="goTab('lib')">查看全部 ›</a></div>
   <div class="recent-wrap"><div id="recent-list"></div><div id="recent-empty" class="recent-empty" style="display:none">還沒有夢境記錄 🌙</div></div>
